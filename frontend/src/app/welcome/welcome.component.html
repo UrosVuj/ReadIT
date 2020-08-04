@@ -1,1 +1,87 @@
-<p>welcome works!</p>
+<!DOCTYPE html>
+<html>
+
+
+
+<body>
+
+  <div id="main">
+
+    <div id="title">
+      Readit
+    </div>
+
+    <div class="container" id="container">
+
+      <div class="form-container sign-up-container">
+        <form action="#">
+          <h2 style="color: #ffffff;">Create Account</h2>
+
+          <div *ngIf="sgnup_page2 == false" id="pageOne">
+            <input type="text" name="first_name" placeholder="Name" [(ngModel)]="first_name" class="input-text" />
+            <input type="text" name="last_name" placeholder="Surname" [(ngModel)]="last_name" class="input-text" />
+            <input type="Date" name="dob" placeholder="Date of birth" [(ngModel)]="dob" class="input-text" />
+            <input type="text" name="country" placeholder="Country" [(ngModel)]="country" class="input-text" />
+            <input type="text" name="city" placeholder="City" [(ngModel)]="city" class="input-text" />
+
+            <button (click)='page2()' class="button" style="margin-top: 5px;">Next</button>
+          </div>
+
+          <div *ngIf="sgnup_page2 == true" id="pageTwo">
+            <input type="text" name="username" placeholder="Username" [(ngModel)]="username" class="input-text" />
+            <input type="text" name="email" placeholder="Email" [(ngModel)]="email" class="input-text" />
+            <input type="password" name="password" placeholder="Password" [(ngModel)]="password" class="input-text" />
+
+            <button (click)='signup()' class="button" style="margin-top: 5px;">Sign Up</button>
+
+            <br>
+            <br>
+
+
+            <div *ngIf="serverErrorMsg !=''" style="color: red; font-size: 12;">
+              {{serverErrorMsg}}
+            </div>
+
+            <div *ngIf="successMsg !=''" style="color: green; font-size: 12;">
+              {{successMsg}}
+            </div>
+
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form action="#">
+          <h2 style="color: #ffffff;">Welcome back</h2>
+
+          <input type="text" name="log_jmbg" placeholder="Username" [(ngModel)]="username" class="input-text" />
+
+          <input type="password" name="log_password" placeholder="Password" [(ngModel)]="password" class="input-text" />
+          <button (click)='reset_signup()' class="button" style="margin-top: 20px;">Sign In</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Sign In</h1>
+            <br>
+            <button class="ghost_2" id="signIn">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>No account?</h1>
+            <p>Enter your personal details</p>
+            <button class="ghost_2" id="signUp">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</body>
+
+
+</html>
