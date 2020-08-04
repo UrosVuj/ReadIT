@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-
-
 <body>
 
   <div id="main">
@@ -10,6 +8,9 @@
     <div id="title">
       Readit
     </div>
+
+
+    <!-- Login / Register form -->
 
     <div class="container" id="container">
 
@@ -24,7 +25,15 @@
             <input type="text" name="country" placeholder="Country" [(ngModel)]="country" class="input-text" />
             <input type="text" name="city" placeholder="City" [(ngModel)]="city" class="input-text" />
 
-            <button (click)='page2()' class="button" style="margin-top: 5px;">Next</button>
+            <button (click)='goto_page2()' class="button" style="margin-top: 5px;">Next</button>
+
+            <br>
+            <br>
+
+            <div *ngIf="emptyField_pg1msg !=''" style="color: red;">
+              {{emptyField_pg1msg}}
+            </div>
+
           </div>
 
           <div *ngIf="sgnup_page2 == true" id="pageTwo">
@@ -37,6 +46,9 @@
             <br>
             <br>
 
+            <div *ngIf="emptyField_pg2msg !=''" style="color: red;">
+              {{emptyField_pg2msg}}
+            </div>
 
             <div *ngIf="serverErrorMsg !=''" style="color: red; font-size: 12;">
               {{serverErrorMsg}}
@@ -67,7 +79,7 @@
           <div class="overlay-panel overlay-left">
             <h1>Sign In</h1>
             <br>
-            <button class="ghost_2" id="signIn">Sign In</button>
+            <button (click)='reset_signup()' class="ghost_2" id="signIn">Sign In</button>
           </div>
           <div class="overlay-panel overlay-right">
             <h1>No account?</h1>

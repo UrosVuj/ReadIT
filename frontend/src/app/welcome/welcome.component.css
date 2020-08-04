@@ -130,6 +130,13 @@ form {
 
 }
 
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(54, 54, 54);
+  opacity: 0.6;
+  font-style: italic;
+}
+
 
 
 .input-text {
@@ -159,7 +166,7 @@ form {
   position: relative;
   overflow: hidden;
   width: 758px;
-  min-height: 60%;
+  min-height: 63%;
   /* min-height: 420px; */
   text-align: center;
 

@@ -50,12 +50,23 @@ export class WelcomeComponent implements OnInit {
   serverErrorMsg: string;
   successMsg: string;
 
+  emptyField_pg1msg: string;
+  emptyField_pg2msg: string;
+
   //signup screen page 2 flag
   sgnup_page2: boolean;
 
 
   signup() {
 
+    //min 7 karaktera, slovo malo i veliko, broj, specijalan karakter
+    let passwordRegex = RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])([a-z]|[A-Z]).{7,}$');
+
+
+    if (!passwordRegex.test(this.password)) {
+      this.emptyField_pg2msg = "Password must meet the criteria"
+      return;
+    }
 
     this.user.first_name = this.first_name;
     this.user.last_name = this.last_name;
@@ -66,6 +77,7 @@ export class WelcomeComponent implements OnInit {
     this.user.email = this.email;
     this.user.password = this.password;
 
+    //calls service which can send a http post req
     this.userService.registerRequest(this.user).subscribe(
       res => {
         this.successMsg = "Success!"
@@ -83,23 +95,24 @@ export class WelcomeComponent implements OnInit {
 
   }
 
-  isEmpty(field: string): boolean {
-    if (field == "" || field == null)
-      return true;
-    return false;
-  }
-
-
-  page2() {
+  goto_page2() {
     if (this.isEmpty(this.first_name) || this.isEmpty(this.last_name) || this.isEmpty(this.country) || this.isEmpty(this.city) || this.dob == null)
-      this.serverErrorMsg = "All fields must be fileld"
+      this.emptyField_pg1msg = "All fields must be filled"
 
-    else
+    else {
       this.sgnup_page2 = true;
+      this.emptyField_pg1msg = "";
+    }
   }
 
   reset_signup() {
     this.sgnup_page2 = false;
+  }
+
+  isEmpty(field: string): boolean {
+    if (field == "" || field == null)
+      return true;
+    return false;
   }
 
 
