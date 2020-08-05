@@ -41,6 +41,8 @@
             <input type="text" name="email" placeholder="Email" [(ngModel)]="email" class="input-text" />
             <input type="password" name="password" placeholder="Password" [(ngModel)]="password" class="input-text" />
 
+            <input type="file" name="avatar" multiple (change)="upload_img($event)" id="img_upload" />
+
             <button (click)='signup()' class="button" style="margin-top: 5px;">Sign Up</button>
 
             <br>

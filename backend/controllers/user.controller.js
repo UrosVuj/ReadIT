@@ -1,6 +1,23 @@
 const mongoose = require('mongoose');
+const multer = require('multer');
+
 
 const User = mongoose.model('User');
+
+const upload = multer({
+    storage: storage
+});
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, '../images/user_avatars')
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + file.originalname);
+    }
+})
+
+
 
 module.exports.register = (req, res, next) => {
 
@@ -19,7 +36,7 @@ module.exports.register = (req, res, next) => {
             res.send(doc);
         else {
             if (err.code == 11000) {
-                res.status(422).send('Duplicate email/username address found.');
+                res.status(422).send('Duplicate email/username found.');
             } else
                 return next(err);
         }

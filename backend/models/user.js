@@ -22,6 +22,10 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    avatar_path: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true,
@@ -36,7 +40,8 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    saltSecret: String
+    saltSecret: String,
+
 });
 
 /*
