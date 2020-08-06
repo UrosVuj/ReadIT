@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-welcome',
@@ -30,11 +31,16 @@ export class WelcomeComponent implements OnInit {
       this.container.classList.remove("right-panel-active");
     });
 
+
+
   }
 
   signUpButton: HTMLElement;
   signInButton: HTMLElement;
   container: HTMLElement;
+
+  login_username: string;
+  login_password: string;
 
   first_name: string;
   last_name: string;
@@ -44,6 +50,7 @@ export class WelcomeComponent implements OnInit {
   username: string;
   email: string;
   password: string;
+  avatar: File;
 
   user: User;
 
@@ -57,17 +64,34 @@ export class WelcomeComponent implements OnInit {
   sgnup_page2: boolean;
 
 
+  signIn() {
+
+    this.userService.loginRequest({ username: this.login_username, password: this.login_password }).subscribe(
+      res => {
+
+        localStorage.setItem('user_session', JSON.stringify(res));
+
+      },
+      err => {
+        console.log("NAY")
+      }
+    )
+
+  }
+
   signup() {
 
     //min 7 karaktera, slovo malo i veliko, broj, specijalan karakter
-    let passwordRegex = RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])([a-z]|[A-Z]).{7,}$');
+    // let passwordRegex = RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])([a-z]|[A-Z]).{7,}$');
 
 
-    if (!passwordRegex.test(this.password)) {
-      this.emptyField_pg2msg = "Password must meet the criteria"
-      return;
-    }
+    // if (!passwordRegex.test(this.password)) {
+    //   this.emptyField_pg2msg = this.password;
+    //  return;
+    //  }
 
+
+    /*
     this.user.first_name = this.first_name;
     this.user.last_name = this.last_name;
     this.user.dob = this.dob;
@@ -76,9 +100,24 @@ export class WelcomeComponent implements OnInit {
     this.user.username = this.username;
     this.user.email = this.email;
     this.user.password = this.password;
+    this.user.type = "user";
+
+    this.user.avatar = this.avatar;
+    */
+
+    let form = new FormData();
+    form.append('avatar', this.avatar);
+    form.append('first_name', this.first_name);
+    form.append('last_name', this.last_name);
+    form.append('dob', this.dob.toString());
+    form.append('country', this.country);
+    form.append('city', this.city);
+    form.append('username', this.username);
+    form.append('email', this.email);
+    form.append('password', this.password);
 
     //calls service which can send a http post req
-    this.userService.registerRequest(this.user).subscribe(
+    this.userService.registerRequest(form).subscribe(
       res => {
         this.successMsg = "Success!"
         this.serverErrorMsg = ""
@@ -89,13 +128,20 @@ export class WelcomeComponent implements OnInit {
           this.successMsg = ""
         }
         else
-          this.serverErrorMsg = 'Something went wrong.Please contact admin.';
+          this.serverErrorMsg = 'Something went wrong. Please contact admin.';
       }
     );
 
   }
 
+  upload_img(event) {
+    if (event.target.files.length > 0)
+      this.avatar = event.target.files[0];
+  }
+
+  //used by the "Next" button in the signup container
   goto_page2() {
+
     if (this.isEmpty(this.first_name) || this.isEmpty(this.last_name) || this.isEmpty(this.country) || this.isEmpty(this.city) || this.dob == null)
       this.emptyField_pg1msg = "All fields must be filled"
 
@@ -105,6 +151,7 @@ export class WelcomeComponent implements OnInit {
     }
   }
 
+  //when trying to login, resets the signup container to page 1
   reset_signup() {
     this.sgnup_page2 = false;
   }
@@ -113,6 +160,10 @@ export class WelcomeComponent implements OnInit {
     if (field == "" || field == null)
       return true;
     return false;
+  }
+
+  resolved(captchaResponse: string) {
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
   }
 
 

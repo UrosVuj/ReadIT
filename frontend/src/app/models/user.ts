@@ -8,6 +8,9 @@ export interface User {
     username: string,
     email: string,
     password: string,
-    type: string
+    type: string,
+    avatar: File;
+
+
 
 }

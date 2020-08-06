@@ -1,28 +1,40 @@
 const mongoose = require('mongoose');
+const multer = require('multer');
+const bcrypt = require('bcryptjs');
+
 
 const User = mongoose.model('User');
 
-module.exports.register = (req, res, next) => {
 
-    var user = new User();
-    user.first_name = req.body.first_name;
-    user.last_name = req.body.last_name;
-    user.dob = req.body.dob;
-    user.country = req.body.country;
-    user.city = req.body.city;
-    user.username = req.body.username;
-    user.email = req.body.email;
-    user.password = req.body.password;
+module.exports.login = async (req, res, next) => {
 
-    user.save((err, doc) => {
-        if (!err)
-            res.send(doc);
-        else {
-            if (err.code == 11000) {
-                res.status(422).send('Duplicate email/username address found.');
-            } else
-                return next(err);
-        }
+    let users = await User.find({
+        username: req.body.username
+    }).exec();
 
-    });
+    if (users.length == 0) {
+        res.status(200).json({
+            success: false,
+            msg: "Username cannot be associated with an account"
+        })
+        return;
+    }
+
+    console.log(users[0])
+
+
+    if (bcrypt.compare(req.body.password, users[0].password)) {
+
+
+        res.status(200).json({
+            first_name: users[0].first_name,
+            last_name: users[0].last_name,
+            country: users[0].country,
+            city: users[0].city,
+            username: users[0].username,
+            email: users[0].email,
+            avatar_path: users[0].avatar_path
+        })
+    }
+
 }

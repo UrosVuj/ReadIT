@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 
+import { RecaptchaModule } from 'ng-recaptcha';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -17,7 +18,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RecaptchaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
