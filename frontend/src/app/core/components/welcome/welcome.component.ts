@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../models/user';
-import { UserService } from '../services/user.service';
+import { User } from '../../../models/user';
+import { UserService } from '../../services/user.service';
 import { JsonPipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-welcome',
@@ -11,7 +12,7 @@ import { JsonPipe } from '@angular/common';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -59,6 +60,7 @@ export class WelcomeComponent implements OnInit {
 
   emptyField_pg1msg: string;
   emptyField_pg2msg: string;
+  signIn_msg: string;
 
   //signup screen page 2 flag
   sgnup_page2: boolean;
@@ -69,13 +71,22 @@ export class WelcomeComponent implements OnInit {
     this.userService.loginRequest({ username: this.login_username, password: this.login_password }).subscribe(
       res => {
 
-        localStorage.setItem('user_session', JSON.stringify(res));
+        console.log(res)
 
+        if (res.found == true) {
+          localStorage.setItem('user_session', JSON.stringify(res.info));
+          console.log(JSON.stringify(res.info))
+          this.router.navigate(['/home'])
+        }
+        else {
+          this.signIn_msg = "No such account"
+        }
       },
       err => {
         console.log("NAY")
       }
     )
+
 
   }
 

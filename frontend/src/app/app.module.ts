@@ -6,13 +6,15 @@ import { HttpClientModule } from '@angular/common/http'
 import { RecaptchaModule } from 'ng-recaptcha';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { WelcomeComponent } from './welcome/welcome.component';
+import { WelcomeComponent } from './core/components/welcome/welcome.component';
+import { HomeComponent } from './core/components/home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

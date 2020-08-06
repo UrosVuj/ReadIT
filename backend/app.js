@@ -14,6 +14,9 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/api', rtsIndex);
 
+//for image displaying
+app.use(express.static('images'))
+
 // error handler
 app.use((err, req, res, next) => {
     if (err.name === 'ValidationError') {
