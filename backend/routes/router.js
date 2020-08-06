@@ -4,9 +4,12 @@ const mongoose = require('mongoose')
 const multer = require('multer');
 
 
+const userContr = require('../controllers/user.controller')
+
+
 const User = mongoose.model('User');
 
-const storage = multer.diskStorage({
+const avatar_storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'images/user_avatars')
     },
@@ -16,12 +19,12 @@ const storage = multer.diskStorage({
 })
 
 
-const upload = multer({
-    storage: storage
+const upload_profile = multer({
+    storage: avatar_storage
 });
 
 
-router.post('/register', upload.single('avatar'), (req, res, next) => {
+router.post('/register', upload_profile.single('avatar'), (req, res, next) => {
 
 
     console.log(req.body);
@@ -52,5 +55,7 @@ router.post('/register', upload.single('avatar'), (req, res, next) => {
 
     });
 })
+
+router.post('/login', userContr.login);
 
 module.exports = router;

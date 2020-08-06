@@ -14,7 +14,11 @@ export class UserService {
   _user = {} as User;
 
   registerRequest(form: FormData) {
-    return this.http.post(environment.apiUrl + '/register', form)
+    return this.http.post<any>(environment.apiUrl + '/register', form)
+  }
+
+  loginRequest(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/login', data)
   }
 
 }

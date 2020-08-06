@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-welcome',
@@ -38,6 +39,9 @@ export class WelcomeComponent implements OnInit {
   signInButton: HTMLElement;
   container: HTMLElement;
 
+  login_username: string;
+  login_password: string;
+
   first_name: string;
   last_name: string;
   dob: Date;
@@ -59,6 +63,21 @@ export class WelcomeComponent implements OnInit {
   //signup screen page 2 flag
   sgnup_page2: boolean;
 
+
+  signIn() {
+
+    this.userService.loginRequest({ username: this.login_username, password: this.login_password }).subscribe(
+      res => {
+
+        localStorage.setItem('user_session', JSON.stringify(res));
+
+      },
+      err => {
+        console.log("NAY")
+      }
+    )
+
+  }
 
   signup() {
 
@@ -118,7 +137,6 @@ export class WelcomeComponent implements OnInit {
   upload_img(event) {
     if (event.target.files.length > 0)
       this.avatar = event.target.files[0];
-    //console.log(this.avatar)
   }
 
   //used by the "Next" button in the signup container
@@ -142,6 +160,10 @@ export class WelcomeComponent implements OnInit {
     if (field == "" || field == null)
       return true;
     return false;
+  }
+
+  resolved(captchaResponse: string) {
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
   }
 
 
