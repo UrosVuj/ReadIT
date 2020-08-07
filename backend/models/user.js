@@ -40,7 +40,7 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    saltSecret: String,
+    saltSecret: String, //check dal moze bez , hahahh
 
 });
 

@@ -8,4 +8,6 @@ mongoose.connect(process.env.MONGODB_URI, (err) => {
     }
 });
 
+//for all models
 require('./user');
+require('./book')
