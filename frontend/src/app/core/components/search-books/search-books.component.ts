@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../services/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-books',
@@ -8,7 +9,7 @@ import { BookService } from '../../services/book.service';
 })
 export class SearchBooksComponent implements OnInit {
 
-  constructor(private bookservice: BookService) { }
+  constructor(private bookservice: BookService, private router: Router) { }
 
   ngOnInit(): void {
     this.search_flag = false;
@@ -79,5 +80,8 @@ export class SearchBooksComponent implements OnInit {
     )
   }
 
+  goto_book(id: string) {
+    this.router.navigate(['/book/' + id])
+  }
 
 }

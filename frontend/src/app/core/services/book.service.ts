@@ -16,4 +16,8 @@ export class BookService {
   searchBooks(data: any) {
     return this.http.post<any>(environment.apiUrl + '/search-books', data)
   }
+
+  getBook(id: string) {
+    return this.http.get<any>(environment.apiUrl + '/book/' + id)
+  }
 }

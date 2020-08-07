@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const bcrypt = require('bcryptjs');
 
+//for GET book request with id
+const ObjectId = require('mongodb').ObjectId
 
 const User = mongoose.model('User');
 const Book = mongoose.model('Book');
@@ -88,4 +90,10 @@ module.exports.searchBooks = async (req, res, next) => {
 
 
 
+}
+
+module.exports.getBook = async (req, res, next) => {
+
+    let book = await Book.findOne(ObjectId(req.params.id)).exec();
+    res.send(book);
 }

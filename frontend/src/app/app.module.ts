@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './core/components/welcome/welcome.component';
 import { HomeComponent } from './core/components/home/home.component';
 import { SearchBooksComponent } from './core/components/search-books/search-books.component';
+import { BookComponent } from './core/components/book/book.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SearchBooksComponent } from './core/components/search-books/search-book
     AppComponent,
     WelcomeComponent,
     HomeComponent,
-    SearchBooksComponent
+    SearchBooksComponent,
+    BookComponent
   ],
   imports: [
     BrowserModule,
