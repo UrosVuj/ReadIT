@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { User } from 'src/app/models/user';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
 
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit {
   user: User;
 
   books() {
-    this.books_flag = true;
+    this.router.navigate(['/search'])
   }
 
 }

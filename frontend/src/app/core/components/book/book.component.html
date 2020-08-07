@@ -8,41 +8,7 @@
 
 <body>
 
-  <input type="checkbox" id="check">
-
-  <!--header area start-->
-  <header>
-    <label for="check">
-      <i class="fas fa-bars" id="sidebar_btn"></i>
-    </label>
-    <div class="left_area">
-      <h3> Read<span>it</span></h3>
-    </div>
-    <div class="right_area">
-      <a href="#" class="logout_btn">Logout</a>
-    </div>
-  </header>
-  <!--header area end-->
-
-  <!--sidebar start-->
-  <div class="sidebar">
-    <div id="pic_and_name">
-      <img src={{user.avatar_path}} class="profile_image" alt="">
-      <h4> {{user.first_name + " " + user.last_name}}</h4>
-    </div>
-    <a href="home"><i class="fas fa-user-circle"></i><span>Profile</span></a>
-    <a (click)="books()"><i class="fas fa-book-open"></i><span>Books</span></a>
-    <a href="#"><i class="fas fa-users"></i><span>Events</span></a>
-    <a href="#"><i class="fas fa-th"></i><span>Forms</span></a>
-    <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
-  </div>
-  <!--sidebar end-->
-
-
-  <div class="content">
-    blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    {{book.name}}
-  </div>
+  {{book.name}}
 
 
 </body>

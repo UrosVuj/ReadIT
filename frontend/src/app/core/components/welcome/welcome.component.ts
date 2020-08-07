@@ -3,6 +3,7 @@ import { User } from '../../../models/user';
 import { UserService } from '../../services/user.service';
 import { JsonPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-welcome',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private storageService: StorageService) { }
 
   ngOnInit(): void {
 
@@ -74,7 +75,7 @@ export class WelcomeComponent implements OnInit {
         console.log(res)
 
         if (res.found == true) {
-          localStorage.setItem('user_session', JSON.stringify(res.info));
+          this.storageService.setItem('user_session', JSON.stringify(res.info));
           console.log(JSON.stringify(res.info))
           this.router.navigate(['/home'])
         }
