@@ -103,4 +103,6 @@ router.post('/add-book', upload_bookCover.single('cover'), (req, res, next) => {
     });
 })
 
+router.post('/search-books', userContr.searchBooks);
+
 module.exports = router;

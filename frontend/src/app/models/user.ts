@@ -10,7 +10,4 @@ export interface User {
     password: string,
     type: string,
     avatar_path: string;
-
-
-
 }

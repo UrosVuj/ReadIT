@@ -31,12 +31,19 @@
       <h4> {{user.first_name + " " + user.last_name}}</h4>
     </div>
     <a href="home"><i class="fas fa-user-circle"></i><span>Profile</span></a>
-    <a href="#"><i class="fas fa-book-open"></i><span>Books</span></a>
+    <a (click)="books()"><i class="fas fa-book-open"></i><span>Books</span></a>
     <a href="#"><i class="fas fa-users"></i><span>Events</span></a>
     <a href="#"><i class="fas fa-th"></i><span>Forms</span></a>
     <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
   </div>
   <!--sidebar end-->
+
+
+  <div class="content">
+    <div *ngIf="books_flag==true">
+      <app-search-books></app-search-books>
+    </div>
+  </div>
 
 
 </body>

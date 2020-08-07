@@ -14,10 +14,14 @@ export class HomeComponent implements OnInit {
 
     this.user = JSON.parse(localStorage.getItem('user_session'));
     this.user.avatar_path = "http://localhost:3000/" + this.user.avatar_path.substr(7);
-    console.log(this.user.avatar_path)
 
   }
 
+  books_flag: boolean;
   user: User;
+
+  books() {
+    this.books_flag = true;
+  }
 
 }

@@ -8,13 +8,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './core/components/welcome/welcome.component';
 import { HomeComponent } from './core/components/home/home.component';
+import { SearchBooksComponent } from './core/components/search-books/search-books.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
-    HomeComponent
+    HomeComponent,
+    SearchBooksComponent
   ],
   imports: [
     BrowserModule,

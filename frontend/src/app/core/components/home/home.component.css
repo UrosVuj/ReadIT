@@ -123,6 +123,7 @@ label #sidebar_btn:hover {
   background-position: center;
   background-size: cover;
   height: 100vh;
+  overflow: hidden;
   transition: 0.5s;
 }
 
