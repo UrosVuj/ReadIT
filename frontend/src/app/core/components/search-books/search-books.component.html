@@ -1,7 +1,7 @@
 <body>
-  <div *ngIf="search_flag==false">
+  <div *ngIf="search_flag==false" id="search">
     <form>
-      <table id="search">
+      <table>
         <tr>
           <td>
             Name:
@@ -44,15 +44,15 @@
     <table id="books">
       <tr *ngFor="let book of books">
 
-        <td>
-          <div id="coverImg" *ngIf="book.hasOwnProperty('column1') ">
+        <td *ngIf="book.hasOwnProperty('column1')">
+          <div id="coverImg">
             <button (click)=" goto_book(book.column2._id)">
               <img src={{book.column1.cover_path}}>
             </button>
           </div>
         </td>
 
-        <td>
+        <td *ngIf="book.hasOwnProperty('column2') ">
           <div id=" coverImg" *ngIf="book.hasOwnProperty('column2') ">
             <button (click)=" goto_book(book.column2._id)">
               <img src={{book.column2.cover_path}}>
@@ -60,7 +60,7 @@
           </div>
         </td>
 
-        <td>
+        <td *ngIf="book.hasOwnProperty('column3') ">
           <div id="coverImg" *ngIf="book.hasOwnProperty('column3') ">
             <button (click)="goto_book(book.column3._id)">
               <img src={{book.column3.cover_path}}>
@@ -68,7 +68,7 @@
           </div>
         </td>
 
-        <td>
+        <td *ngIf="book.hasOwnProperty('column4') ">
           <div id="coverImg" *ngIf="book.hasOwnProperty('column4') ">
             <button (click)="goto_book(book.column4._id)">
               <img src={{book.column4.cover_path}}>

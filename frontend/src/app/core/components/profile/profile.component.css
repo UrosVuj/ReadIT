@@ -14,5 +14,9 @@ body {
   height: calc(100% - 70px);
 }
 
+#lol {
+  text-align: center;
+}
+
 /* ! */
 /* END */

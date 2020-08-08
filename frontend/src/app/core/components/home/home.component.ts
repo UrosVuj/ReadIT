@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private storageService: StorageService) { }
 
   ngOnInit(): void {
 
@@ -21,8 +22,17 @@ export class HomeComponent implements OnInit {
   books_flag: boolean;
   user: User;
 
+  profile() {
+    this.router.navigate(['/profile'])
+  }
   books() {
     this.router.navigate(['/search'])
+  }
+
+  logout() {
+
+    this.storageService.removeItem('user_session')
+    this.router.navigate([''])
   }
 
 }

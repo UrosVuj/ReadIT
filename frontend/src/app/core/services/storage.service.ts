@@ -19,7 +19,7 @@ export class StorageService {
     this.storageSub.next('changed');
   }
 
-  removeItem(key) {
+  removeItem(key: string) {
     localStorage.removeItem(key);
     this.storageSub.next('changed');
   }

@@ -10,6 +10,7 @@ import { WelcomeComponent } from './core/components/welcome/welcome.component';
 import { HomeComponent } from './core/components/home/home.component';
 import { SearchBooksComponent } from './core/components/search-books/search-books.component';
 import { BookComponent } from './core/components/book/book.component';
+import { ProfileComponent } from './core/components/profile/profile.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { BookComponent } from './core/components/book/book.component';
     WelcomeComponent,
     HomeComponent,
     SearchBooksComponent,
-    BookComponent
+    BookComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

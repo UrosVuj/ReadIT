@@ -77,7 +77,7 @@ export class WelcomeComponent implements OnInit {
         if (res.found == true) {
           this.storageService.setItem('user_session', JSON.stringify(res.info));
           console.log(JSON.stringify(res.info))
-          this.router.navigate(['/home'])
+          this.router.navigate(['/profile'])
         }
         else {
           this.signIn_msg = "No such account"
