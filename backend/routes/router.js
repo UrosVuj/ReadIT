@@ -6,9 +6,12 @@ const multer = require('multer');
 
 const userContr = require('../controllers/user.controller')
 
+const bookContr = require('../controllers/book.controller')
+
 
 const User = mongoose.model('User');
-const Book = mongoose.model('Book')
+const Book = mongoose.model('Book');
+const ReadList = mongoose.model('ReadList');
 
 const avatar_storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -103,8 +106,16 @@ router.post('/add-book', upload_bookCover.single('cover'), (req, res, next) => {
     });
 })
 
-router.post('/search-books', userContr.searchBooks);
+router.post('/search-books', bookContr.searchBooks);
 
-router.get('/book/:id', userContr.getBook);
+router.get('/book/:id', bookContr.getBook);
+
+router.get('/book/lists/:id', bookContr.getLists);
+
+router.post('/book/create-list', bookContr.createLists);
+
+router.post('/book/add-list/past', bookContr.addToPastList)
+router.post('/book/add-list/present', bookContr.addToPresentList)
+router.post('/book/add-list/future', bookContr.addToFutureList)
 
 module.exports = router;
