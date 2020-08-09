@@ -1,0 +1,83 @@
+<body>
+  <div *ngIf="search_flag==false" id="search">
+    <form>
+      <table>
+        <tr>
+          <td>
+            Name:
+          </td>
+          <td>
+            <input type="search" name="name" class="search_box" [(ngModel)]="name">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Author:
+          </td>
+          <td>
+            <input type="search" name="author" class="search_box" [(ngModel)]="author">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Genre:
+          </td>
+          <td>
+            <select name="genre" id="genre" [(ngModel)]="genre">
+              <option value="horor">Horror</option>
+              <option value="drama">Drama</option>
+              <option value="fantasy">Fantasy</option>
+              <option value="poetry">Poetry</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" id="button">
+            <button (click)="search()" name="search" id="search_btn"> Search </button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+  </div>
+  <div *ngIf="search_flag==true">
+    <table id="books">
+      <tr *ngFor="let book of books">
+
+        <td *ngIf="book.hasOwnProperty('column1')">
+          <div id="coverImg">
+            <button (click)=" goto_book(book.column2._id)">
+              <img src={{book.column1.cover_path}}>
+            </button>
+          </div>
+        </td>
+
+        <td *ngIf="book.hasOwnProperty('column2') ">
+          <div id=" coverImg" *ngIf="book.hasOwnProperty('column2') ">
+            <button (click)=" goto_book(book.column2._id)">
+              <img src={{book.column2.cover_path}}>
+            </button>
+          </div>
+        </td>
+
+        <td *ngIf="book.hasOwnProperty('column3') ">
+          <div id="coverImg" *ngIf="book.hasOwnProperty('column3') ">
+            <button (click)="goto_book(book.column3._id)">
+              <img src={{book.column3.cover_path}}>
+            </button>
+          </div>
+        </td>
+
+        <td *ngIf="book.hasOwnProperty('column4') ">
+          <div id="coverImg" *ngIf="book.hasOwnProperty('column4') ">
+            <button (click)="goto_book(book.column4._id)">
+              <img src={{book.column4.cover_path}}>
+            </button>
+          </div>
+        </td>
+
+
+      </tr>
+    </table>
+  </div>
+</body>
