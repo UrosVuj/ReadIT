@@ -69,3 +69,12 @@ img {
 #lists {
   padding-left: 520px;
 }
+
+.coverImg img:hover {
+  transform: scale(1.1);
+}
+
+.coverImg img {
+  transition: transform .2s;
+  border-radius: 5px;
+}

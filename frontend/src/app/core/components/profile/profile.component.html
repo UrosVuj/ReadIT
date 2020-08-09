@@ -67,34 +67,26 @@
       <tr *ngFor="let book of currently_reading">
 
         <td *ngIf="book.hasOwnProperty('column1')">
-          <div id="coverImg">
-            <button (click)=" goto_book(book.column1._id)">
-              <img src={{book.column1.cover_path}}>
-            </button>
+          <div class="coverImg">
+            <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
           </div>
         </td>
 
         <td *ngIf="book.hasOwnProperty('column2') ">
-          <div id=" coverImg" *ngIf="book.hasOwnProperty('column2') ">
-            <button (click)=" goto_book(book.column2._id)">
-              <img src={{book.column2.cover_path}}>
-            </button>
+          <div class=" coverImg" *ngIf="book.hasOwnProperty('column2')">
+            <img src={{book.column2.cover_path}} (click)="goto_book(book.column2._id)">
           </div>
         </td>
 
         <td *ngIf="book.hasOwnProperty('column3') ">
-          <div id="coverImg" *ngIf="book.hasOwnProperty('column3') ">
-            <button (click)="goto_book(book.column3._id)">
-              <img src={{book.column3.cover_path}}>
-            </button>
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column3') ">
+            <img src={{book.column3.cover_path}} (click)="goto_book(book.column3._id)">
           </div>
         </td>
 
         <td *ngIf="book.hasOwnProperty('column4') ">
-          <div id="coverImg" *ngIf="book.hasOwnProperty('column4') ">
-            <button (click)="goto_book(book.column4._id)">
-              <img src={{book.column4.cover_path}}>
-            </button>
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column4') ">
+            <img src={{book.column4.cover_path}} (click)="goto_book(book.column4._id)">
           </div>
         </td>
 
@@ -104,35 +96,29 @@
     <table id="books" *ngIf="finished_reading_flag==true">
       <h4>Finished books:</h4>
       <tr *ngFor="let book of finished_reading">
+
+
         <td *ngIf="book.hasOwnProperty('column1')">
-          <div id="coverImg">
-            <button (click)=" goto_book(book.column1._id)">
-              <img src={{book.column1.cover_path}}>
-            </button>
+          <div class="coverImg">
+            <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
           </div>
         </td>
 
         <td *ngIf="book.hasOwnProperty('column2') ">
-          <div id=" coverImg" *ngIf="book.hasOwnProperty('column2') ">
-            <button (click)=" goto_book(book.column2._id)">
-              <img src={{book.column2.cover_path}}>
-            </button>
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column2')">
+            <img src={{book.column2.cover_path}} (click)="goto_book(book.column2._id)">
           </div>
         </td>
 
         <td *ngIf="book.hasOwnProperty('column3') ">
-          <div id="coverImg" *ngIf="book.hasOwnProperty('column3') ">
-            <button (click)="goto_book(book.column3._id)">
-              <img src={{book.column3.cover_path}}>
-            </button>
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column3') ">
+            <img src={{book.column3.cover_path}} (click)="goto_book(book.column3._id)">
           </div>
         </td>
 
         <td *ngIf="book.hasOwnProperty('column4') ">
-          <div id="coverImg" *ngIf="book.hasOwnProperty('column4') ">
-            <button (click)="goto_book(book.column4._id)">
-              <img src={{book.column4.cover_path}}>
-            </button>
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column4') ">
+            <img src={{book.column4.cover_path}} (click)="goto_book(book.column4._id)">
           </div>
         </td>
 
@@ -144,34 +130,26 @@
       <tr *ngFor="let book of want_to_read">
 
         <td *ngIf="book.hasOwnProperty('column1')">
-          <div id="coverImg">
-            <button (click)=" goto_book(book.column1._id)">
-              <img src={{book.column1.cover_path}}>
-            </button>
+          <div class="coverImg">
+            <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
           </div>
         </td>
 
         <td *ngIf="book.hasOwnProperty('column2') ">
-          <div id=" coverImg" *ngIf="book.hasOwnProperty('column2') ">
-            <button (click)=" goto_book(book.column2._id)">
-              <img src={{book.column2.cover_path}}>
-            </button>
+          <div class=" coverImg" *ngIf="book.hasOwnProperty('column2')">
+            <img src={{book.column2.cover_path}} (click)="goto_book(book.column2._id)">
           </div>
         </td>
 
         <td *ngIf="book.hasOwnProperty('column3') ">
-          <div id="coverImg" *ngIf="book.hasOwnProperty('column3') ">
-            <button (click)="goto_book(book.column3._id)">
-              <img src={{book.column3.cover_path}}>
-            </button>
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column3') ">
+            <img src={{book.column3.cover_path}} (click)="goto_book(book.column3._id)">
           </div>
         </td>
 
         <td *ngIf="book.hasOwnProperty('column4') ">
-          <div id="coverImg" *ngIf="book.hasOwnProperty('column4') ">
-            <button (click)="goto_book(book.column4._id)">
-              <img src={{book.column4.cover_path}}>
-            </button>
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column4') ">
+            <img src={{book.column4.cover_path}} (click)="goto_book(book.column4._id)">
           </div>
         </td>
 

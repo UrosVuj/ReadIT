@@ -81,13 +81,13 @@ router.post('/add-book', upload_bookCover.single('cover'), (req, res, next) => {
 
     var book = new Book();
     book.name = req.body.name;
-    book.authors = req.body.authors;
+    book.authors = JSON.parse(req.body.authors);
     book.description = req.body.description;
     book.date_of_publishing = req.body.date_of_publishing;
-    book.genres = req.body.genres;
+    book.genres = JSON.parse(req.body.genres);
     book.avg_score = req.body.avg_score;
 
-    console.log(req.file)
+    console.log(req.body)
 
     if (req.file)
         book.cover_path = req.file.path;

@@ -93,29 +93,6 @@ export class WelcomeComponent implements OnInit {
 
   signup() {
 
-    //min 7 karaktera, slovo malo i veliko, broj, specijalan karakter
-    // let passwordRegex = RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])([a-z]|[A-Z]).{7,}$');
-
-
-    // if (!passwordRegex.test(this.password)) {
-    //   this.emptyField_pg2msg = this.password;
-    //  return;
-    //  }
-
-
-    /*
-    this.user.first_name = this.first_name;
-    this.user.last_name = this.last_name;
-    this.user.dob = this.dob;
-    this.user.country = this.country;
-    this.user.city = this.city;
-    this.user.username = this.username;
-    this.user.email = this.email;
-    this.user.password = this.password;
-    this.user.type = "user";
-
-    this.user.avatar = this.avatar;
-    */
 
     let form = new FormData();
     form.append('avatar', this.avatar);

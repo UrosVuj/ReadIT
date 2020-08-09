@@ -1,28 +1,35 @@
+@import url("//fonts.googleapis.com/css?family=Josefin+Slab");
+
 /*Needed for every component to be shown in home page!*/
 /* ! */
 
 body {
+
+  font-family: "Josefin Slab";
   color: black;
   background-color: rgb(95, 95, 95);
   background-position: center;
   background-size: cover;
   padding-left: 250px;
   padding-top: 70px;
-  overflow: inherit;
-
+  overflow-x: hidden;
   /* da se ne bi scrollovalo*/
   height: calc(100% - 70px);
+}
+
+#showingSearchedBooks {
+  background-color: rgb(95, 95, 95);
+  overflow: hidden;
+  display: contents;
+  /* 600 je sirina tabele pretrazenih*/
+  width: 100%;
+  min-height: 100%;
+
 }
 
 /* ! */
 /* END */
 
-/*bitno za pozicioniranje*/
-#search {
-  top: 30%;
-  left: 45%;
-  position: absolute;
-}
 
 #search_btn {
 
@@ -41,10 +48,159 @@ td {
 img {
   height: 188px;
   width: 120px;
+  transition: transform .2s;
+  /* Animation */
+}
+
+img:hover {
+  transform: scale(1.1)
+}
+
+#coverImg {
+  border: none;
+  padding-bottom: 10px;
+}
+
+#coverImg button {
+
+  height: 170px;
+  width: 110px;
+
+  background-color: rgb(95, 95, 95);
+}
+
+#coverImg img {
+  height: 188px;
+  width: 120px;
+  border-radius: 5px;
+}
+
+#tablediv {
+  background-color: rgb(95, 95, 95);
+  padding-left: 25%;
+  width: 100%;
+  display: inline-block;
 }
 
 #books {
   top: 15%;
   left: 35%;
+  background-color: inherit;
+}
+
+.addBook {
+
+  background-color: rgb(95, 95, 95);
+  display: contents;
+}
+
+.addBook .form {
+  width: 340px;
+  height: 650px;
+  background: #e6e6e6;
+  border-radius: 8px;
+  box-shadow: 0 0 40px -10px #000;
+  margin-top: 100px;
+  margin-left: 200px;
+  padding: 20px 30px;
+  max-width: calc(100vw - 40px);
+  box-sizing: border-box;
+}
+
+
+.addBook h3 {
+  margin: 10px 0;
+  padding-bottom: 10px;
+  width: 180px;
+  color: #78788c;
+  border-bottom: 3px solid #78788c
+}
+
+.addBook input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background: none;
+  outline: none;
+  resize: none;
+  border: 0;
+  font-family: 'Montserrat', sans-serif;
+  transition: all .3s;
+  border-bottom: 2px solid #bebed2
+}
+
+.addBook input:focus {
+  border-bottom: 2px solid #78788c
+}
+
+.addBook p:before {
+  content: attr(type);
+  display: block;
+  margin: 28px 0 0;
+  font-size: 14px;
+  color: #5a5a5a
+}
+
+.addBook button {
+  float: right;
+  padding: 8px 12px;
+  margin: 8px 0 0;
+  font-family: 'Montserrat', sans-serif;
+  border: 2px solid #78788c;
+  background: 0;
+  color: #5a5a6e;
+  cursor: pointer;
+  transition: all .3s
+}
+
+.addBook button:hover {
+  background: #78788c;
+  color: #fff
+}
+
+.addBook div {
+  content: 'Hi';
   position: absolute;
+  bottom: -15px;
+  right: -20px;
+  background: #50505a;
+  color: #fff;
+  width: 320px;
+  padding: 16px 4px 16px 0;
+  border-radius: 6px;
+  font-size: 13px;
+  box-shadow: 10px 10px 40px -14px #000
+}
+
+.addBook span {
+  margin: 0 5px 0 15px
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+}
+
+#first_form {
+  max-height: 500px;
+}
+
+#second_form {
+  max-height: 380px;
+}
+
+#search {
+  display: inline-block;
+  padding-bottom: 30px;
+  padding-left: 30%;
+}
+
+#search_form {
+  top: 10%;
+  height: 360px;
+  width: 350px;
+  margin-top: 50px;
+  margin-left: 50px;
+  display: inline-block;
+
 }

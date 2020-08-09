@@ -3,12 +3,51 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 </head>
 
 <body>
+  <div id="breef_info" *ngIf="book_came == true">
+    <div id="left_col" class="col">
+      <div id="img_div">
+        <img src={{book.cover_path}} alt="" id="img">
+      </div>
+      <div id="read_lists">
+        <form>
+          <select name="list_type" id="lists" [(ngModel)]="list_type" (change)="addToList()">
+            <option value="want_to_read" disabed selected hidden>Add to a list</option>
+            <option value="want_to_read">Want to Read</option>
+            <option value="finished_reading">Read</option>
+            <option value="currently_reading">Currently Reading</option>
+          </select>
 
-  {{book.name}}
+        </form>
+      </div>
+
+    </div>
+    <div id="right_col" class="col">
+      <div style="font-weight: bold; font-size: 28px;">
+        {{book.name}}
+      </div>
+      <div style="color: rgb(15, 15, 15); font-size: 18px;  padding-top: 3px;">
+        by {{authors}}
+      </div>
+      <div class="line"></div>
+      <div style="color: rgb(0, 0, 0); font-size: 15px;">
+        Average review: {{book.avg_score}}
+      </div>
+      <div class="line"></div>
+
+      <div id="description">
+        {{book.description}}
+      </div>
+      <div class="line"></div>
+      <div id="published">
+        Published: {{book.date_of_publishing}}
+      </div>
+
+    </div>
+
+  </div>
 
 
 </body>

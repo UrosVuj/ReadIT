@@ -17,6 +17,10 @@ export class BookService {
     return this.http.post<any>(environment.apiUrl + '/search-books', data)
   }
 
+  addBook(form: FormData) {
+    return this.http.post<any>(environment.apiUrl + '/add-book', form)
+  }
+
   getBook(id: string) {
     return this.http.get<any>(environment.apiUrl + '/book/' + id)
   }
@@ -24,4 +28,15 @@ export class BookService {
   getReadingLists(id: string) {
     return this.http.get<any>(environment.apiUrl + '/book/lists/' + id)
   }
+
+  addBookToList(data: any, list_type: string) {
+    if (list_type == "want_to_read")
+      return this.http.post<any>(environment.apiUrl + '/book/add-list/future', data)
+    else
+      if (list_type == "finished_reading")
+        return this.http.post<any>(environment.apiUrl + '/book/add-list/past', data)
+      else
+        return this.http.post<any>(environment.apiUrl + '/book/add-list/present', data)
+  }
+
 }
