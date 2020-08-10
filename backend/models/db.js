@@ -12,3 +12,4 @@ mongoose.connect(process.env.MONGODB_URI, (err) => {
 require('./user');
 require('./book');
 require('./book_list');
+require('./comment');

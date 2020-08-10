@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const ObjectId = require('mongodb').ObjectId
 
 const User = mongoose.model('User');
+const Comment = mongoose.model('Comment');
 const Book = mongoose.model('Book');
 const ReadList = mongoose.model('ReadList');
 
@@ -153,7 +154,6 @@ module.exports.addToPastList = async (req, res, next) => {
     console.log(req.body);
     res.send(req.body);
 
-
 }
 module.exports.addToPresentList = async (req, res, next) => {
 
@@ -192,7 +192,6 @@ module.exports.addToFutureList = async (req, res, next) => {
 
 
 }
-
 module.exports.getLists2 = async (req, res, next) => {
 
 
@@ -203,4 +202,27 @@ module.exports.getLists2 = async (req, res, next) => {
     }).exec();
 
     res.send(book_lists);
+}
+
+module.exports.addComment = async (req, res, next) => {
+
+    var comment = new Comment();
+    comment.username = req.body.username;
+    comment.book_id = ObjectId(req.body.book_id);
+    comment.comment = req.body.comment;
+    comment.rating = req.body.rating;
+
+    console.log(comment);
+
+    comment.save((err, doc) => {
+        if (!err)
+            res.send(doc);
+        else {
+            if (err.code == 11000) {
+                res.status(422).send('Duplicate comment found');
+            } else
+                return next(err);
+        }
+
+    });
 }

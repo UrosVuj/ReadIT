@@ -76,9 +76,6 @@ router.post('/login', userContr.login);
 
 router.post('/add-book', upload_bookCover.single('cover'), (req, res, next) => {
 
-
-
-
     var book = new Book();
     book.name = req.body.name;
     book.authors = JSON.parse(req.body.authors);
@@ -117,5 +114,7 @@ router.post('/book/create-list', bookContr.createLists);
 router.post('/book/add-list/past', bookContr.addToPastList)
 router.post('/book/add-list/present', bookContr.addToPresentList)
 router.post('/book/add-list/future', bookContr.addToFutureList)
+
+router.post('/book/add-comment', bookContr.addComment)
 
 module.exports = router;
