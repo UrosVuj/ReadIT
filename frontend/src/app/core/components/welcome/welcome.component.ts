@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { JsonPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
+import { BookService } from '../../services/book.service';
 
 @Component({
   selector: 'app-welcome',
@@ -13,7 +14,12 @@ import { StorageService } from '../../services/storage.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, private storageService: StorageService) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private storageService: StorageService,
+    private bookService: BookService
+  ) { }
 
   ngOnInit(): void {
 
@@ -110,6 +116,16 @@ export class WelcomeComponent implements OnInit {
       res => {
         this.successMsg = "Success!"
         this.serverErrorMsg = ""
+
+        let my_data = {};
+        my_data["username"] = this.username;
+
+        this.bookService.createList(my_data).subscribe(
+          res => {
+            console.log(res);
+            console.log("List created")
+          }
+        )
       },
       err => {
         if (err.status === 422) {

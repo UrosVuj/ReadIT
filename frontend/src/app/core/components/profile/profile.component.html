@@ -1,52 +1,38 @@
 <body>
-  <div id="data_table">
-    <div id="pic_and_name">
-      <img src={{user.avatar_path}} class="profile_image" alt="">
+  <div id="breef_info">
+    <div id="left_col" class="col">
+      <div id="img_div">
+        <img src={{user.avatar_path}} alt="" id="img">
+      </div>
+      <div>
+        Last accessed: Today
+      </div>
+
     </div>
-    <table id="userTable">
-      <tr>
-        <td>
-          Full name:
-        </td>
-        <td>
-          {{user.first_name + " " + user.last_name}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Country:
-        </td>
-        <td>
-          {{user.country}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          City:
-        </td>
-        <td>
-          {{user.city}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Email:
-        </td>
-        <td>
-          {{user.email}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Date:
-        </td>
-        <td>
-          {{birthday}}
-        </td>
-      </tr>
-    </table>
+    <div id="right_col" class="col">
+      <div style="font-weight: bold; font-size: 28px;">
+        {{user.first_name}}&nbsp;{{user.last_name}}
+      </div>
+      <div id="email" style="font-size: 20px;">
+        {{user.email}}
+      </div>
+      <div class="line"></div>
+      <div style="color: rgb(15, 15, 15); font-size: 18px;  padding-top: 3px;">
+        From {{user.city}}, &nbsp;{{user.country}}
+      </div>
+      <div class="line"></div>
+      <div style="color: rgb(0, 0, 0); font-size: 15px;">
+        Birthday: {{birthday}}
+      </div>
+      <div class="line"></div>
+      <div id="published">
+        Published:
+      </div>
+
+    </div>
 
   </div>
+
 
   <div id="lists">
 

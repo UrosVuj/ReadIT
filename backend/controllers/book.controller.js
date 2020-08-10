@@ -34,7 +34,6 @@ module.exports.searchBooks = async (req, res, next) => {
     if (req.body.genre) {
         query["genres"] = req.body.genre;
     }
-    console.log(query)
 
     let books = await Book.find(query).exec();
 
@@ -104,7 +103,6 @@ module.exports.getLists = async (req, res, next) => {
         }
     }).exec();
 
-    console.log(finished_books);
     console.log(currently_reading_books);
 
     res.json({

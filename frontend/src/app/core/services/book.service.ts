@@ -25,6 +25,10 @@ export class BookService {
     return this.http.get<any>(environment.apiUrl + '/book/' + id)
   }
 
+  createList(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/book/create-list', data);
+  }
+
   getReadingLists(id: string) {
     return this.http.get<any>(environment.apiUrl + '/book/lists/' + id)
   }
