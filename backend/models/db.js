@@ -13,3 +13,4 @@ require('./user');
 require('./book');
 require('./book_list');
 require('./comment');
+require('./genres');

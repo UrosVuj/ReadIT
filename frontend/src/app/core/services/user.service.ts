@@ -21,4 +21,8 @@ export class UserService {
     return this.http.post<any>(environment.apiUrl + '/login', data)
   }
 
+  getComments(id: string) {
+    return this.http.get<any>(environment.apiUrl + '/user/get-comments/' + id)
+  }
+
 }

@@ -10,6 +10,7 @@ const Comment = mongoose.model('Comment');
 const Book = mongoose.model('Book');
 const ReadList = mongoose.model('ReadList');
 
+
 module.exports.searchBooks = async (req, res, next) => {
 
     var query = {};
@@ -211,6 +212,14 @@ module.exports.addComment = async (req, res, next) => {
     comment.book_id = ObjectId(req.body.book_id);
     comment.comment = req.body.comment;
     comment.rating = req.body.rating;
+    comment.avg_score = req.body.avg_score;
+
+    await Book.updateOne({
+        _id: ObjectId(req.body.book_id)
+    }, {
+        avg_score: req.body.avg_score
+
+    }).exec();
 
     console.log(comment);
 
@@ -225,4 +234,31 @@ module.exports.addComment = async (req, res, next) => {
         }
 
     });
+}
+
+module.exports.getComments = async (req, res, next) => {
+
+    //console.log("lol")
+    let comments = await Comment.find({
+        book_id: req.params.id
+    }).exec();
+
+    res.send(comments);
+
+}
+
+module.exports.addRating = async (req, res, next) => {
+
+
+    await Book.updateOne({
+        _id: ObjectId(req.body._id)
+    }, {
+        avg_score: req.body.avg_score
+
+    }).exec();
+
+    //console.log(req.body);
+    res.send(req.body);
+
+
 }

@@ -4,6 +4,7 @@ import { StorageService } from '../../services/storage.service';
 import { User } from 'src/app/models/user';
 import { BookService } from '../../services/book.service';
 import { Book } from 'src/app/models/book';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,9 +21,17 @@ export class ProfileComponent implements OnInit {
   finished_reading_flag: boolean;
   currently_reading_flag: boolean;
 
+  gotComments_flag: boolean;
+
+  my_comments: any;
+
   birthday: string;
 
-  constructor(private router: Router, private storageService: StorageService, private bookService: BookService) { }
+  constructor(
+    private router: Router,
+    private storageService: StorageService,
+    private bookService: BookService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -34,6 +43,7 @@ export class ProfileComponent implements OnInit {
     this.generateBirthday();
 
     console.log("Nice!")
+    this.getComments();
   }
 
   user: User;
@@ -70,16 +80,13 @@ export class ProfileComponent implements OnInit {
   */
 
   setReadingLists() {
-    console.log("Nice!")
+
     this.bookService.getReadingLists(this.user.username).subscribe(
       res => {
-        console.log("Nice2!")
+
         this.want_to_read = res.want_to_read;
         this.finished_reading = res.finished_reading;
         this.currently_reading = res.currently_reading;
-
-        console.log(this.finished_reading)
-        console.log("Nice!")
 
       },
       err => {
@@ -196,6 +203,18 @@ export class ProfileComponent implements OnInit {
 
     console.log(this.finished_reading)
 
+  }
+
+  getComments() {
+
+    console.log(this.user.username)
+    this.userService.getComments(this.user.username).subscribe(
+      res => {
+        this.my_comments = res;
+        this.gotComments_flag = true;
+        console.log(res);
+      }
+    )
   }
 
 

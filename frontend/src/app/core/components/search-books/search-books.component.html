@@ -106,7 +106,7 @@
     <form class="form" id="second_form" *ngIf="secondform_flag==true">
       <h2>Finishing touches</h2>
       <p type="Description:"><br> <textarea placeholder="Type your book description here..." name="description"
-          placeholder="Description" [(ngModel)]="description" class="input-text"></textarea>
+          [(ngModel)]="description" class="input-text"></textarea>
       </p>
 
       <p type="Cover:"> <input type="file" name="cover" multiple (change)="upload_img($event)" id="img_upload" />

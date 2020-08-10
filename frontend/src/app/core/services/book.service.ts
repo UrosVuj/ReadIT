@@ -43,4 +43,12 @@ export class BookService {
         return this.http.post<any>(environment.apiUrl + '/book/add-list/present', data)
   }
 
+  addComment(data: any) {
+    return this.http.post<any>(environment.apiUrl + "/book/add-comment", data)
+  }
+
+  getComments(id: string) {
+    return this.http.get<any>(environment.apiUrl + "/book/get-comments/" + id)
+  }
+
 }

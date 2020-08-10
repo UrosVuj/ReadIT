@@ -11,6 +11,7 @@ import { HomeComponent } from './core/components/home/home.component';
 import { SearchBooksComponent } from './core/components/search-books/search-books.component';
 import { BookComponent } from './core/components/book/book.component';
 import { ProfileComponent } from './core/components/profile/profile.component';
+import { RatingModule } from 'ng-starrating';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ProfileComponent } from './core/components/profile/profile.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RecaptchaModule
+    RecaptchaModule,
+    RatingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

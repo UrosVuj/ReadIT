@@ -7,6 +7,7 @@ const ObjectId = require('mongodb').ObjectId
 
 const User = mongoose.model('User');
 const Book = mongoose.model('Book');
+const Comment = mongoose.model('Comment');
 
 
 module.exports.login = async (req, res, next) => {
@@ -43,5 +44,16 @@ module.exports.login = async (req, res, next) => {
             }
         })
     }
+
+}
+
+module.exports.getComments = async (req, res, next) => {
+
+    console.log("here")
+    let comments = await Comment.find({
+        username: req.params.id
+    }).exec();
+
+    res.send(comments);
 
 }

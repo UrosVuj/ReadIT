@@ -48,8 +48,6 @@ export class SearchBooksComponent implements OnInit {
     }
     this.books.forEach(book => {
       book.cover_path = "http://localhost:3000/" + book.cover_path.substr(7);
-      console.log(book.cover_path.substr(7))
-      console.log(book.name)
     });
 
     //test
@@ -69,8 +67,6 @@ export class SearchBooksComponent implements OnInit {
     }, []);
 
 
-    console.log(this.books)
-
   }
 
 
@@ -85,7 +81,6 @@ export class SearchBooksComponent implements OnInit {
       res => {
         if (res.found == true) {
           this.books = res.books;
-          console.log(this.books);
           this.search_flag = 2;
           this.showBooks();
         }

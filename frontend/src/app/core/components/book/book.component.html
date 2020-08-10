@@ -32,8 +32,11 @@
         by {{authors}}
       </div>
       <div class="line"></div>
-      <div style="color: rgb(0, 0, 0); font-size: 15px;">
-        Average review: {{book.avg_score}}
+      <div style="color: rgb(0, 0, 0); font-size: 15px;" *ngIf="real_rating<0">
+        No reviews yet
+      </div>
+      <div style="color: rgb(0, 0, 0); font-size: 15px;" *ngIf="real_rating>=0">
+        Average review: {{real_rating}}
       </div>
       <div class="line"></div>
 
@@ -46,7 +49,49 @@
       </div>
 
     </div>
+  </div>
 
+
+  <div class="line" id="bigline"></div>
+
+
+  <div id="comments">
+    <div id="add_comment" *ngIf="already_reviewed==false">
+      <form class="form" id="second_form">
+        <h2>Write a review</h2>
+        <p type="Text:"><br> <textarea name="comment" placeholder="Type your comment text here..."
+            [(ngModel)]="my_comment_text" class="input-text"></textarea>
+        </p>
+
+        <p type="Rating:"> <input type="number" min="1" max="10" name="rating" id="rating" placeholder="eg. 8.7"
+            [(ngModel)]="my_rating" />
+        </p>
+
+        <button (click)='addComment()' class="button" style="margin-top: 5px;">Submit review</button>
+
+      </form>
+    </div>
+
+    <div class="line" id="bigline2" *ngIf="already_reviewed==false"></div>
+    <h1 style="text-align: center;" id="title_comments">User reviews</h1>
+
+    <div id="other_comments" *ngFor="let comment of all_comments">
+      <div class="comment">
+        <div class="user_img_div">
+          <img src={{user.avatar_path}} id="user_img">
+          <div style="text-align: center;">
+            {{comment.rating}}
+          </div>
+        </div>
+        <div id="text">
+          <div id="username">
+            {{comment.username}}
+          </div>
+          {{comment.comment}}
+        </div>
+
+      </div>
+    </div>
   </div>
 
 
