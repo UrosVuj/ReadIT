@@ -24,14 +24,33 @@ header {
   color: #19B3D3;
 }
 
+#logout_button {
+  width: 70px;
+  border-radius: 25px;
+  background-color: #19B3D3;
+  color: white;
+  text-decoration: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  transition: 0.5s;
+  transition-property: background;
+  margin: 0;
+  padding: 10px;
+}
+
+#logout_button:hover {
+  background: #0B87A6;
+}
+
 .logout_btn {
-  padding: 5px;
   background: #19B3D3;
   text-decoration: none;
   float: right;
   margin-top: -30px;
   margin-right: 40px;
-  border-radius: 2px;
+  border-radius: 8px;
   font-size: 15px;
   font-weight: 600;
   color: #fff;

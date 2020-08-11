@@ -104,6 +104,11 @@ export class BookComponent implements OnInit, OnDestroy {
     this.bookService.addComment(data).subscribe(
       res => {
         console.log("Success")
+        this.already_reviewed = true;
+        this.getComments();
+        //ako knjiga nema review-ova, rating novi ce joj biti samo ovaj
+        if (this.all_comments.length == 0)
+          this.real_rating = this.my_rating;
       }
     )
   }
@@ -113,9 +118,14 @@ export class BookComponent implements OnInit, OnDestroy {
       res => {
         this.all_comments = res;
         this.gotComments_flag = true;
+
+        console.log(this.all_comments.length)
+        console.log(this.book.avg_score)
         if (this.all_comments.length > 0)
           this.real_rating = this.book.avg_score / this.all_comments.length;
-        else this.real_rating = -1;
+        else this.real_rating = 0
+        if (this.my_rating && this.all_comments.length == 0)
+          this.real_rating = this.my_rating;
 
         this.all_comments.forEach(comment => {
           if (this.user.username == comment.username)
