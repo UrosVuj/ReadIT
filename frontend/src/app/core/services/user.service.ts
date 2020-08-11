@@ -25,4 +25,8 @@ export class UserService {
     return this.http.get<any>(environment.apiUrl + '/user/get-comments/' + id)
   }
 
+  updateProfile(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/user/update-profile', data)
+  }
+
 }

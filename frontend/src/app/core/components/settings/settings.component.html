@@ -1,0 +1,95 @@
+<body>
+  <form id="form">
+    <table>
+      <tr>
+        <td>
+          First name:
+        </td>
+        <td *ngIf="change_flag!=1" class="middle_col">
+          {{user.first_name}}
+        </td>
+        <td *ngIf="change_flag!=1">
+          <button class="change_field" (click)="changeField(1)">Change</button>
+        </td>
+        <td *ngIf="change_flag==1" class="middle_col">
+          <input type="text" name="first_name" id="first_name" [(ngModel)]="first_name">
+        </td>
+        <td *ngIf="change_flag==1">
+          <button class="change_field" (click)="submitChange('first_name')">Submit</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Last name:
+        </td>
+        <td *ngIf="change_flag!=2" class="middle_col">
+          {{user.last_name}}
+        </td>
+        <td *ngIf="change_flag!=2">
+          <button class="change_field" (click)="changeField(2)">Change</button>
+        </td>
+        <td *ngIf="change_flag==2" class="middle_col">
+          <input type="text" name="last_name" id="last_name" [(ngModel)]="last_name">
+        </td>
+        <td *ngIf="change_flag==2">
+          <button class="change_field" (click)="submitChange('email')">Submit</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Email:
+        </td>
+        <td *ngIf="change_flag!=3" class="middle_col">
+          {{user.email}}
+        </td>
+        <td *ngIf="change_flag!=3">
+          <button class="change_field" (click)="changeField(3)">Change</button>
+        </td>
+        <td *ngIf="change_flag==3" class="middle_col">
+          <input type="text" name="email" id="email" [(ngModel)]="email">
+        </td>
+        <td *ngIf="change_flag==3">
+          <button class="change_field" (click)="submitChange('email')">Submit</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Country:
+        </td>
+        <td *ngIf="change_flag!=4" class="middle_col">
+          {{user.country}}
+        </td>
+        <td *ngIf="change_flag!=4">
+          <button class="change_field" (click)="changeField(4)">Change</button>
+        </td>
+        <td *ngIf="change_flag==4" class="middle_col">
+          <input type="text" name="country" id="country" [(ngModel)]="country">
+        </td>
+        <td *ngIf="change_flag==4">
+          <button class="change_field" (click)="submitChange('country')">Submit</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          City:
+        </td>
+        <td *ngIf="change_flag!=5" class="middle_col">
+          {{user.city}}
+        </td>
+        <td *ngIf="change_flag!=5">
+          <button class="change_field" (click)="changeField(5)">Change</button>
+        </td>
+        <td *ngIf="change_flag==5" class="middle_col">
+          <input type="text" name="city" id="city" [(ngModel)]="city" required>
+        </td>
+        <td *ngIf="change_flag==5">
+          <button class="change_field" (click)="submitChange('city')">Submit</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</body>

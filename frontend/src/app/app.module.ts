@@ -12,6 +12,7 @@ import { SearchBooksComponent } from './core/components/search-books/search-book
 import { BookComponent } from './core/components/book/book.component';
 import { ProfileComponent } from './core/components/profile/profile.component';
 import { RatingModule } from 'ng-starrating';
+import { SettingsComponent } from './core/components/settings/settings.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { RatingModule } from 'ng-starrating';
     HomeComponent,
     SearchBooksComponent,
     BookComponent,
-    ProfileComponent
+    ProfileComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

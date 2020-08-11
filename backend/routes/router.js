@@ -104,6 +104,8 @@ router.post('/add-book', upload_bookCover.single('cover'), (req, res, next) => {
     });
 })
 
+router.post('/user/update-profile', userContr.updateProfile);
+
 router.post('/search-books', bookContr.searchBooks);
 
 router.get('/book/:id', bookContr.getBook);

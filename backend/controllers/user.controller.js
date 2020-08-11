@@ -57,3 +57,60 @@ module.exports.getComments = async (req, res, next) => {
     res.send(comments);
 
 }
+
+module.exports.updateProfile = async (req, res, next) => {
+
+    switch (req.body.type_to_update) {
+        case "email":
+            console.log("Update email")
+            await User.updateOne({
+                username: req.body.username
+            }, {
+                email: req.body.email
+            }).exec();
+            break;
+        case "dob":
+            console.log("Update dob")
+            await User.updateOne({
+                username: req.body.username
+            }, {
+                dob: req.body.dob
+            }).exec();
+            break;
+        case "first_name":
+            await User.updateOne({
+                username: req.body.username
+            }, {
+                first_name: req.body.first_name
+            }).exec();
+            break;
+        case "last_name":
+            await User.updateOne({
+                username: req.body.username
+            }, {
+                last_name: req.body.last_name
+            }).exec();
+            break;
+        case "country":
+            await User.updateOne({
+                username: req.body.username
+            }, {
+                country: req.body.country
+            }).exec();
+            break;
+        case "city":
+            await User.updateOne({
+                username: req.body.username
+            }, {
+                city: req.body.city
+            }).exec();
+            break;
+
+
+    }
+
+    //console.log(req.body);
+    res.send(req.body);
+
+
+}

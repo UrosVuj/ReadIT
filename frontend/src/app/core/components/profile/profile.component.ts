@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
   my_comments: any;
 
   birthday: string;
+  user: User;
 
   constructor(
     private router: Router,
@@ -46,7 +47,7 @@ export class ProfileComponent implements OnInit {
     this.getComments();
   }
 
-  user: User;
+
 
 
 

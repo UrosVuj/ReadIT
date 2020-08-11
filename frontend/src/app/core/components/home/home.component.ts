@@ -28,6 +28,9 @@ export class HomeComponent implements OnInit {
   books() {
     this.router.navigate(['/search'])
   }
+  settings() {
+    this.router.navigate(['/settings'])
+  }
 
   logout() {
 
