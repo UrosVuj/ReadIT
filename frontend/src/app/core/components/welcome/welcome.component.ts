@@ -171,5 +171,15 @@ export class WelcomeComponent implements OnInit {
     console.log(`Resolved captcha with response: ${captchaResponse}`);
   }
 
+  goGuest() {
+    let guest = {} as User;
+    guest.first_name = "Guest";
+    guest.last_name = "Guest";
+    guest.username = "Guest";
+    guest.avatar_path = "images/default_avatar.jpg"
+    this.storageService.setItem('user_session', JSON.stringify(guest))
+    this.router.navigate(['/search'])
+  }
+
 
 }

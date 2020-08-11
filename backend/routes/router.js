@@ -10,9 +10,11 @@ const bookContr = require('../controllers/book.controller')
 
 
 const User = mongoose.model('User');
+const Pending_user = mongoose.model('Pending_user');
 const Book = mongoose.model('Book');
 const ReadList = mongoose.model('ReadList');
-const Comment = mongoose.model('Comment')
+const Comment = mongoose.model('Comment');
+const Genres = mongoose.model('Genres');
 
 const avatar_storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -46,7 +48,7 @@ router.post('/register', upload_profile.single('avatar'), (req, res, next) => {
 
     console.log(req.body);
 
-    var user = new User();
+    var user = new Pending_user();
     user.first_name = req.body.first_name;
     user.last_name = req.body.last_name;
     user.dob = req.body.dob;
@@ -73,9 +75,11 @@ router.post('/register', upload_profile.single('avatar'), (req, res, next) => {
     });
 })
 
+router.post('/admin/approve-user', userContr.approveUser)
+
 router.post('/login', userContr.login);
 
-router.post('/add-book', upload_bookCover.single('cover'), (req, res, next) => {
+router.post('/add-book', upload_bookCover.single('cover'), async (req, res, next) => {
 
     var book = new Book();
     book.name = req.body.name;
@@ -85,7 +89,16 @@ router.post('/add-book', upload_bookCover.single('cover'), (req, res, next) => {
     book.genres = JSON.parse(req.body.genres);
     book.avg_score = req.body.avg_score;
 
-    console.log(req.body)
+    console.log(book.genres)
+    await Genres.updateMany({
+        name: {
+            $in: book.genres
+        }
+    }, {
+        $inc: {
+            "num_of_books": 1
+        }
+    }).exec();
 
     if (req.file)
         book.cover_path = req.file.path;
@@ -123,5 +136,9 @@ router.post('/book/add-rating', bookContr.addRating)
 
 router.get('/book/get-comments/:id', bookContr.getComments);
 router.get('/user/get-comments/:id', userContr.getComments);
+
+router.get('/user/get-genres', userContr.getGenres);
+router.post('/user/add-genres', userContr.setGenres);
+router.post('/user/delete-genres', userContr.deleteGenres);
 
 module.exports = router;

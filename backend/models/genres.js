@@ -2,9 +2,13 @@ const mongoose = require('mongoose');
 
 var genreSchema = new mongoose.Schema({
 
-    genres: [{
-        type: String
-    }]
+    name: {
+        type: String,
+        unique: true
+    },
+    num_of_books: {
+        type: Number
+    }
 });
 
 

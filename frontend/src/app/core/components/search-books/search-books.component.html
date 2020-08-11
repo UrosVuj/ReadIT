@@ -10,10 +10,9 @@
         <p type="Authors:"><input type="text" name="authors" placeholder="Author" [(ngModel)]="author"
             class="input-text" /></p>
         <select name="genre" id="genre" [(ngModel)]="genre">
-          <option value="horor">Horror</option>
-          <option value="drama">Drama</option>
-          <option value="fantasy">Fantasy</option>
-          <option value="poetry">Poetry</option>
+          <option *ngFor="let genre of available_genres; let i = index" [value]="genre.name" [selected]="i == 2">
+            {{genre.name}}
+          </option>
         </select>
 
 
@@ -84,7 +83,7 @@
   </div>
 
 
-  <div *ngIf="search_flag==3" class="addBook">
+  <div *ngIf="search_flag==3 && this.user.username!='Guest'" class="addBook">
 
     <form class="form" id="first_form">
       <h2>Add a book</h2>
@@ -115,5 +114,10 @@
       <button (click)='add_book()' class="button" style="margin-top: 5px;">Add a book</button>
 
     </form>
+  </div>
+
+  <div *ngIf="search_flag==3 && this.user.username=='Guest'"
+    style="color: rgb(26, 27, 29); margin-left: 300px; margin-top: 200px; font-size: 30px;">
+    Please register to add books that are not in our database
   </div>
 </body>

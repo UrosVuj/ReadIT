@@ -29,4 +29,7 @@ export class UserService {
     return this.http.post<any>(environment.apiUrl + '/user/update-profile', data)
   }
 
+  getGenres() {
+    return this.http.get<any>(environment.apiUrl + '/user/get-genres/')
+  }
 }

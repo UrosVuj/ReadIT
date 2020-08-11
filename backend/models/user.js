@@ -57,3 +57,4 @@ userSchema.pre('save', function (next) {
 });
 
 mongoose.model('User', userSchema);
+mongoose.model('Pending_user', userSchema);

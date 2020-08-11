@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../services/book.service';
 import { Router } from '@angular/router';
 import { Book } from 'src/app/models/book';
+import { UserService } from '../../services/user.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-search-books',
@@ -10,15 +12,27 @@ import { Book } from 'src/app/models/book';
 })
 export class SearchBooksComponent implements OnInit {
 
-  constructor(private bookservice: BookService, private router: Router) { }
+  constructor(private bookservice: BookService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
+
+    this.user = JSON.parse(localStorage.getItem('user_session'));
+
     this.search_flag = 1;
     this.genre = "";
     this.author = "";
     this.search_name = "";
 
+    this.userService.getGenres().subscribe(
+      res => {
+        this.available_genres = res;
+        console.log(this.available_genres);
+      }
+    )
+
   }
+
+  user: User;
 
   search_name: string;
   author: string;
@@ -31,6 +45,8 @@ export class SearchBooksComponent implements OnInit {
   //for adding a book
   addBook: boolean;
   addBookButtonFlag: boolean;
+  available_genres: any;
+
 
   authors: String;
   genres: String

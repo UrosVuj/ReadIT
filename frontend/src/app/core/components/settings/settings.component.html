@@ -1,5 +1,5 @@
 <body>
-  <form id="form">
+  <form id="form" *ngIf="this.user.username!='Guest'">
     <table>
       <tr>
         <td>
@@ -33,7 +33,7 @@
           <input type="text" name="last_name" id="last_name" [(ngModel)]="last_name">
         </td>
         <td *ngIf="change_flag==2">
-          <button class="change_field" (click)="submitChange('email')">Submit</button>
+          <button class="change_field" (click)="submitChange('last_name')">Submit</button>
         </td>
       </tr>
 
@@ -92,4 +92,8 @@
       </tr>
     </table>
   </form>
+  <div *ngIf="this.user.username=='Guest'"
+    style="color: rgb(26, 27, 29); margin-left: 300px; margin-top: 200px; font-size: 30px;">
+    Please register to access this page! :)
+  </div>
 </body>

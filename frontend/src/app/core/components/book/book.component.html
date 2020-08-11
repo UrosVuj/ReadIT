@@ -12,7 +12,7 @@
         <img src={{book.cover_path}} alt="" id="img">
       </div>
       <div id="read_lists">
-        <form>
+        <form *ngIf="user.username!='Guest'">
           <select name="list_type" id="lists" [(ngModel)]="list_type" (change)="addToList()">
             <option value="want_to_read" disabed selected hidden>Add to a list</option>
             <option value="want_to_read">Want to Read</option>
@@ -56,7 +56,7 @@
 
 
   <div id="comments">
-    <div id="add_comment" *ngIf="already_reviewed==false">
+    <div id="add_comment" *ngIf="already_reviewed==false && this.user.username != 'Guest'">
       <form class="form" id="second_form">
         <h2>Write a review</h2>
         <p type="Text:"><br> <textarea name="comment" placeholder="Type your comment text here..."
@@ -72,7 +72,7 @@
       </form>
     </div>
 
-    <div class="line" id="bigline2" *ngIf="already_reviewed==false"></div>
+    <div class="line" id="bigline2" *ngIf="already_reviewed==false && this.user.username != 'Guest'"></div>
     <h1 style="text-align: center;" id="title_comments">User reviews</h1>
 
     <div id="other_comments" *ngFor="let comment of all_comments">
@@ -85,7 +85,13 @@
         </div>
         <div id="text">
           <div id="username">
-            {{comment.username}}
+            <div *ngIf="user.username!='Guest'">
+              {{comment.username}}
+            </div>
+            <div *ngIf="user.username=='Guest'" style="font-style: italic; font-weight: 700;">
+              Username hidden
+            </div>
+
           </div>
           {{comment.comment}}
         </div>
