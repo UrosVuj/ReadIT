@@ -32,6 +32,15 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/settings'])
   }
 
+  approveUsers() {
+    this.router.navigate(['/admin/approve'])
+  }
+  addGenres() {
+    this.router.navigate(['/admin/genres'])
+  }
+
+
+
   logout() {
 
     this.storageService.removeItem('user_session')

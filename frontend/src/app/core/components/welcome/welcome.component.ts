@@ -5,6 +5,7 @@ import { JsonPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { BookService } from '../../services/book.service';
+import { ifError } from 'assert';
 
 @Component({
   selector: 'app-welcome',
@@ -114,18 +115,21 @@ export class WelcomeComponent implements OnInit {
     //calls service which can send a http post req
     this.userService.registerRequest(form).subscribe(
       res => {
-        this.successMsg = "Success!"
-        this.serverErrorMsg = ""
+        if (res.msg == "Success!") {
+          this.successMsg = "Success!"
+          this.serverErrorMsg = ""
 
-        let my_data = {};
-        my_data["username"] = this.username;
+          let my_data = {};
+          my_data["username"] = this.username;
 
-        this.bookService.createList(my_data).subscribe(
-          res => {
-            console.log(res);
-            console.log("List created")
-          }
-        )
+          this.bookService.createList(my_data).subscribe(
+            res => {
+              console.log(res);
+              console.log("List created")
+            }
+          )
+        }
+        else this.serverErrorMsg = res.msg
       },
       err => {
         if (err.status === 422) {
@@ -134,6 +138,7 @@ export class WelcomeComponent implements OnInit {
         }
         else
           this.serverErrorMsg = 'Something went wrong. Please contact admin.';
+        console.log(err.status)
       }
     );
 

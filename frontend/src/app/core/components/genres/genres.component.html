@@ -1,0 +1,24 @@
+<body>
+  <table>
+    <tr>
+      <td>
+        Genre name:
+      </td>
+      <td>
+        Number of books belonging to that genre
+      </td>
+    </tr>
+    <tr *ngFor="let genre of genres, let i=index">
+      <td>
+        {{genre.name}}
+      </td>
+      <td>
+        {{genre.num_of_books}}
+      </td>
+      <td *ngIf="genre.num_of_books == 0">
+        <button (click)="deleteGenre(genre.name, i)">Remove</button>
+      </td>
+    </tr>
+
+  </table>
+</body>

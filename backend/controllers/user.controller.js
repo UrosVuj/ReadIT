@@ -10,6 +10,7 @@ const Book = mongoose.model('Book');
 const Pending_user = mongoose.model('Pending_user')
 const Comment = mongoose.model('Comment');
 const Genre = mongoose.model('Genres');
+const ReadList = mongoose.model('ReadList');
 
 
 module.exports.login = async (req, res, next) => {
@@ -42,43 +43,18 @@ module.exports.login = async (req, res, next) => {
                 username: users[0].username,
                 email: users[0].email,
                 dob: users[0].dob,
-                avatar_path: users[0].avatar_path
+                avatar_path: users[0].avatar_path,
+                type: users[0].type
             }
         })
     }
 
 }
 
-module.exports.approveUser = async (req, res, next) => {
 
-    let user = await Pending_user.findOne({
-        username: req.body.username
-    }).exec();
-
-    Pending_user.deleteOne({
-        username: req.body.username
-    }).exec();
-
-
-    let approved_user = new User();
-    approved_user.first_name = user.first_name;
-    approved_user.last_name = user.last_name;
-    approved_user.email = user.email;
-    approved_user.password = user.password;
-    approved_user.username = user.username;
-    approved_user.saltSecret = user.saltSecret;
-    approved_user.avatar_path = user.avatar_path;
-    approved_user.city = user.city;
-    approved_user.country = user.country;
-    approved_user.dob = user.dob;
-
-    approved_user.save();
-    res.send(approved_user);
-}
 
 module.exports.getComments = async (req, res, next) => {
 
-    console.log("here")
     let comments = await Comment.find({
         username: req.params.id
     }).exec();
@@ -154,7 +130,7 @@ module.exports.getGenres = async (req, res, next) => {
 
 module.exports.setGenres = async (req, res, next) => {
 
-    console.log("here")
+    console.log("set")
     let new_genre = new Genre();
 
     new_genre.name = req.body.name;
@@ -162,21 +138,25 @@ module.exports.setGenres = async (req, res, next) => {
 
     new_genre.save((err, doc) => {
         if (!err)
-            res.send(doc);
+            res.send({
+                msg: "Success!"
+            });
         else {
             if (err.code == 11000) {
-                res.status(422).send('Duplicate genre found.');
+                res.send({
+                    msg: 'Duplicate genre found.'
+                });
             } else
                 return next(err);
         }
 
     })
-    res.send(genres);
 
 }
 
 module.exports.deleteGenres = async (req, res, next) => {
 
+    console.log("delete")
     let genre = await Genre.findOne({
         name: req.body.name
     }).exec();
@@ -185,8 +165,62 @@ module.exports.deleteGenres = async (req, res, next) => {
         Genre.deleteOne({
             name: req.body.name
         }).exec();
-        res.send("Genre " + "'" + req.body.name + "'" + " deleted")
+        res.send({
+            msg: "Genre " + "'" + req.body.name + "'" + " deleted"
+        })
     } else
-        res.send("Cannot delete this genre, it has some books belonging to it");
+        res.send({
+            msg: "Cannot delete this genre, it has some books belonging to it"
+        });
 
+}
+
+module.exports.getUnapprovedUsers = async (req, res, next) => {
+
+    let users = await Pending_user.find({}).exec();
+    res.send(users);
+
+}
+
+module.exports.approveUser = async (req, res, next) => {
+
+    let user = await Pending_user.findOne({
+        username: req.body.username
+    }).exec();
+
+    Pending_user.deleteOne({
+        username: req.body.username
+    }).exec();
+
+
+    let approved_user = new User();
+    approved_user.first_name = user.first_name;
+    approved_user.last_name = user.last_name;
+    approved_user.email = user.email;
+    approved_user.password = user.password;
+    approved_user.username = user.username;
+    approved_user.saltSecret = user.saltSecret;
+    approved_user.avatar_path = user.avatar_path;
+    approved_user.city = user.city;
+    approved_user.country = user.country;
+    approved_user.dob = user.dob;
+    approved_user.type = user.type;
+
+    approved_user.save();
+    res.send(approved_user);
+}
+
+module.exports.rejectUser = async (req, res, next) => {
+
+    ReadList.deleteOne({
+        username: req.body.username
+    }).exec();
+
+    Pending_user.deleteOne({
+        username: req.body.username
+    }).exec();
+
+    res.json({
+        msg: "success"
+    });
 }

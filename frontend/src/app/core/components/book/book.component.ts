@@ -17,6 +17,8 @@ export class BookComponent implements OnInit, OnDestroy {
 
   book: Book;
   real_rating: number;
+  date_of_publishing: string;
+
   books_flag: boolean;
   book_came: boolean;
   user: User;
@@ -66,6 +68,7 @@ export class BookComponent implements OnInit, OnDestroy {
           }
           this.book.cover_path = "http://localhost:3000/" + this.book.cover_path.substr(7);
           this.book_came = true;
+          this.generatePublishingDate();
           this.getComments();
         }
       )
@@ -136,4 +139,24 @@ export class BookComponent implements OnInit, OnDestroy {
     )
   }
 
+  generatePublishingDate() {
+    var real_month: string;
+    var real_day: string;
+
+    let date = new Date(this.book.date_of_publishing)
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let year = date.getFullYear();
+
+    real_month = month + "";
+    real_day = day + "";
+
+    if (month < 10) {
+      real_month = "0" + real_month;
+    }
+    if (day < 10) {
+      real_day = "0" + real_day
+    }
+    this.date_of_publishing = real_day + "/" + real_month + "/" + year
+  }
 }

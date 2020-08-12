@@ -40,6 +40,10 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    type: {
+        type: String,
+        required: true
+    },
     saltSecret: String, //check dal moze bez , hahahh
 
 });

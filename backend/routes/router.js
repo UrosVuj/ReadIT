@@ -43,7 +43,7 @@ const upload_bookCover = multer({
 });
 
 
-router.post('/register', upload_profile.single('avatar'), (req, res, next) => {
+router.post('/register', upload_profile.single('avatar'), async (req, res, next) => {
 
 
     console.log(req.body);
@@ -57,25 +57,51 @@ router.post('/register', upload_profile.single('avatar'), (req, res, next) => {
     user.username = req.body.username;
     user.email = req.body.email;
     user.password = req.body.password;
+    user.type = "user";
 
     if (req.file)
         user.avatar_path = req.file.path;
     else user.avatar_path = 'images\\default_avatar.jpg';
 
-    user.save((err, doc) => {
-        if (!err)
-            res.send(doc);
-        else {
-            if (err.code == 11000) {
-                res.status(422).send('Duplicate email/username found.');
-            } else
-                return next(err);
-        }
+    //search for existing username
 
-    });
+    let username_found = await User.find({
+        username: req.body.username
+    }).exec();
+    console.log(username_found)
+    if (username_found.length != 0)
+        res.send({
+            msg: 'Duplicate username found.'
+        });
+    else {
+        //search for existing email
+        let email_found = await User.find({
+            email: req.body.email
+        }).exec();
+        console.log(email_found)
+        if (email_found.length != 0) res.send({
+            msg: 'Duplicate email found.'
+        });
+        else {
+            user.save((err, doc) => {
+                if (!err)
+                    res.send({
+                        msg: "Success!"
+                    });
+                else {
+                    if (err.code == 11000) {
+                        res.status(422).send({
+                            msg: 'Duplicate email/username found.'
+                        });
+                    } else
+                        return next(err);
+                }
+
+            });
+        }
+    }
 })
 
-router.post('/admin/approve-user', userContr.approveUser)
 
 router.post('/login', userContr.login);
 
@@ -127,18 +153,25 @@ router.get('/book/lists/:id', bookContr.getLists);
 
 router.post('/book/create-list', bookContr.createLists);
 
-router.post('/book/add-list/past', bookContr.addToPastList)
-router.post('/book/add-list/present', bookContr.addToPresentList)
-router.post('/book/add-list/future', bookContr.addToFutureList)
+router.post('/book/add-list/past', bookContr.addToPastList);
+router.post('/book/add-list/present', bookContr.addToPresentList);
+router.post('/book/add-list/future', bookContr.addToFutureList);
 
-router.post('/book/add-comment', bookContr.addComment)
-router.post('/book/add-rating', bookContr.addRating)
+router.post('/book/add-comment', bookContr.addComment);
+router.post('/book/add-rating', bookContr.addRating);
 
 router.get('/book/get-comments/:id', bookContr.getComments);
 router.get('/user/get-comments/:id', userContr.getComments);
 
 router.get('/user/get-genres', userContr.getGenres);
-router.post('/user/add-genres', userContr.setGenres);
-router.post('/user/delete-genres', userContr.deleteGenres);
+
+router.post('/admin/add-genres', userContr.setGenres);
+router.post('/admin/delete-genres', userContr.deleteGenres);
+
+router.post('/admin/approve-user', userContr.approveUser);
+router.post('/admin/reject-user', userContr.rejectUser);
+router.get('/admin/get-unapproved', userContr.getUnapprovedUsers);
+
+
 
 module.exports = router;
