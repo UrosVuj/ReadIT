@@ -204,3 +204,10 @@ textarea {
   display: inline-block;
 
 }
+
+.coverImg_notApproved img {
+  filter: saturate(0);
+  height: 188px;
+  width: 120px;
+  border-radius: 5px;
+}

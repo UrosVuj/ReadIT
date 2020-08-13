@@ -17,6 +17,10 @@ export class BookService {
     return this.http.post<any>(environment.apiUrl + '/search-books', data)
   }
 
+  searchBooksUnapproved(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/search-books-unapproved', data)
+  }
+
   addBook(form: FormData) {
     return this.http.post<any>(environment.apiUrl + '/add-book', form)
   }

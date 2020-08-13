@@ -28,4 +28,8 @@ export class AdminService {
   deleteGenre(data: any) {
     return this.http.post<any>(environment.apiUrl + '/admin/delete-genres', data)
   }
+
+  setPrivileges(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/admin/set-type', data)
+  }
 }

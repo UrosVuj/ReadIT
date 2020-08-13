@@ -32,4 +32,8 @@ export class UserService {
   getGenres() {
     return this.http.get<any>(environment.apiUrl + '/user/get-genres/')
   }
+
+  getUsers() {
+    return this.http.get<any>(environment.apiUrl + '/user/get-users/')
+  }
 }

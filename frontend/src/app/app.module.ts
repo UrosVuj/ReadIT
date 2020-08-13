@@ -15,6 +15,7 @@ import { RatingModule } from 'ng-starrating';
 import { SettingsComponent } from './core/components/settings/settings.component';
 import { ApproveComponent } from './core/components/approve/approve.component';
 import { GenresComponent } from './core/components/genres/genres.component';
+import { AddPrivilegesComponent } from './core/components/add-privileges/add-privileges.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { GenresComponent } from './core/components/genres/genres.component';
     ProfileComponent,
     SettingsComponent,
     ApproveComponent,
-    GenresComponent
+    GenresComponent,
+    AddPrivilegesComponent
   ],
   imports: [
     BrowserModule,

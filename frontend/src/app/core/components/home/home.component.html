@@ -40,8 +40,10 @@
         class="fas fa-sliders-h"></i><span>Settings</span></a>
     <a (click)="approveUsers()" *ngIf="this.user.type == 'admin'"><i class="fas fa-user-plus"></i><span>Approve
         users</span></a>
-    <a (click)="addGenres()" *ngIf="this.user.type == 'admin'"><i class="fas fa-file-alt"></i><span>Add a
+    <a (click)="addGenres()" *ngIf="this.user.type == 'admin'"><i class="fas fa-file-alt"></i><span>Add/remove a
         genre</span></a>
+    <a (click)="addPrivileges()" *ngIf="this.user.type == 'admin'"><i class="fas fa-user-shield"></i><span>Add/Take user
+        privileges</span></a>
   </div>
   <!--sidebar end-->
 

@@ -7,6 +7,7 @@ const ObjectId = require('mongodb').ObjectId
 
 const User = mongoose.model('User');
 const Book = mongoose.model('Book');
+const Unapproved_Book = mongoose.model('Unapproved_Book')
 const Pending_user = mongoose.model('Pending_user')
 const Comment = mongoose.model('Comment');
 const Genre = mongoose.model('Genres');
@@ -51,7 +52,20 @@ module.exports.login = async (req, res, next) => {
 
 }
 
+module.exports.setType = async (req, res, next) => {
 
+    await User.updateOne({
+        username: req.body.username
+    }, {
+        type: req.body.type
+
+    }).exec();
+
+    res.send({
+        msg: "Success"
+    });
+
+}
 
 module.exports.getComments = async (req, res, next) => {
 
@@ -182,6 +196,13 @@ module.exports.getUnapprovedUsers = async (req, res, next) => {
 
 }
 
+module.exports.getAllUsers = async (req, res, next) => {
+
+    let users = await User.find({}).exec();
+    res.send(users);
+
+}
+
 module.exports.approveUser = async (req, res, next) => {
 
     let user = await Pending_user.findOne({
@@ -223,4 +244,51 @@ module.exports.rejectUser = async (req, res, next) => {
     res.json({
         msg: "success"
     });
+}
+
+module.exports.rejectBook = async (req, res, next) => {
+
+
+    Unapproved_Book.deleteOne({
+        name: req.body.name
+    }).exec();
+
+    res.json({
+        msg: "success"
+    });
+}
+
+module.exports.approveBook = async (req, res, next) => {
+
+    let book = await Unapproved_Book.findOne({
+        name: req.body.name
+    }).exec();
+    console.log(book);
+
+    Unapproved_Book.deleteOne({
+        name: req.body.name
+    }).exec();
+
+    await Genre.updateMany({
+        name: {
+            $in: book.genres
+        }
+    }, {
+        $inc: {
+            "num_of_books": 1
+        }
+    }).exec();
+
+    var approved_book = new Book();
+    approved_book.name = book.name;
+    approved_book.authors = book.authors;
+    approved_book.description = book.description;
+    approved_book.date_of_publishing = book.date_of_publishing;
+    approved_book.genres = book.genres;
+    approved_book.avg_score = book.avg_score;
+    approved_book.cover_path = book.cover_path;
+    approved_book.approved = true;
+
+    approved_book.save();
+    res.send(approved_book);
 }

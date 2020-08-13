@@ -14,7 +14,7 @@
       <div id="read_lists">
         <form *ngIf="user.username!='Guest'">
           <select name="list_type" id="lists" [(ngModel)]="list_type" (change)="addToList()">
-            <option value="want_to_read" disabed selected hidden>Add to a list</option>
+            <option value="" disabled hidden selected>Add to a list</option>
             <option value="want_to_read">Want to Read</option>
             <option value="finished_reading">Read</option>
             <option value="currently_reading">Currently Reading</option>

@@ -8,6 +8,7 @@ import { ProfileComponent } from './core/components/profile/profile.component';
 import { SettingsComponent } from './core/components/settings/settings.component';
 import { ApproveComponent } from './core/components/approve/approve.component';
 import { GenresComponent } from './core/components/genres/genres.component';
+import { AddPrivilegesComponent } from './core/components/add-privileges/add-privileges.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: "profile", component: ProfileComponent },
   { path: "settings", component: SettingsComponent },
   { path: "admin/approve", component: ApproveComponent },
-  { path: "admin/genres", component: GenresComponent }
+  { path: "admin/genres", component: GenresComponent },
+  { path: "admin/privileges", component: AddPrivilegesComponent }
 
 ];
 

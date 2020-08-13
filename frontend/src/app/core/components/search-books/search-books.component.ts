@@ -37,7 +37,9 @@ export class SearchBooksComponent implements OnInit {
   search_name: string;
   author: string;
   genre: string;
+
   books: any[];
+  unapproved_books: any[];
 
   search_flag: number;
   secondform_flag: boolean;
@@ -55,7 +57,7 @@ export class SearchBooksComponent implements OnInit {
   date_of_publishing: Date;
   cover: File;
 
-  book: Book;
+  book: any;
 
 
   showBooks() {
@@ -63,6 +65,7 @@ export class SearchBooksComponent implements OnInit {
       this.addBookButtonFlag = true;
     }
     this.books.forEach(book => {
+      console.log(book)
       book.cover_path = "http://localhost:3000/" + book.cover_path.substr(7);
     });
 
@@ -82,27 +85,58 @@ export class SearchBooksComponent implements OnInit {
       return acc;
     }, []);
 
+    console.log(this.books);
+
 
   }
 
 
   search() {
 
+    this.books = []
+    this.unapproved_books = []
+
     let criteria = {};
     criteria["name"] = this.search_name;
     criteria["author"] = this.author;
     criteria["genre"] = this.genre;
+    this.bookservice.searchBooksUnapproved(criteria).subscribe(
+      res => {
+        if (res.found == true) {
+          console.log(res);
+          this.unapproved_books = res.books;
+        }
+        else console.log("no unapproved books like that")
+      }
+    )
 
     this.bookservice.searchBooks(criteria).subscribe(
       res => {
+        //found approved books
         if (res.found == true) {
+
           this.books = res.books;
+          console.log(this.unapproved_books)
+
+          //if found both approved and unapproved
+          if (this.unapproved_books.length > 0) {
+            this.books = this.books.concat(this.unapproved_books);
+          }
+
           this.search_flag = 2;
           this.showBooks();
         }
         else {
-          this.addBookButtonFlag = true;
-          this.search_flag = 3;
+          //if only unapproved
+          if (this.unapproved_books.length > 0) {
+            this.books = this.unapproved_books;
+            this.search_flag = 2;
+            this.showBooks();
+          }
+          else {
+            this.addBookButtonFlag = true;
+            this.search_flag = 3;
+          }
         }
       },
       err => {

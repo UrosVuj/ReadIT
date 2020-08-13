@@ -10,6 +10,7 @@ import { AdminService } from '../../services/admin.service';
 export class GenresComponent implements OnInit {
 
   genres: [];
+  new_genre: string;
 
   constructor(private userService: UserService, private adminService: AdminService) { }
 
@@ -22,9 +23,9 @@ export class GenresComponent implements OnInit {
     )
   }
 
-  addGenre(genre: string) {
+  addGenre() {
     let data = {}
-    data["name"] = genre;
+    data["name"] = this.new_genre;
     this.adminService.addGenre(data).subscribe(
       res => {
         console.log(res.msg)

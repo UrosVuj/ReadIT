@@ -12,6 +12,7 @@ const bookContr = require('../controllers/book.controller')
 const User = mongoose.model('User');
 const Pending_user = mongoose.model('Pending_user');
 const Book = mongoose.model('Book');
+const Unapproved_Book = mongoose.model('Unapproved_Book');
 const ReadList = mongoose.model('ReadList');
 const Comment = mongoose.model('Comment');
 const Genres = mongoose.model('Genres');
@@ -107,45 +108,52 @@ router.post('/login', userContr.login);
 
 router.post('/add-book', upload_bookCover.single('cover'), async (req, res, next) => {
 
-    var book = new Book();
+    var book = new Unapproved_Book();
     book.name = req.body.name;
     book.authors = JSON.parse(req.body.authors);
     book.description = req.body.description;
     book.date_of_publishing = req.body.date_of_publishing;
     book.genres = JSON.parse(req.body.genres);
     book.avg_score = req.body.avg_score;
-
-    console.log(book.genres)
-    await Genres.updateMany({
-        name: {
-            $in: book.genres
-        }
-    }, {
-        $inc: {
-            "num_of_books": 1
-        }
-    }).exec();
+    book.approved = false;
 
     if (req.file)
         book.cover_path = req.file.path;
     else book.cover_path = 'images\\default_cover.png';
 
-    book.save((err, doc) => {
-        if (!err)
-            res.send(doc);
-        else {
-            if (err.code == 11000) {
-                res.status(422).send('Duplicate book found');
-            } else
-                return next(err);
-        }
+    let name_found = await Book.find({
+        name: req.body.name
+    }).exec();
 
-    });
+    console.log(name_found)
+    if (name_found.length != 0)
+        res.send({
+            msg: 'Duplicate name found.'
+        });
+    else {
+        book.save((err, doc) => {
+            if (!err)
+                res.send({
+                    msg: "Success!"
+                });
+            else {
+                if (err.code == 11000) {
+                    res.status(422).send({
+                        msg: 'Duplicate found.'
+                    });
+                } else
+                    return next(err);
+            }
+
+        });
+    }
+
 })
 
 router.post('/user/update-profile', userContr.updateProfile);
 
 router.post('/search-books', bookContr.searchBooks);
+router.post('/search-books-unapproved', bookContr.searchBooksUnapproved);
 
 router.get('/book/:id', bookContr.getBook);
 
@@ -170,7 +178,14 @@ router.post('/admin/delete-genres', userContr.deleteGenres);
 
 router.post('/admin/approve-user', userContr.approveUser);
 router.post('/admin/reject-user', userContr.rejectUser);
+router.post('/mod/approve-book', userContr.approveBook);
+router.post('/mod/reject-book', userContr.rejectBook);
+
+router.post('/admin/set-type', userContr.setType);
+
 router.get('/admin/get-unapproved', userContr.getUnapprovedUsers);
+router.get('/user/get-users', userContr.getAllUsers);
+
 
 
 

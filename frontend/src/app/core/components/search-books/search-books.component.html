@@ -10,7 +10,8 @@
         <p type="Authors:"><input type="text" name="authors" placeholder="Author" [(ngModel)]="author"
             class="input-text" /></p>
         <select name="genre" id="genre" [(ngModel)]="genre">
-          <option *ngFor="let genre of available_genres; let i = index" [value]="genre.name" [selected]="i == 2">
+          <option value="" selected disabled hidden>Pick a genre</option>
+          <option *ngFor="let genre of available_genres; let i = index" [value]="genre.name">
             {{genre.name}}
           </option>
         </select>
@@ -26,23 +27,52 @@
   <div *ngIf="search_flag==2" id="showingSearchedBooks">
     <div id="tablediv">
       <table id="books">
-        <div *ngIf="books.length == 1" style="padding-left: 210px;">
+        <div *ngIf="books.length == 1 && !(books[0].hasOwnProperty('column4'))" style="padding-left: 210px;">
           <tr>
-            <td colspan="4" style="font-size:33px; font-weight: bold;">
+            <td style="font-size:33px; font-weight: bold; text-align: center;">
               Results
               <br>
             </td>
           </tr>
           <tr>
-            <td>
-              <div id="coverImg">
+
+            <td *ngIf="books[0].hasOwnProperty('column1')">
+
+              <div id="coverImg" *ngIf="books[0].column1.approved == true">
                 <img src={{books[0].column1.cover_path}} (click)=" goto_book(books[0].column1._id)">
               </div>
+              <div class="coverImg_notApproved" *ngIf="books[0].column1.approved != true">
+                <img src={{books[0].column1.cover_path}} (click)=" goto_book(books[0].column1._id)">
+              </div>
+
             </td>
+
+            <td *ngIf="books[0].hasOwnProperty('column2')">
+
+              <div id="coverImg" *ngIf="books[0].column2.approved == true">
+                <img src={{books[0].column2.cover_path}} (click)=" goto_book(books[0].column2._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="books[0].column2.approved != true">
+                <img src={{books[0].column2.cover_path}} (click)=" goto_book(books[0].column2._id)">
+              </div>
+
+            </td>
+            <td *ngIf="books[0].hasOwnProperty('column3')">
+
+              <div id="coverImg" *ngIf="books[0].column3.approved == true">
+                <img src={{books[0].column3.cover_path}} (click)=" goto_book(books[0].column3._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="books[0].column3.approved != true">
+                <img src={{books[0].column3.cover_path}} (click)=" goto_book(books[0].column3._id)">
+              </div>
+
+            </td>
+
+
           </tr>
         </div>
 
-        <div *ngIf="books.length > 1">
+        <div *ngIf="books.length > 1 || books[0].hasOwnProperty('column4')">
           <tr>
             <td colspan="4" style="font-size:33px; font-weight: bold;">
               Results
@@ -51,25 +81,37 @@
           </tr>
           <tr *ngFor="let book of books">
             <td *ngIf="book.hasOwnProperty('column1')">
-              <div id="coverImg">
+              <div id="coverImg" *ngIf="book.column1.approved == true">
                 <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="book.column1.approved != true">
+                <img src={{book.column1.cover_path}} (click)=" goto_book(books[0].column1._id)">
               </div>
             </td>
 
-            <td *ngIf="book.hasOwnProperty('column2') ">
-              <div id="coverImg" *ngIf="book.hasOwnProperty('column2') ">
+            <td *ngIf="book.hasOwnProperty('column2')">
+              <div id="coverImg" *ngIf="book.column2.approved == true">
+                <img src={{book.column2.cover_path}} (click)=" goto_book(book.column2._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="book.column2.approved != true">
                 <img src={{book.column2.cover_path}} (click)=" goto_book(book.column2._id)">
               </div>
             </td>
 
-            <td *ngIf="book.hasOwnProperty('column3') ">
-              <div id="coverImg" *ngIf="book.hasOwnProperty('column3') ">
+            <td *ngIf="book.hasOwnProperty('column3')">
+              <div id="coverImg" *ngIf="book.column3.approved == true">
+                <img src={{book.column3.cover_path}} (click)=" goto_book(book.column3._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="book.column3.approved != true">
                 <img src={{book.column3.cover_path}} (click)=" goto_book(book.column3._id)">
               </div>
             </td>
 
-            <td *ngIf="book.hasOwnProperty('column4') ">
-              <div id="coverImg" *ngIf="book.hasOwnProperty('column4') ">
+            <td *ngIf="book.hasOwnProperty('column4')">
+              <div id="coverImg" *ngIf="book.column4.approved == true">
+                <img src={{book.column4.cover_path}} (click)=" goto_book(book.column4._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="book.column4.approved != true">
                 <img src={{book.column4.cover_path}} (click)=" goto_book(book.column4._id)">
               </div>
             </td>

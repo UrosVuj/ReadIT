@@ -1,24 +1,35 @@
 <body>
-  <table>
+  <table id="remove_genres">
     <tr>
-      <td>
+      <td style="width: 190px; text-align: center;">
         Genre name:
       </td>
-      <td>
+      <td style="width: 190px; text-align: center; padding-bottom: 30px;">
         Number of books belonging to that genre
       </td>
     </tr>
-    <tr *ngFor="let genre of genres, let i=index">
-      <td>
+    <tr *ngFor="let genre of genres, let i=index" style="text-align: center;">
+      <td style="padding-bottom: 10px;">
         {{genre.name}}
       </td>
       <td>
         {{genre.num_of_books}}
       </td>
-      <td *ngIf="genre.num_of_books == 0">
+      <td *ngIf=" genre.num_of_books==0">
         <button (click)="deleteGenre(genre.name, i)">Remove</button>
       </td>
     </tr>
 
   </table>
+
+  <div id="add_genre">
+    <form style="text-align: center;">
+      Genre name:
+      <br>
+      <input type="text" name="genre" [(ngModel)]="new_genre">
+    </form>
+    <div id="wrapper">
+      <button (click)="addGenre()" style="align-items: center;">Add</button>
+    </div>
+  </div>
 </body>

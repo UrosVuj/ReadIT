@@ -38,6 +38,9 @@ export class HomeComponent implements OnInit {
   addGenres() {
     this.router.navigate(['/admin/genres'])
   }
+  addPrivileges() {
+    this.router.navigate(['/admin/privileges'])
+  }
 
 
 

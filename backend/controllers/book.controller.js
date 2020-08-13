@@ -9,11 +9,14 @@ const User = mongoose.model('User');
 const Comment = mongoose.model('Comment');
 const Book = mongoose.model('Book');
 const ReadList = mongoose.model('ReadList');
+const Unapproved_Book = mongoose.model('Unapproved_Book')
 
 
 module.exports.searchBooks = async (req, res, next) => {
 
     var query = {};
+
+    console.log(req.body)
 
     // pojedinacno se dodaju parametri u zavisnosti od toga sta je korsinik hteo da doda
     // regex sluzi kao LIKE operator za upit
@@ -26,7 +29,6 @@ module.exports.searchBooks = async (req, res, next) => {
     }
 
     if (req.body.author) {
-        //query["authors"] = "/" + req.body.author + "/";
         query["authors"] = {
             '$regex': req.body.author,
             '$options': 'i'
@@ -38,7 +40,7 @@ module.exports.searchBooks = async (req, res, next) => {
     }
 
     let books = await Book.find(query).exec();
-
+    console.log(books);
     if (books.length == 0) {
         res.status(200).json({
             found: false,
@@ -56,6 +58,50 @@ module.exports.searchBooks = async (req, res, next) => {
 
 
 }
+module.exports.searchBooksUnapproved = async (req, res, next) => {
+
+    var query = {};
+
+    console.log(req.body)
+
+    // pojedinacno se dodaju parametri u zavisnosti od toga sta je korsinik hteo da doda
+    // regex sluzi kao LIKE operator za upit
+    if (req.body.name) {
+        query["name"] = {
+            '$regex': req.body.name,
+            '$options': 'i'
+        };
+
+    }
+
+    if (req.body.author) {
+        query["authors"] = {
+            '$regex': req.body.author,
+            '$options': 'i'
+        };
+    }
+
+    if (req.body.genre) {
+        query["genres"] = req.body.genre;
+    }
+
+    let books = await Unapproved_Book.find(query).exec();
+    console.log(books);
+    if (books.length == 0) {
+        res.status(200).json({
+            found: false,
+            msg: "None of the books fit the criteria"
+        })
+        return;
+    } else {
+        res.json({
+            found: true,
+            books: books
+        })
+    }
+}
+
+
 
 module.exports.getBook = async (req, res, next) => {
 
