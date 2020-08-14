@@ -150,32 +150,38 @@ router.post('/add-book', upload_bookCover.single('cover'), async (req, res, next
 
 })
 
+//update book and profile
 router.post('/user/update-profile', userContr.updateProfile);
+router.post('/book/update-book', bookContr.updateBook);
 
+//search books
 router.post('/search-books', bookContr.searchBooks);
 router.post('/search-books-unapproved', bookContr.searchBooksUnapproved);
 
 router.get('/book/:id', bookContr.getBook);
 
+//book lists
 router.get('/book/lists/:id', bookContr.getLists);
-
 router.post('/book/create-list', bookContr.createLists);
 
 router.post('/book/add-list/past', bookContr.addToPastList);
 router.post('/book/add-list/present', bookContr.addToPresentList);
 router.post('/book/add-list/future', bookContr.addToFutureList);
 
+//book comments
 router.post('/book/add-comment', bookContr.addComment);
 router.post('/book/add-rating', bookContr.addRating);
 
 router.get('/book/get-comments/:id', bookContr.getComments);
 router.get('/user/get-comments/:id', userContr.getComments);
 
+//genres
 router.get('/user/get-genres', userContr.getGenres);
 
 router.post('/admin/add-genres', userContr.setGenres);
 router.post('/admin/delete-genres', userContr.deleteGenres);
 
+//admin approvals
 router.post('/admin/approve-user', userContr.approveUser);
 router.post('/admin/reject-user', userContr.rejectUser);
 router.post('/mod/approve-book', userContr.approveBook);

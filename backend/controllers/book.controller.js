@@ -308,3 +308,53 @@ module.exports.addRating = async (req, res, next) => {
 
 
 }
+
+module.exports.updateBook = async (req, res, next) => {
+
+    console.log(req.body.type_to_update)
+    switch (req.body.type_to_update) {
+        case "name":
+            console.log("Update email")
+            await Book.updateOne({
+                _id: ObjectId(req.body._id)
+            }, {
+                name: req.body.name
+            }).exec();
+            break;
+        case "authors":
+            console.log("Update dob")
+            await Book.updateOne({
+                _id: ObjectId(req.body._id)
+            }, {
+                authors: req.body.authors
+            }).exec();
+            break;
+        case "description":
+            await Book.updateOne({
+                _id: ObjectId(req.body._id)
+            }, {
+                description: req.body.description
+            }).exec();
+            break;
+        case "genres":
+            await Book.updateOne({
+                _id: ObjectId(req.body._id)
+            }, {
+                genres: req.body.genres
+            }).exec();
+            break;
+        case "date_of_publishing":
+            await Book.updateOne({
+                _id: ObjectId(req.body._id)
+            }, {
+                date_of_publishing: req.body.date_of_publishing
+            }).exec();
+            break;
+
+    }
+
+    //console.log(req.body);
+    res.send(req.body);
+
+
+}

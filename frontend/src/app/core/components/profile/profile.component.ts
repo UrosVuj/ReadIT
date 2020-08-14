@@ -218,5 +218,13 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+  generatePieChart() {
+
+    //get books with all object ids from finished_reading from server and get their genres
+    // in a google chart
+    this.finished_reading.forEach(book => {
+    });
+  }
+
 
 }

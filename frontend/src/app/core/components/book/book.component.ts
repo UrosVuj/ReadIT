@@ -27,19 +27,38 @@ export class BookComponent implements OnInit, OnDestroy {
   genres: string;
   list_type: string;
 
+  //this users comment
   my_comment_text: string;
   my_rating: number;
 
+  //getting comments from backend
   all_comments: any;
   gotComments_flag: boolean;
 
   already_reviewed: boolean;
+
+  //user reading lists
+  want_to_read: any;
+  finished_reading: any;
+  currently_reading: any;
+
+  //changing book info
+  change_flag: number;
+  new_name: string;
+  new_authors: string;
+  new_authors_arr: string[];
+  new_description: string;
+  new_genres: string;
+  new_genres_arr: string[];
+  new_pub_date: Date;
 
 
 
   constructor(private route: ActivatedRoute, private bookService: BookService) { }
 
   ngOnInit() {
+    this.change_flag = 0;
+
     this.book = {} as Book;
     this.authors = "";
     this.genres = "";
@@ -159,4 +178,89 @@ export class BookComponent implements OnInit, OnDestroy {
     }
     this.date_of_publishing = real_day + "/" + real_month + "/" + year
   }
+
+  setReadingLists() {
+
+    this.bookService.getReadingLists(this.user.username).subscribe(
+      res => {
+
+        this.want_to_read = res.want_to_read;
+        this.finished_reading = res.finished_reading;
+        this.currently_reading = res.currently_reading;
+
+      },
+      err => {
+        console.log("NAY")
+      }
+    )
+  }
+
+  //book modifying starts here for admin
+
+  changeName() {
+    this.change_flag = 1;
+  }
+
+  changeAuthors() {
+    this.change_flag = 2;
+  }
+
+  changeDescription() {
+    this.change_flag = 3;
+  }
+
+  changeGenres() {
+    this.change_flag = 4;
+  }
+
+  changePublishingDate() {
+    this.change_flag = 5;
+  }
+
+  submitChange(type: string) {
+    this.change_flag = 0;
+
+    console.log(type)
+    console.log(this.new_description)
+    let data = {};
+    data["_id"] = this.id;
+    data["type_to_update"] = type;
+
+
+    switch (type) {
+      case ("name"):
+        data[type] = this.new_name;
+        this.book.name = this.new_name;
+        break;
+      case ("authors"):
+        this.new_authors_arr = this.new_authors.split(', ');
+        data[type] = this.new_authors_arr;
+        this.book.authors = this.new_authors_arr;
+        break;
+      case ("description"):
+        data[type] = this.new_description;
+        this.book.description = this.new_description;
+        break;
+      case ("genres"):
+        this.new_genres_arr = this.new_genres.split(', ');
+        data[type] = this.new_genres_arr;
+        this.book.genres = this.new_genres_arr;
+        break;
+      case ("date_of_publishing"):
+        data[type] = this.new_pub_date;
+        this.book.date_of_publishing = this.new_pub_date;
+        this.generatePublishingDate();
+        break;
+    }
+
+
+    this.bookService.updateBook(data).subscribe(
+      res => {
+        console.log(res)
+      }
+    )
+  }
+
+
+
 }

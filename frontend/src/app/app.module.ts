@@ -4,7 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 
 import { RecaptchaModule } from 'ng-recaptcha';
+import { GoogleChartsModule } from 'angular-google-charts';
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './core/components/welcome/welcome.component';
 import { HomeComponent } from './core/components/home/home.component';
@@ -39,7 +41,8 @@ import { ApproveBooksComponent } from './core/components/approve-books/approve-b
     FormsModule,
     HttpClientModule,
     RecaptchaModule,
-    RatingModule
+    RatingModule,
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -55,4 +55,8 @@ export class BookService {
     return this.http.get<any>(environment.apiUrl + "/book/get-comments/" + id)
   }
 
+  updateBook(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/book/update-book', data)
+  }
+
 }
