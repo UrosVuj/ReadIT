@@ -42,6 +42,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/admin/privileges'])
   }
 
+  approveBooks() {
+    this.router.navigate(['/mod/approve-books'])
+  }
+
 
 
   logout() {

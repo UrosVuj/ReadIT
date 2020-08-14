@@ -11,6 +11,7 @@
             class="input-text" /></p>
         <select name="genre" id="genre" [(ngModel)]="genre">
           <option value="" selected disabled hidden>Pick a genre</option>
+          <option value="">Any genre</option>
           <option *ngFor="let genre of available_genres; let i = index" [value]="genre.name">
             {{genre.name}}
           </option>

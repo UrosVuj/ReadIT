@@ -254,7 +254,7 @@ module.exports.rejectBook = async (req, res, next) => {
     }).exec();
 
     res.json({
-        msg: "success"
+        msg: "Success!"
     });
 }
 
@@ -290,5 +290,7 @@ module.exports.approveBook = async (req, res, next) => {
     approved_book.approved = true;
 
     approved_book.save();
-    res.send(approved_book);
+    res.send({
+        msg: "Success!"
+    });
 }

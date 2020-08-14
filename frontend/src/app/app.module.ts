@@ -16,6 +16,7 @@ import { SettingsComponent } from './core/components/settings/settings.component
 import { ApproveComponent } from './core/components/approve/approve.component';
 import { GenresComponent } from './core/components/genres/genres.component';
 import { AddPrivilegesComponent } from './core/components/add-privileges/add-privileges.component';
+import { ApproveBooksComponent } from './core/components/approve-books/approve-books.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AddPrivilegesComponent } from './core/components/add-privileges/add-pri
     SettingsComponent,
     ApproveComponent,
     GenresComponent,
-    AddPrivilegesComponent
+    AddPrivilegesComponent,
+    ApproveBooksComponent
   ],
   imports: [
     BrowserModule,

@@ -32,4 +32,12 @@ export class AdminService {
   setPrivileges(data: any) {
     return this.http.post<any>(environment.apiUrl + '/admin/set-type', data)
   }
+
+  approveBook(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/mod/approve-book', data)
+  }
+
+  rejectBook(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/mod/reject-book', data)
+  }
 }
