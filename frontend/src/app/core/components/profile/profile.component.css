@@ -67,7 +67,7 @@ img {
 }
 
 #lists {
-  padding-left: 520px;
+  padding-left: 650px;
 }
 
 .coverImg img:hover {
@@ -91,6 +91,7 @@ img {
 #breef_info {
   margin-left: 60px;
   margin-top: 65px;
+  height: 200px;
 }
 
 #left_col {
@@ -122,4 +123,19 @@ img {
 
 #right_col {
   width: 460px;
+}
+
+#pie_chart {
+  height: auto;
+}
+
+google-chart {
+  height: 400px;
+  margin-top: 20px;
+  width: 550px;
+}
+
+#buttons {
+  margin-top: 50px;
+  display: inline-block;
 }

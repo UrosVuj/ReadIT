@@ -31,26 +31,27 @@
       </div>
 
     </div>
+    <div id="buttons">
+      <table>
+        <tr>
+          <button (click)="setCurrRead()">Reading list</button>
+        </tr>
+        <tr>
+          <button (click)="setFutureRead()">Wishlist</button>
+        </tr>
+        <tr>
+          <button (click)="setFinishedBooks()">Finished list</button>
+        </tr>
+      </table>
+    </div>
 
   </div>
 
   <div id="lists" *ngIf="this.user.username!='Guest'">
 
-    <table>
-      <tr>
-        <button (click)="setCurrRead()">Reading list</button>
-      </tr>
-      <tr>
-        <button (click)="setFutureRead()">Wishlist</button>
-      </tr>
-      <tr>
-        <button (click)="setFinishedBooks()">Finished list</button>
-      </tr>
-    </table>
-
     <table id="books" *ngIf="currently_reading_flag==true">
       <h4>Currently reading:</h4>
-      <tr *ngFor="let book of currently_reading">
+      <tr *ngFor="let book of currently_reading_reduced">
 
         <td *ngIf="book.hasOwnProperty('column1')">
           <div class="coverImg">
@@ -79,41 +80,50 @@
 
       </tr>
     </table>
-    <table id="books" *ngIf="finished_reading_flag==true">
-      <h4>Finished books:</h4>
-      <tr *ngFor="let book of finished_reading">
+    <div *ngIf="finished_reading_flag==true">
+      <table id="books">
+        <h4>Finished books:</h4>
+        <tr *ngFor="let book of finished_reading_reduced">
 
 
-        <td *ngIf="book.hasOwnProperty('column1')">
-          <div class="coverImg">
-            <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
-          </div>
-        </td>
+          <td *ngIf="book.hasOwnProperty('column1')">
+            <div class="coverImg">
+              <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
+            </div>
+          </td>
 
-        <td *ngIf="book.hasOwnProperty('column2') ">
-          <div class="coverImg" *ngIf="book.hasOwnProperty('column2')">
-            <img src={{book.column2.cover_path}} (click)="goto_book(book.column2._id)">
-          </div>
-        </td>
+          <td *ngIf="book.hasOwnProperty('column2') ">
+            <div class="coverImg" *ngIf="book.hasOwnProperty('column2')">
+              <img src={{book.column2.cover_path}} (click)="goto_book(book.column2._id)">
+            </div>
+          </td>
 
-        <td *ngIf="book.hasOwnProperty('column3') ">
-          <div class="coverImg" *ngIf="book.hasOwnProperty('column3') ">
-            <img src={{book.column3.cover_path}} (click)="goto_book(book.column3._id)">
-          </div>
-        </td>
+          <td *ngIf="book.hasOwnProperty('column3') ">
+            <div class="coverImg" *ngIf="book.hasOwnProperty('column3') ">
+              <img src={{book.column3.cover_path}} (click)="goto_book(book.column3._id)">
+            </div>
+          </td>
 
-        <td *ngIf="book.hasOwnProperty('column4') ">
-          <div class="coverImg" *ngIf="book.hasOwnProperty('column4') ">
-            <img src={{book.column4.cover_path}} (click)="goto_book(book.column4._id)">
-          </div>
-        </td>
+          <td *ngIf="book.hasOwnProperty('column4') ">
+            <div class="coverImg" *ngIf="book.hasOwnProperty('column4') ">
+              <img src={{book.column4.cover_path}} (click)="goto_book(book.column4._id)">
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <div id="pie_chart" *ngIf="this.user.username!='Guest'">
+        <google-chart #chart [title]="title" [type]="type" [data]="chart_data" [columns]="columnNames"
+          [options]="options" [width]="width" [height]="height">
+        </google-chart>
+      </div>
+
+    </div>
 
 
-      </tr>
-    </table>
     <table id="books" *ngIf="want_to_read_flag==true">
       <h4>Want to read:</h4>
-      <tr *ngFor="let book of want_to_read">
+      <tr *ngFor="let book of want_to_read_reduced">
 
         <td *ngIf="book.hasOwnProperty('column1')">
           <div class="coverImg">
@@ -144,9 +154,7 @@
     </table>
   </div>
 
-  <div id="pie_charts">
 
-  </div>
 
 
   <div *ngIf="this.user.username=='Guest'"

@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 const ObjectId = require('mongodb').ObjectId
 
 const User = mongoose.model('User');
+
+const Genre = mongoose.model('Genres');
 const Comment = mongoose.model('Comment');
 const Book = mongoose.model('Book');
 const ReadList = mongoose.model('ReadList');
@@ -311,6 +313,10 @@ module.exports.addRating = async (req, res, next) => {
 
 module.exports.updateBook = async (req, res, next) => {
 
+    let book = await Book.findOne({
+        _id: ObjectId(req.body._id)
+    })
+
     console.log(req.body.type_to_update)
     switch (req.body.type_to_update) {
         case "name":
@@ -337,6 +343,25 @@ module.exports.updateBook = async (req, res, next) => {
             }).exec();
             break;
         case "genres":
+            await Genre.updateMany({
+                name: {
+                    $in: book.genres
+                }
+            }, {
+                $inc: {
+                    "num_of_books": -1
+                }
+            }).exec();
+            await Genre.updateMany({
+                name: {
+                    $in: req.body.genres
+                }
+            }, {
+                $inc: {
+                    "num_of_books": 1
+                }
+            }).exec();
+
             await Book.updateOne({
                 _id: ObjectId(req.body._id)
             }, {
