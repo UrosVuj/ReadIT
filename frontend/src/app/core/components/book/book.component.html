@@ -11,14 +11,29 @@
       <div id="img_div">
         <img src={{book.cover_path}} alt="" id="img">
       </div>
-      <div id="read_lists">
+      <div id="read_lists" *ngIf="this.book.approved==true">
         <form *ngIf="user.username!='Guest'">
-          <select name="list_type" id="lists" [(ngModel)]="list_type" (change)="addToList()">
-            <option value="" disabled hidden selected>Add to a list</option>
-            <option value="want_to_read">Want to Read</option>
-            <option value="finished_reading">Read</option>
-            <option value="currently_reading">Currently Reading</option>
-          </select>
+
+          <button mat-button (click)="addToWishlist()"
+            *ngIf="want_to_read_flag==false && currently_reading_flag==false && finished_reading_flag==false"
+            style="background-color: rgb(47, 99, 211); width: 75%;">Wishlist</button>
+          <button mat-button (click)="startReading()"
+            *ngIf="(want_to_read_flag==false && currently_reading_flag==false && finished_reading_flag==false) || want_to_read_flag==true"
+            style="background-color: rgb(47, 99, 211); width: 75%; margin-top: 5px;">Start
+            reading</button>
+          <button mat-button (click)="finishReading()"
+            *ngIf="(want_to_read_flag==false && currently_reading_flag==false && finished_reading_flag==false) || currently_reading_flag==true"
+            style="background-color: rgb(47, 99, 211); width: 75%;  margin-top: 5px;">Finish
+            reading</button>
+
+
+
+
+
+
+          <div *ngIf="finished_reading_flag==true" style="text-align: center;">
+            Finished!
+          </div>
 
         </form>
       </div>
@@ -45,7 +60,7 @@
         </div>
       </div>
 
-
+      <br>
 
       <div *ngIf="change_flag==2">
         <div style="display: inline-block;">
@@ -140,16 +155,51 @@
         </div>
       </div>
 
+      <div class="line"></div>
+
+      <!--Progress part!-->
+
+      <div id="progress">
+        <div *ngIf="this.currently_reading_flag==true || this.finished_reading_flag==true">
+          Progress:
+          <mat-progress-bar mode="determinate" [value]="this.progress" *ngIf="this.currently_reading_flag==true">
+          </mat-progress-bar>
+          <mat-progress-bar mode="determinate" value="100" *ngIf="this.finished_reading_flag==true">
+          </mat-progress-bar>
+
+        </div>
+        <div *ngIf="currently_reading_flag==true && progress_flag==false">
+          <button (click)="setProgress()" style="display: inline-block;">Set progress</button>
+        </div>
+        <div *ngIf="progress_flag==true">
+          <input type="number" name="progress" placeholder="eg. 85%" [(ngModel)]="temp_progress" style="width: 80px;">
+        </div>
+
+        <div *ngIf="progress_flag==true">
+          <button (click)="submitProgress()">Submit</button>
+        </div>
+      </div>
+
+
+      <div *ngIf="want_to_read_flag == true" id="start_reading">
+
+        Currently in your Wishlist
+        <br>
+        Reading? Click on the button under the image
+      </div>
+
+
 
     </div>
   </div>
 
 
-  <div class="line" id="bigline"></div>
+  <div class="line" id="bigline" *ngIf="this.book.approved==true"></div>
 
 
-  <div id="comments">
-    <div id="add_comment" *ngIf="already_reviewed==false && this.user.username != 'Guest'">
+  <div id="comments" *ngIf="this.book.approved==true">
+    <div id="add_comment"
+      *ngIf="already_reviewed==false && this.user.username != 'Guest' && (this.finished_reading_flag==true || this.progress > 50)">
       <form class="form" id="second_form">
         <h2>Write a review</h2>
         <p type="Text:"><br> <textarea name="comment" placeholder="Type your comment text here..."

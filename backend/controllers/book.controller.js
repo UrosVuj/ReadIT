@@ -108,8 +108,15 @@ module.exports.searchBooksUnapproved = async (req, res, next) => {
 module.exports.getBook = async (req, res, next) => {
 
     let book = await Book.findOne(ObjectId(req.params.id)).exec();
-    res.send(book);
+    if (book != null)
+        res.send(book);
+    else {
+        let unap_book = await Unapproved_Book.findOne(ObjectId(req.params.id)).exec();
+        res.send(unap_book)
+    }
 }
+
+
 
 module.exports.getLists = async (req, res, next) => {
 
@@ -241,6 +248,61 @@ module.exports.addToFutureList = async (req, res, next) => {
 
 
 }
+module.exports.removeFromList = async (req, res, next) => {
+
+    console.log(req.body.type_to_update);
+
+    if (req.body.type_to_update == 'currently_reading')
+        await ReadList.updateOne({
+            username: req.body.username
+        }, {
+            "$pull": {
+                currently_reading: {
+                    book_id: req.body.book_id
+                }
+            }
+        }).exec();
+
+    else {
+
+        await ReadList.updateOne({
+            username: req.body.username
+        }, {
+            "$pull": {
+                want_to_read: {
+                    book_id: req.body.book_id
+                }
+            }
+        }).exec();
+    }
+    res.json({
+        msg: "Success!"
+    })
+}
+
+module.exports.setProgress = async (req, res, next) => {
+
+
+    let result = await ReadList.updateOne({
+        'currently_reading.book_id': req.body.book_id,
+        username: req.body.username
+    }, {
+        '$set': {
+            'currently_reading.$.book_id': req.body.book_id,
+            'currently_reading.$.progress': req.body.progress
+        }
+    }).exec();
+
+
+    console.log(req.body);
+    res.json({
+        msg: "Success!"
+    });
+
+
+}
+
+//bas kako stoje u bazi
 module.exports.getLists2 = async (req, res, next) => {
 
 
@@ -313,70 +375,117 @@ module.exports.addRating = async (req, res, next) => {
 
 module.exports.updateBook = async (req, res, next) => {
 
-    let book = await Book.findOne({
-        _id: ObjectId(req.body._id)
-    })
+    if (req.body.approved == true) {
+        let book = await Book.findOne({
+            _id: ObjectId(req.body._id)
+        })
 
-    console.log(req.body.type_to_update)
-    switch (req.body.type_to_update) {
-        case "name":
-            console.log("Update email")
-            await Book.updateOne({
-                _id: ObjectId(req.body._id)
-            }, {
-                name: req.body.name
-            }).exec();
-            break;
-        case "authors":
-            console.log("Update dob")
-            await Book.updateOne({
-                _id: ObjectId(req.body._id)
-            }, {
-                authors: req.body.authors
-            }).exec();
-            break;
-        case "description":
-            await Book.updateOne({
-                _id: ObjectId(req.body._id)
-            }, {
-                description: req.body.description
-            }).exec();
-            break;
-        case "genres":
-            await Genre.updateMany({
-                name: {
-                    $in: book.genres
-                }
-            }, {
-                $inc: {
-                    "num_of_books": -1
-                }
-            }).exec();
-            await Genre.updateMany({
-                name: {
-                    $in: req.body.genres
-                }
-            }, {
-                $inc: {
-                    "num_of_books": 1
-                }
-            }).exec();
+        console.log(req.body.type_to_update)
+        switch (req.body.type_to_update) {
+            case "name":
+                console.log("Update email")
+                await Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    name: req.body.name
+                }).exec();
+                break;
+            case "authors":
+                console.log("Update dob")
+                await Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    authors: req.body.authors
+                }).exec();
+                break;
+            case "description":
+                await Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    description: req.body.description
+                }).exec();
+                break;
+            case "genres":
+                await Genre.updateMany({
+                    name: {
+                        $in: book.genres
+                    }
+                }, {
+                    $inc: {
+                        "num_of_books": -1
+                    }
+                }).exec();
+                await Genre.updateMany({
+                    name: {
+                        $in: req.body.genres
+                    }
+                }, {
+                    $inc: {
+                        "num_of_books": 1
+                    }
+                }).exec();
 
-            await Book.updateOne({
-                _id: ObjectId(req.body._id)
-            }, {
-                genres: req.body.genres
-            }).exec();
-            break;
-        case "date_of_publishing":
-            await Book.updateOne({
-                _id: ObjectId(req.body._id)
-            }, {
-                date_of_publishing: req.body.date_of_publishing
-            }).exec();
-            break;
+                await Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    genres: req.body.genres
+                }).exec();
+                break;
+            case "date_of_publishing":
+                await Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    date_of_publishing: req.body.date_of_publishing
+                }).exec();
+                break;
 
+        }
+    } else {
+        let book = await Unapproved_Book.findOne({
+            _id: ObjectId(req.body._id)
+        })
+
+        switch (req.body.type_to_update) {
+            case "name":
+                await Unapproved_Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    name: req.body.name
+                }).exec();
+                break;
+            case "authors":
+                await Unapproved_Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    authors: req.body.authors
+                }).exec();
+                break;
+            case "description":
+                await Unapproved_Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    description: req.body.description
+                }).exec();
+                break;
+            case "genres":
+                await Unapproved_Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    genres: req.body.genres
+                }).exec();
+                break;
+            case "date_of_publishing":
+                await Unapproved_Book.updateOne({
+                    _id: ObjectId(req.body._id)
+                }, {
+                    date_of_publishing: req.body.date_of_publishing
+                }).exec();
+                break;
+
+        }
     }
+
+
 
     //console.log(req.body);
     res.send(req.body);

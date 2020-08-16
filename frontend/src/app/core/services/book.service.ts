@@ -59,4 +59,18 @@ export class BookService {
     return this.http.post<any>(environment.apiUrl + '/book/update-book', data)
   }
 
+  setProgress(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/book/set-progress', data)
+  }
+
+  getLists2(id: string) {
+    return this.http.get<any>(environment.apiUrl + "/book/get-lists/" + id)
+  }
+
+  removeFromList(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/book/remove-from-list', data)
+  }
+
+
+
 }

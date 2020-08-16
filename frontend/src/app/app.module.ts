@@ -19,6 +19,11 @@ import { ApproveComponent } from './core/components/approve/approve.component';
 import { GenresComponent } from './core/components/genres/genres.component';
 import { AddPrivilegesComponent } from './core/components/add-privileges/add-privileges.component';
 import { ApproveBooksComponent } from './core/components/approve-books/approve-books.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//material
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -42,7 +47,10 @@ import { ApproveBooksComponent } from './core/components/approve-books/approve-b
     HttpClientModule,
     RecaptchaModule,
     RatingModule,
-    GoogleChartsModule
+    GoogleChartsModule,
+    BrowserAnimationsModule,
+    MatProgressBarModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

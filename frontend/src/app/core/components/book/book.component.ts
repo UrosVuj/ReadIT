@@ -5,6 +5,7 @@ import { BookService } from '../../services/book.service';
 import { User } from 'src/app/models/user';
 import { StarRatingComponent } from 'ng-starrating';
 
+
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
@@ -15,7 +16,7 @@ export class BookComponent implements OnInit, OnDestroy {
   id: string;
   private subscription: any;
 
-  book: Book;
+  book: any;
   real_rating: number;
   date_of_publishing: string;
 
@@ -41,6 +42,14 @@ export class BookComponent implements OnInit, OnDestroy {
   want_to_read: any;
   finished_reading: any;
   currently_reading: any;
+  want_to_read_flag: boolean;
+  finished_reading_flag: boolean;
+  currently_reading_flag: boolean;
+
+  progress: number;
+  temp_progress: number;
+  progress_flag: boolean;
+
 
   //changing book info
   change_flag: number;
@@ -58,8 +67,13 @@ export class BookComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.change_flag = 0;
+    this.progress_flag = false;
 
-    this.book = {} as Book;
+    this.want_to_read_flag = false;
+    this.finished_reading_flag = false;
+    this.currently_reading_flag = false;
+
+    this.book = {};
     this.authors = "";
     this.genres = "";
     this.already_reviewed = false;
@@ -92,6 +106,11 @@ export class BookComponent implements OnInit, OnDestroy {
         }
       )
     });
+
+
+    if (this.user.type != 'Guest')
+      this.setReadingLists2();
+
   }
 
   ngOnDestroy() {
@@ -112,6 +131,46 @@ export class BookComponent implements OnInit, OnDestroy {
         console.log(res);
       }
     )
+  }
+
+  finishReading() {
+
+    if (this.currently_reading_flag)
+      this.removeFromList('currently_reading');
+
+    this.list_type = "finished_reading";
+    this.addToList();
+
+    this.want_to_read_flag = false;
+    this.currently_reading_flag = false;
+    this.finished_reading_flag = true;
+
+
+  }
+
+  startReading() {
+
+    this.list_type = "currently_reading";
+    this.addToList();
+    if (this.want_to_read_flag)
+      this.removeFromList('want_to_read');
+
+    this.want_to_read_flag = false;
+    this.currently_reading_flag = true;
+    this.finished_reading_flag = false;
+
+
+
+  }
+
+  addToWishlist() {
+
+    this.want_to_read_flag = true;
+    this.currently_reading_flag = false;
+    this.finished_reading_flag = false;
+
+    this.list_type = "want_to_read";
+    this.addToList();
   }
 
   addComment() {
@@ -179,21 +238,72 @@ export class BookComponent implements OnInit, OnDestroy {
     this.date_of_publishing = real_day + "/" + real_month + "/" + year
   }
 
+  //DELETE
   setReadingLists() {
 
     this.bookService.getReadingLists(this.user.username).subscribe(
       res => {
-
         this.want_to_read = res.want_to_read;
         this.finished_reading = res.finished_reading;
         this.currently_reading = res.currently_reading;
 
+        this.want_to_read.forEach(book => {
+          if (this.id == book._id)
+            this.want_to_read_flag = true;
+        });
+        this.finished_reading.forEach(book => {
+          if (this.id == book._id)
+            this.finished_reading_flag = true;
+        });
+        this.currently_reading.forEach(book => {
+          console.log(this.currently_reading)
+          if (this.id == book._id) {
+            this.currently_reading_flag = true;
+          }
+        });
+
+        console.log(this.currently_reading_flag)
       },
       err => {
         console.log("NAY")
       }
     )
   }
+
+  setReadingLists2() {
+
+    this.bookService.getLists2(this.user.username).subscribe(
+      res => {
+        this.want_to_read = res.want_to_read;
+        this.finished_reading = res.finished_reading;
+        this.currently_reading = res.currently_reading;
+
+        this.want_to_read.forEach(book => {
+          if (this.id == book.book_id)
+            this.want_to_read_flag = true;
+        });
+        this.finished_reading.forEach(book => {
+          if (this.id == book.book_id)
+            this.finished_reading_flag = true;
+        });
+        this.currently_reading.forEach(book => {
+          console.log(this.currently_reading)
+          if (this.id == book.book_id) {
+            this.currently_reading_flag = true;
+            this.progress = book.progress;
+          }
+        });
+
+        console.log(this.finished_reading_flag)
+        console.log(this.want_to_read_flag)
+      },
+      err => {
+        console.log("NAY")
+      }
+    )
+  }
+
+
 
   //book modifying starts here for admin
 
@@ -225,6 +335,7 @@ export class BookComponent implements OnInit, OnDestroy {
     let data = {};
     data["_id"] = this.id;
     data["type_to_update"] = type;
+    data["approved"] = this.book.approved;
 
 
     switch (type) {
@@ -261,6 +372,48 @@ export class BookComponent implements OnInit, OnDestroy {
     )
   }
 
+  setProgress() {
+    this.progress_flag = true;
+  }
 
+  submitProgress() {
+    if (this.progress > this.temp_progress) return;
+    this.progress = this.temp_progress;
+
+    if (this.progress != 100) {
+      let data = {}
+      data["username"] = this.user.username;
+      data["book_id"] = this.id;
+      data["progress"] = this.temp_progress;
+
+      this.bookService.setProgress(data).subscribe(
+        res => {
+          console.log(res);
+        }
+      )
+    }
+    else {
+      this.list_type = "finished_reading";
+      this.addToList();
+      this.removeFromList('currently_reading');
+    }
+
+
+  }
+
+
+  removeFromList(type_to_update: string) {
+    let data = {};
+    data["username"] = this.user.username;
+    data["type_to_update"] = type_to_update;
+    data["book_id"] = this.id;
+
+    this.bookService.removeFromList(data).subscribe(
+      res => {
+        console.log("YOLO")
+        console.log(res.msg);
+      }
+    )
+  }
 
 }

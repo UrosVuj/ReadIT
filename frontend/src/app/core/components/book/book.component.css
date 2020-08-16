@@ -32,11 +32,11 @@ star-rating {
   min-height: 300px;
   height: auto;
   display: inline-block;
-  width: 650px;
+  width: 750px;
 }
 
 #left_col {
-  width: 150px;
+  width: 200px;
   text-align: center;
 }
 
@@ -186,4 +186,9 @@ star-rating {
 
 .right_btn {
   float: right;
+}
+
+mat-progress-bar {
+  width: 300px;
+  display: inline-block;
 }

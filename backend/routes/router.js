@@ -168,6 +168,11 @@ router.post('/book/add-list/past', bookContr.addToPastList);
 router.post('/book/add-list/present', bookContr.addToPresentList);
 router.post('/book/add-list/future', bookContr.addToFutureList);
 
+router.post('/book/remove-from-list', bookContr.removeFromList);
+
+router.post('/book/set-progress', bookContr.setProgress);
+router.get('/book/get-lists/:id', bookContr.getLists2);
+
 //book comments
 router.post('/book/add-comment', bookContr.addComment);
 router.post('/book/add-rating', bookContr.addRating);

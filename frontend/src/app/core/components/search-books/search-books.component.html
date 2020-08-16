@@ -86,7 +86,7 @@
                 <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
               </div>
               <div class="coverImg_notApproved" *ngIf="book.column1.approved != true">
-                <img src={{book.column1.cover_path}} (click)=" goto_book(books[0].column1._id)">
+                <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
               </div>
             </td>
 
