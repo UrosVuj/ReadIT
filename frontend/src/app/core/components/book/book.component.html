@@ -229,7 +229,7 @@
         <div id="text">
           <div id="username">
             <div *ngIf="user.username!='Guest'">
-              {{comment.username}}
+              <a [href]="'user/' + comment.username">{{comment.username}}</a>
             </div>
             <div *ngIf="user.username=='Guest'" style="font-style: italic; font-weight: 700;">
               Username hidden

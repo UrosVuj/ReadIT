@@ -10,6 +10,7 @@ import { ApproveComponent } from './core/components/approve/approve.component';
 import { GenresComponent } from './core/components/genres/genres.component';
 import { AddPrivilegesComponent } from './core/components/add-privileges/add-privileges.component';
 import { ApproveBooksComponent } from './core/components/approve-books/approve-books.component';
+import { OtherProfileComponent } from './core/components/other-profile/other-profile.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: "admin/approve", component: ApproveComponent },
   { path: "admin/genres", component: GenresComponent },
   { path: "mod/approve-books", component: ApproveBooksComponent },
-  { path: "admin/privileges", component: AddPrivilegesComponent }
+  { path: "admin/privileges", component: AddPrivilegesComponent },
+  { path: "user/:id", component: OtherProfileComponent }
 
 ];
 

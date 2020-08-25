@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //material
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { OtherProfileComponent } from './core/components/other-profile/other-profile.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MatButtonModule } from '@angular/material/button';
     ApproveComponent,
     GenresComponent,
     AddPrivilegesComponent,
-    ApproveBooksComponent
+    ApproveBooksComponent,
+    OtherProfileComponent
   ],
   imports: [
     BrowserModule,

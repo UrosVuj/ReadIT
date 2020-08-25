@@ -158,7 +158,9 @@ router.post('/book/update-book', bookContr.updateBook);
 router.post('/search-books', bookContr.searchBooks);
 router.post('/search-books-unapproved', bookContr.searchBooksUnapproved);
 
+//get user and book
 router.get('/book/:id', bookContr.getBook);
+router.get('/user-profile/:username', userContr.getOtherUser);
 
 //book lists
 router.get('/book/lists/:id', bookContr.getLists);

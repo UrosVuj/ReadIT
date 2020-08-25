@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from 'src/app/models/book';
 import { BookService } from '../../services/book.service';
 import { User } from 'src/app/models/user';
@@ -63,7 +63,7 @@ export class BookComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private route: ActivatedRoute, private bookService: BookService) { }
+  constructor(private route: ActivatedRoute, private bookService: BookService, private router: Router) { }
 
   ngOnInit() {
     this.change_flag = 0;
@@ -416,4 +416,7 @@ export class BookComponent implements OnInit, OnDestroy {
     )
   }
 
+  goto_User(username: string) {
+    this.router.navigate(['/user/' + username])
+  }
 }

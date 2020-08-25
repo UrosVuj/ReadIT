@@ -44,8 +44,8 @@
         genre</span></a>
     <a (click)="addPrivileges()" *ngIf="this.user.type == 'admin'"><i class="fas fa-user-shield"></i><span>Add/Take user
         privileges</span></a>
-    <a (click)="approveBooks()" *ngIf="this.user.type == 'moderator'"><i class="fas fa-book"></i><i
-        class="fas fa-plus"></i><span>Approve
+    <a (click)="approveBooks()" *ngIf="this.user.type == 'moderator'  || this.user.type == 'admin'"><i
+        class="fas fa-book"></i><i class="fas fa-plus"></i><span>Approve
         a book</span></a>
 
   </div>

@@ -294,3 +294,23 @@ module.exports.approveBook = async (req, res, next) => {
         msg: "Success!"
     });
 }
+
+
+module.exports.getOtherUser = async (req, res, next) => {
+
+    let user = await User.findOne({
+        username: req.params.username
+    }).exec();
+
+    console.log(req.params.username)
+    if (user != null)
+        res.json({
+            msg: "Success!",
+            "user": user
+        });
+    else
+        res.json({
+            msg: "Fail"
+        });
+
+}

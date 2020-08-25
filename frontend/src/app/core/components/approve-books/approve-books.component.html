@@ -1,8 +1,8 @@
 <body>
-  <div *ngIf="this.user.type != 'moderator'">
+  <div *ngIf="this.user.type != 'moderator' && this.user.type!='admin'">
     Restricted area!
   </div>
-  <div *ngIf="this.user.type == 'moderator'">
+  <div *ngIf="this.user.type == 'moderator' || this.user.type == 'admin'">
     <div *ngFor="let book of unapproved_books, let i=index">
       <div id="breef_info" *ngIf="unapproved_books.length > 0">
         <div id="left_col" class="col">

@@ -36,4 +36,8 @@ export class UserService {
   getUsers() {
     return this.http.get<any>(environment.apiUrl + '/user/get-users/')
   }
+
+  getUserProfile(username: string) {
+    return this.http.get<any>(environment.apiUrl + '/user-profile/' + username)
+  }
 }
