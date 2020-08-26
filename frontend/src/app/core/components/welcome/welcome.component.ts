@@ -4,6 +4,8 @@ import { UserService } from '../../services/user.service';
 import { JsonPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
+import { BookService } from '../../services/book.service';
+import { ifError } from 'assert';
 
 @Component({
   selector: 'app-welcome',
@@ -13,7 +15,12 @@ import { StorageService } from '../../services/storage.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, private storageService: StorageService) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private storageService: StorageService,
+    private bookService: BookService
+  ) { }
 
   ngOnInit(): void {
 
@@ -93,29 +100,6 @@ export class WelcomeComponent implements OnInit {
 
   signup() {
 
-    //min 7 karaktera, slovo malo i veliko, broj, specijalan karakter
-    // let passwordRegex = RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])([a-z]|[A-Z]).{7,}$');
-
-
-    // if (!passwordRegex.test(this.password)) {
-    //   this.emptyField_pg2msg = this.password;
-    //  return;
-    //  }
-
-
-    /*
-    this.user.first_name = this.first_name;
-    this.user.last_name = this.last_name;
-    this.user.dob = this.dob;
-    this.user.country = this.country;
-    this.user.city = this.city;
-    this.user.username = this.username;
-    this.user.email = this.email;
-    this.user.password = this.password;
-    this.user.type = "user";
-
-    this.user.avatar = this.avatar;
-    */
 
     let form = new FormData();
     form.append('avatar', this.avatar);
@@ -131,8 +115,21 @@ export class WelcomeComponent implements OnInit {
     //calls service which can send a http post req
     this.userService.registerRequest(form).subscribe(
       res => {
-        this.successMsg = "Success!"
-        this.serverErrorMsg = ""
+        if (res.msg == "Success!") {
+          this.successMsg = "Success!"
+          this.serverErrorMsg = ""
+
+          let my_data = {};
+          my_data["username"] = this.username;
+
+          this.bookService.createList(my_data).subscribe(
+            res => {
+              console.log(res);
+              console.log("List created")
+            }
+          )
+        }
+        else this.serverErrorMsg = res.msg
       },
       err => {
         if (err.status === 422) {
@@ -141,6 +138,7 @@ export class WelcomeComponent implements OnInit {
         }
         else
           this.serverErrorMsg = 'Something went wrong. Please contact admin.';
+        console.log(err.status)
       }
     );
 
@@ -176,6 +174,16 @@ export class WelcomeComponent implements OnInit {
 
   resolved(captchaResponse: string) {
     console.log(`Resolved captcha with response: ${captchaResponse}`);
+  }
+
+  goGuest() {
+    let guest = {} as User;
+    guest.first_name = "Guest";
+    guest.last_name = "Guest";
+    guest.username = "Guest";
+    guest.avatar_path = "images/default_avatar.jpg"
+    this.storageService.setItem('user_session', JSON.stringify(guest))
+    this.router.navigate(['/search'])
   }
 
 

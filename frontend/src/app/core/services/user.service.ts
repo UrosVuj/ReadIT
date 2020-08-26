@@ -21,4 +21,34 @@ export class UserService {
     return this.http.post<any>(environment.apiUrl + '/login', data)
   }
 
+  getComments(id: string) {
+    return this.http.get<any>(environment.apiUrl + '/user/get-comments/' + id)
+  }
+
+  updateProfile(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/user/update-profile', data)
+  }
+
+  changePassword(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/user/update-password', data)
+  }
+
+
+
+  getGenres() {
+    return this.http.get<any>(environment.apiUrl + '/user/get-genres/')
+  }
+
+  getUsers() {
+    return this.http.get<any>(environment.apiUrl + '/user/get-users/')
+  }
+
+  getUserProfile(username: string) {
+    return this.http.get<any>(environment.apiUrl + '/user-profile/' + username)
+  }
+
+  checkPassword(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/user/check-password/', data)
+  }
+
 }

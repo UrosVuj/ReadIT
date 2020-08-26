@@ -21,8 +21,12 @@ var bookSchema = new mongoose.Schema({
     },
     cover_path: {
         type: String
+    },
+    approved: {
+        type: Boolean
     }
 });
 
 
 mongoose.model('Book', bookSchema);
+mongoose.model('Unapproved_Book', bookSchema);

@@ -1,18 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { StorageService } from '../../services/storage.service';
-import { User } from 'src/app/models/user';
-import { BookService } from '../../services/book.service';
-import { Book } from 'src/app/models/book';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { GoogleChartsModule } from 'angular-google-charts'
+import { BookService } from '../../services/book.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: 'app-other-profile',
+  templateUrl: './other-profile.component.html',
+  styleUrls: ['./other-profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class OtherProfileComponent implements OnInit, OnDestroy {
+
+  private subscription: any;
+  user_came: boolean;
+  logged_user: any;
+
+  user: any;
+
+  username: string;
+
+
+  //taken from profile component
 
   want_to_read: any;
   finished_reading: any;
@@ -31,10 +38,6 @@ export class ProfileComponent implements OnInit {
   my_comments: any;
 
   birthday: string;
-  user: User;
-
-
-
   //charts:
 
   title = "Book genre distribution for books you've finished";
@@ -56,30 +59,51 @@ export class ProfileComponent implements OnInit {
   width = 550;
   height = 400;
 
-  constructor(
-    private router: Router,
-    private storageService: StorageService,
-    private bookService: BookService,
-    private userService: UserService) { }
 
-  ngOnInit(): void {
+  constructor(private route: ActivatedRoute, private userService: UserService, private router: Router, private bookService: BookService) { }
 
-    this.user = JSON.parse(localStorage.getItem('user_session'));
+  ngOnInit() {
+    this.user_came = false;
+    this.logged_user = JSON.parse(localStorage.getItem('user_session'));
+    this.logged_user.avatar_path = "http://localhost:3000/" + this.logged_user.avatar_path.substr(7);
 
-    this.user.avatar_path = "http://localhost:3000/" + this.user.avatar_path.substr(7);
+    this.subscription = this.route.params.subscribe(params => {
+      this.username = params['id'];
 
-    this.chart_data = [];
+      this.userService.getUserProfile(this.username).subscribe(
+        res => {
+          if (res.msg == "Fail")
+            console.log("Fail")
+          else {
+            this.user = res.user;
+            this.user_came = true;
 
-    this.setReadingLists();
-    this.generateBirthday();
+            this.user.avatar_path = "http://localhost:3000/" + this.user.avatar_path.substr(7);
 
-    console.log("Nice!")
-    this.getComments();
+
+
+            this.chart_data = [];
+            this.setReadingLists();
+            this.generateBirthday();
+            console.log("Nice!")
+            this.getComments();
+          }
+        }
+      )
+    }
+    )
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 
 
 
+
+
+  // taken from profile *************************************************************************************************************************************************************************
 
   goto_book(id: string) {
     this.router.navigate(['/book/' + id])
@@ -271,6 +295,10 @@ export class ProfileComponent implements OnInit {
     })
     console.log(chart_data)
   }
+
+
+
+
 
 
 }

@@ -28,6 +28,25 @@ export class HomeComponent implements OnInit {
   books() {
     this.router.navigate(['/search'])
   }
+  settings() {
+    this.router.navigate(['/settings'])
+  }
+
+  approveUsers() {
+    this.router.navigate(['/admin/approve'])
+  }
+  addGenres() {
+    this.router.navigate(['/admin/genres'])
+  }
+  addPrivileges() {
+    this.router.navigate(['/admin/privileges'])
+  }
+
+  approveBooks() {
+    this.router.navigate(['/mod/approve-books'])
+  }
+
+
 
   logout() {
 

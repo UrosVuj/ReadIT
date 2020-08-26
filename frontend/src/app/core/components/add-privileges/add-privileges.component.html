@@ -1,0 +1,24 @@
+<body>
+  <div id="other_comments" *ngFor="let user of users">
+    <div class="comment">
+      <div class="user_img_div">
+        <img src={{user.avatar_path}} id="user_img">
+        <div style="text-align: center;">
+          <button *ngIf="user.type == 'user'" style="background-color: green;" (click)="setType('moderator', user)">
+            Promote </button>
+          <button *ngIf="user.type == 'moderator'" style="background-color: red;" (click)="setType('user', user)">
+            Demote </button>
+        </div>
+      </div>
+      <div id="text">
+        <div id="username">
+          <div>
+            {{user.first_name}} {{user.last_name}} <br> {{user.username}}
+          </div>
+        </div>
+        {{user.email}}
+      </div>
+
+    </div>
+  </div>
+</body>

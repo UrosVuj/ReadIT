@@ -1,0 +1,47 @@
+<body>
+  <div *ngIf="this.user.type != 'moderator' && this.user.type!='admin'">
+    Restricted area!
+  </div>
+  <div *ngIf="this.user.type == 'moderator' || this.user.type == 'admin'">
+    <div *ngFor="let book of unapproved_books, let i=index">
+      <div id="breef_info" *ngIf="unapproved_books.length > 0">
+        <div id="left_col" class="col">
+          <div id="img_div">
+            <img src={{book.cover_path}} alt="" id="img">
+          </div>
+          <div>
+            <div style="float: left; width: 50%;">
+              <button id="approve_button" (click)="approveBook(book.name, i)" style="width: 100%;"> Approve </button>
+            </div>
+            <div style="float: left; width: 50%;">
+              <button id="reject_button" (click)="rejectBook(book.name, i)" style="width: 100%;"> Reject </button>
+            </div>
+          </div>
+
+        </div>
+        <div id="right_col" class="col">
+          <div style="font-weight: bold; font-size: 28px;">
+            {{book.name}}
+          </div>
+          <div style="color: rgb(15, 15, 15); font-size: 18px;  padding-top: 3px;">
+            by {{book.authors}}
+          </div>
+          <div class="line"></div>
+          <div style="color: rgb(15, 15, 15); font-size: 18px;  padding-top: 3px;">
+            {{book.genres}}
+          </div>
+          <div class="line"></div>
+
+          <div id="description">
+            {{book.description}}
+          </div>
+          <div class="line"></div>
+          <div id="published">
+            Published: {{book.date_of_publishing}}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

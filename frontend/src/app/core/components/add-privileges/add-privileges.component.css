@@ -1,0 +1,64 @@
+@import url("//fonts.googleapis.com/css?family=Josefin+Slab");
+
+body {
+  color: rgb(29, 29, 29);
+  font-size: 22px;
+  background-color: rgb(95, 95, 95);
+  background-position: center;
+  background-size: cover;
+  padding-left: 250px;
+  padding-top: 70px;
+  overflow-y: auto;
+  font-family: "Josefin Slab";
+
+  /* da se ne bi scrollovalo*/
+  height: calc(100% - 70px);
+}
+
+#other_comments {
+  margin-top: 70px;
+  margin-left: 250px;
+  display: block;
+  min-height: 150px;
+}
+
+
+#comments {
+  width: calc(100% - 270px);
+  background-color: rgb(95, 95, 95);
+  padding-left: 270px;
+  margin-left: 0px;
+}
+
+#text {
+  float: left;
+  width: 460px;
+}
+
+.comment {
+  width: 550px;
+  max-height: 300px;
+  float: left;
+  display: block;
+}
+
+#title_comments {
+  width: 560px;
+}
+
+#user_img {
+  max-width: 65px;
+}
+
+.user_img_div {
+  max-width: 90px;
+  height: 200px;
+  text-align: center;
+  float: left;
+  padding-right: 15px;
+}
+
+#username {
+  font-size: 20px;
+  font-weight: 700;
+}

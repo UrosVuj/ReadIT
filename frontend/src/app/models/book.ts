@@ -4,7 +4,7 @@ export interface Book {
     date_of_publishing: Date,
     genres: string[],
     description: string,
-    avg_score: Number,
+    avg_score: number,
     cover_path: string
 
 }

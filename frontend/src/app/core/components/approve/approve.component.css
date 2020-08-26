@@ -1,0 +1,64 @@
+@import url("//fonts.googleapis.com/css?family=Josefin+Slab");
+
+body {
+  color: rgb(29, 29, 29);
+  font-size: 22px;
+  background-color: rgb(95, 95, 95);
+  background-position: center;
+  background-size: cover;
+  padding-left: 250px;
+  padding-top: 70px;
+  overflow-y: auto;
+  font-family: "Josefin Slab";
+
+  /* da se ne bi scrollovalo*/
+  height: calc(100% - 70px);
+}
+
+#user_tables {
+  margin-left: 400px;
+  margin-top: 150px;
+  display: inline-block;
+}
+
+table {
+  margin-bottom: 40px;
+}
+
+
+#approve {
+  float: left;
+  width: 50%;
+
+}
+
+#reject {
+  float: right;
+  width: 50%;
+}
+
+#approve button {
+  width: 100%;
+  padding: 5px;
+  background-color: rgb(83, 138, 87);
+  border-radius: 5px;
+  border: 1px;
+  transition: .2s;
+}
+
+#approve button:hover {
+  background-color: rgb(59, 99, 62)
+}
+
+#reject button {
+  width: 100%;
+  padding: 5px;
+  background-color: rgb(182, 19, 19);
+  border-radius: 5px;
+  border: 1px;
+  transition: .2s;
+}
+
+#reject button:hover {
+  background-color: rgb(128, 16, 16)
+}

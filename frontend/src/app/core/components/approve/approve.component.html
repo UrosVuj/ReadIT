@@ -1,0 +1,59 @@
+<body>
+  <div *ngIf="user.type == 'admin'" id="user_tables">
+    <table>
+      <div *ngFor="let user of users, let i = index">
+        <tr>
+          <td>
+            Full name:
+          </td>
+          <td>
+            {{user.first_name}} {{user.last_name}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Username:
+          </td>
+          <td>
+            {{user.username}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Email:
+          </td>
+          <td>
+            {{user.email}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Country and city:
+          </td>
+          <td>
+            {{user.country}}, {{user.city}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Birthday:
+          </td>
+          <td>
+            {{generateBirthday(user)}}
+          </td>
+        </tr>
+
+        <div id="approve">
+          <button (click)="approveUser(user.username, i)"> Approve! </button>
+        </div>
+        <div id="reject">
+          <button (click)="rejectUser(user.username, i)"> Reject! </button>
+        </div>
+
+      </div>
+    </table>
+  </div>
+  <div *ngIf="user.type != 'admin'" style="margin-left:30%; margin-top: 15%;font-size: 60px;">
+    Access restricted!
+  </div>
+</body>
