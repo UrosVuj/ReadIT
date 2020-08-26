@@ -49,16 +49,5 @@ var userSchema = new mongoose.Schema({
 });
 
 
-// Events
-userSchema.pre('save', function (next) {
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(this.password, salt, (err, hash) => {
-            this.password = hash;
-            this.saltSecret = salt;
-            next();
-        });
-    });
-});
-
 mongoose.model('User', userSchema);
 mongoose.model('Pending_user', userSchema);

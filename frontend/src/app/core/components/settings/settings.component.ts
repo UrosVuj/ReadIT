@@ -13,6 +13,16 @@ export class SettingsComponent implements OnInit {
   user: User;
 
   change_flag: number;
+  change_password: boolean;
+
+  curr_password: string;
+  password_match: number;
+
+  new_password1: string;
+  new_password2: string;
+
+  match_pass_flag: boolean;
+  match_ErrMessage: string;
 
   first_name: string;
   last_name: string;
@@ -27,6 +37,9 @@ export class SettingsComponent implements OnInit {
 
     this.user = JSON.parse(localStorage.getItem('user_session'));
     this.generateBirthday();
+    this.change_password = false;
+    this.password_match = 1;
+    this.match_ErrMessage = "Passwords don't match."
   }
 
   generateBirthday() {
@@ -95,6 +108,46 @@ export class SettingsComponent implements OnInit {
         console.log(res)
       }
     )
+  }
+
+  setChangePass() {
+    this.change_password = true;
+  }
+
+  checkPassword() {
+    let data = {};
+    data["username"] = this.user.username;
+    data["password"] = this.curr_password;
+    this.userService.checkPassword(data).subscribe(
+      res => {
+        if (res.found == true)
+          this.password_match = 2;
+        else
+          this.password_match = 3;
+      }
+    )
+  }
+
+  goBack_changePass() {
+    this.password_match = 1;
+  }
+
+  submitNewPassword() {
+    if (this.new_password1 != this.new_password2 || this.new_password1 == '' || this.new_password2 == '') {
+      this.match_pass_flag = false;
+    }
+    else {
+      let data = {};
+      data["new_password"] = this.new_password1;
+      data["username"] = this.user.username;
+
+      this.userService.changePassword(data).subscribe(
+        res => {
+          console.log(res);
+          this.match_pass_flag = true;
+          this.password_match = 4;
+        })
+    }
   }
 
 }

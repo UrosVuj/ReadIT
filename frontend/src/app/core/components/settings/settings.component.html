@@ -1,6 +1,7 @@
 <body>
   <form id="form" *ngIf="this.user.username!='Guest'">
-    <table>
+    <table style="
+    border-radius: 10px;">
       <tr>
         <td>
           First name:
@@ -92,8 +93,50 @@
       </tr>
     </table>
   </form>
-  <div *ngIf="this.user.username=='Guest'"
-    style="color: rgb(26, 27, 29); margin-left: 300px; margin-top: 200px; font-size: 30px;">
+  <div id="change_pass">
+    <div *ngIf="change_password==false" style="
+    background-color: rgb(95, 95, 95); color: white;">
+      <a (click)="setChangePass()">Click to change password</a>
+    </div>
+    <div *ngIf="change_password==true && (password_match == 1 || password_match == 3)" id="inp">
+      <mat-form-field style="width: 70%;">
+        <mat-label>Enter your old password</mat-label>
+        <input matInput type="password" placeholder="Password" [(ngModel)]="curr_password">
+      </mat-form-field>
+      <button mat-flat-button style="margin-bottom: 15px; margin-left: 20px;" (click)="checkPassword()">Submit</button>
+      <div *ngIf="password_match == 3">
+        Password doesn't match!
+      </div>
+    </div>
+    <div *ngIf="password_match == 2" id="inp2">
+
+      <mat-form-field style="width: 70%;">
+        <mat-label>Enter your new password</mat-label>
+        <input matInput type="password" placeholder="Password" [(ngModel)]="new_password1">
+      </mat-form-field>
+
+      <button mat-flat-button style="margin-bottom: 15px; margin-left: 20px;"
+        (click)="submitNewPassword()">Submit</button>
+
+      <mat-form-field style="width: 70%;">
+        <input matInput type="password" placeholder="Confirm password" [(ngModel)]="new_password2">
+
+      </mat-form-field>
+
+    </div>
+
+    <div *ngIf="match_pass_flag == false && this.password_match ==2"
+      style="color: red; text-align: center; padding-bottom:15px; padding-top: 15px;">
+      {{this.match_ErrMessage}}
+    </div>
+
+    <div *ngIf="match_pass_flag == true && this.password_match==4"
+      style="color: green; text-align: center; padding-bottom:15px; padding-top: 15px;">
+      <a (click)="goBack_changePass()">Success! Click to go back</a>
+    </div>
+  </div>
+  <div *ngIf=" this.user.username=='Guest'"
+    style=" color: rgb(26, 27, 29); margin-left: 300px; margin-top: 200px; font-size: 30px;">
     Please register to access this page! :)
   </div>
 </body>

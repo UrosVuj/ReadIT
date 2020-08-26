@@ -29,6 +29,12 @@ export class UserService {
     return this.http.post<any>(environment.apiUrl + '/user/update-profile', data)
   }
 
+  changePassword(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/user/update-password', data)
+  }
+
+
+
   getGenres() {
     return this.http.get<any>(environment.apiUrl + '/user/get-genres/')
   }
@@ -40,4 +46,9 @@ export class UserService {
   getUserProfile(username: string) {
     return this.http.get<any>(environment.apiUrl + '/user-profile/' + username)
   }
+
+  checkPassword(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/user/check-password/', data)
+  }
+
 }

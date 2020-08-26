@@ -28,10 +28,8 @@ module.exports.login = async (req, res, next) => {
         return;
     }
 
-    console.log(users[0])
 
-
-    if (bcrypt.compare(req.body.password, users[0].password)) {
+    if (await bcrypt.compare(req.body.password, users[0].password)) {
 
 
         res.status(200).json({
@@ -47,6 +45,11 @@ module.exports.login = async (req, res, next) => {
                 avatar_path: users[0].avatar_path,
                 type: users[0].type
             }
+        })
+
+    } else {
+        res.json({
+            found: false
         })
     }
 
@@ -77,6 +80,7 @@ module.exports.getComments = async (req, res, next) => {
 
 }
 
+//update user profile
 module.exports.updateProfile = async (req, res, next) => {
 
     switch (req.body.type_to_update) {
@@ -130,6 +134,57 @@ module.exports.updateProfile = async (req, res, next) => {
 
     //console.log(req.body);
     res.send(req.body);
+
+
+}
+module.exports.updatePassword = async (req, res, next) => {
+
+    let new_pass = "";
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(req.body.new_password, salt, (err, hash) => {
+            new_pass = hash;
+
+            console.log(new_pass)
+            User.updateOne({
+                username: req.body.username
+            }, {
+                password: new_pass
+            }).exec();
+
+            res.json({
+                msg: new_pass
+            })
+        })
+    })
+}
+module.exports.checkOldPassword = async (req, res, next) => {
+
+    let users = await User.find({
+        username: req.body.username
+    }).exec();
+
+    if (users.length == 0) {
+        res.status(200).json({
+            found: false,
+            msg: "Username cannot be associated with an account"
+        })
+        return;
+    }
+    //console.log("yes" + await bcrypt.compare(req.body.password, "$2a$10$ssmqZOybMDYuzbrGB1aru.Q.RAH8yj7ZoWkqmZxEZsUCpNd82ED5q"));
+
+    console.log(users[0].password);
+    if (await bcrypt.compare(req.body.password, users[0].password)) {
+
+        res.status(200).json({
+            found: true,
+            msg: "Success!"
+        })
+    } else {
+        res.status(200).json({
+            found: false,
+            msg: "Wrong password!"
+        })
+    }
 
 
 }

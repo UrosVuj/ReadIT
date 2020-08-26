@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose')
 const multer = require('multer');
 
+const bcrypt = require('bcryptjs');
 
 const userContr = require('../controllers/user.controller')
 
@@ -57,7 +58,6 @@ router.post('/register', upload_profile.single('avatar'), async (req, res, next)
     user.city = req.body.city;
     user.username = req.body.username;
     user.email = req.body.email;
-    user.password = req.body.password;
     user.type = "user";
 
     if (req.file)
@@ -70,11 +70,14 @@ router.post('/register', upload_profile.single('avatar'), async (req, res, next)
         username: req.body.username
     }).exec();
     console.log(username_found)
+
+
     if (username_found.length != 0)
         res.send({
             msg: 'Duplicate username found.'
         });
     else {
+
         //search for existing email
         let email_found = await User.find({
             email: req.body.email
@@ -83,21 +86,39 @@ router.post('/register', upload_profile.single('avatar'), async (req, res, next)
         if (email_found.length != 0) res.send({
             msg: 'Duplicate email found.'
         });
-        else {
-            user.save((err, doc) => {
-                if (!err)
-                    res.send({
-                        msg: "Success!"
-                    });
-                else {
-                    if (err.code == 11000) {
-                        res.status(422).send({
-                            msg: 'Duplicate email/username found.'
-                        });
-                    } else
-                        return next(err);
-                }
+        else { //success
 
+            //create hashed password
+            var original = req.body.password;
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(req.body.password, salt, (err, hash) => {
+                    user.password = hash;
+                    console.log(user.password);
+                    user.saltSecret = salt;
+
+                    //save
+                    user.save((err, doc) => {
+
+                        if (!err)
+                            res.send({
+                                msg: "Success!"
+                            });
+
+                        else {
+
+                            if (err.code == 11000) {
+                                res.status(422).send({
+                                    msg: 'Duplicate email/username found.'
+                                });
+                            } else
+                                return next(err);
+                        }
+
+                    });
+                    bcrypt.compare(original, hash, function (err, result) {
+                        console.log(result)
+                    })
+                });
             });
         }
     }
@@ -152,6 +173,7 @@ router.post('/add-book', upload_bookCover.single('cover'), async (req, res, next
 
 //update book and profile
 router.post('/user/update-profile', userContr.updateProfile);
+router.post('/user/update-password', userContr.updatePassword);
 router.post('/book/update-book', bookContr.updateBook);
 
 //search books
@@ -199,7 +221,7 @@ router.post('/admin/set-type', userContr.setType);
 router.get('/admin/get-unapproved', userContr.getUnapprovedUsers);
 router.get('/user/get-users', userContr.getAllUsers);
 
-
+router.post('/user/check-password', userContr.checkOldPassword);
 
 
 module.exports = router;
