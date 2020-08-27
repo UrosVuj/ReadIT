@@ -1,0 +1,164 @@
+<body>
+
+  <div id="breef_info" *ngIf="this.user.username!='Guest'">
+    <div id="left_col" class="col">
+      <div id="img_div">
+        <img src={{user.avatar_path}} alt="" id="img">
+      </div>
+      <div>
+        Last accessed: Today
+      </div>
+
+    </div>
+    <div id="right_col" class="col">
+      <div style="font-weight: bold; font-size: 28px;">
+        {{user.first_name}}&nbsp;{{user.last_name}}
+      </div>
+      <div id="email" style="font-size: 20px;">
+        {{user.email}}
+      </div>
+      <div class="line"></div>
+      <div style="color: rgb(15, 15, 15); font-size: 18px;  padding-top: 3px;">
+        From {{user.city}}, &nbsp;{{user.country}}
+      </div>
+      <div class="line"></div>
+      <div style="color: rgb(0, 0, 0); font-size: 15px;">
+        Birthday: {{birthday}}
+      </div>
+      <div class="line"></div>
+      <div id="published">
+        Published:
+      </div>
+
+    </div>
+    <div id="buttons">
+      <table>
+        <tr>
+          <button (click)="setCurrRead()">Reading list</button>
+        </tr>
+        <tr>
+          <button (click)="setFutureRead()">Wishlist</button>
+        </tr>
+        <tr>
+          <button (click)="setFinishedBooks()">Finished list</button>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div id="lists" *ngIf="this.user.username!='Guest'">
+
+    <table id="books" *ngIf="currently_reading_flag==true">
+      <h4>Currently reading:</h4>
+      <tr *ngFor="let book of currently_reading_reduced">
+
+        <td *ngIf="book.hasOwnProperty('column1')">
+          <div class="coverImg">
+            <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
+          </div>
+        </td>
+
+        <td *ngIf="book.hasOwnProperty('column2') ">
+          <div class=" coverImg" *ngIf="book.hasOwnProperty('column2')">
+            <img src={{book.column2.cover_path}} (click)="goto_book(book.column2._id)">
+          </div>
+        </td>
+
+        <td *ngIf="book.hasOwnProperty('column3') ">
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column3') ">
+            <img src={{book.column3.cover_path}} (click)="goto_book(book.column3._id)">
+          </div>
+        </td>
+
+        <td *ngIf="book.hasOwnProperty('column4') ">
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column4') ">
+            <img src={{book.column4.cover_path}} (click)="goto_book(book.column4._id)">
+          </div>
+        </td>
+
+
+      </tr>
+    </table>
+    <div *ngIf="finished_reading_flag==true">
+      <table id="books">
+        <h4>Finished books:</h4>
+        <tr *ngFor="let book of finished_reading_reduced">
+
+
+          <td *ngIf="book.hasOwnProperty('column1')">
+            <div class="coverImg">
+              <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
+            </div>
+          </td>
+
+          <td *ngIf="book.hasOwnProperty('column2') ">
+            <div class="coverImg" *ngIf="book.hasOwnProperty('column2')">
+              <img src={{book.column2.cover_path}} (click)="goto_book(book.column2._id)">
+            </div>
+          </td>
+
+          <td *ngIf="book.hasOwnProperty('column3') ">
+            <div class="coverImg" *ngIf="book.hasOwnProperty('column3') ">
+              <img src={{book.column3.cover_path}} (click)="goto_book(book.column3._id)">
+            </div>
+          </td>
+
+          <td *ngIf="book.hasOwnProperty('column4') ">
+            <div class="coverImg" *ngIf="book.hasOwnProperty('column4') ">
+              <img src={{book.column4.cover_path}} (click)="goto_book(book.column4._id)">
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <div id="pie_chart" *ngIf="this.user.username!='Guest'">
+        <google-chart #chart [title]="title" [type]="type" [data]="chart_data" [columns]="columnNames"
+          [options]="options" [width]="width" [height]="height">
+        </google-chart>
+      </div>
+
+    </div>
+
+
+    <table id="books" *ngIf="want_to_read_flag==true">
+      <h4>Want to read:</h4>
+      <tr *ngFor="let book of want_to_read_reduced">
+
+        <td *ngIf="book.hasOwnProperty('column1')">
+          <div class="coverImg">
+            <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
+          </div>
+        </td>
+
+        <td *ngIf="book.hasOwnProperty('column2') ">
+          <div class=" coverImg" *ngIf="book.hasOwnProperty('column2')">
+            <img src={{book.column2.cover_path}} (click)="goto_book(book.column2._id)">
+          </div>
+        </td>
+
+        <td *ngIf="book.hasOwnProperty('column3') ">
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column3') ">
+            <img src={{book.column3.cover_path}} (click)="goto_book(book.column3._id)">
+          </div>
+        </td>
+
+        <td *ngIf="book.hasOwnProperty('column4') ">
+          <div class="coverImg" *ngIf="book.hasOwnProperty('column4') ">
+            <img src={{book.column4.cover_path}} (click)="goto_book(book.column4._id)">
+          </div>
+        </td>
+
+
+      </tr>
+    </table>
+  </div>
+
+
+
+
+  <div *ngIf="this.user.username=='Guest'"
+    style="color: rgb(26, 27, 29); margin-left: 300px; margin-top: 200px; font-size: 30px;">
+    Please register to access this page! :)
+  </div>
+</body>

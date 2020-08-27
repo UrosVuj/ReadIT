@@ -1,0 +1,166 @@
+<body>
+  <div *ngIf="search_flag==1 || search_flag==2" id="search">
+    <div class="addBook">
+
+      <form class="form" id="search_form">
+        <h3>Search for a book</h3>
+        <p type="Title:"> <input type="text" name="name" placeholder="Book title" [(ngModel)]="search_name"
+            class="input-text" />
+        </p>
+        <p type="Authors:"><input type="text" name="authors" placeholder="Author" [(ngModel)]="author"
+            class="input-text" /></p>
+        <select name="genre" id="genre" [(ngModel)]="genre">
+          <option value="" selected disabled hidden>Pick a genre</option>
+          <option value="">Any genre</option>
+          <option *ngFor="let genre of available_genres; let i = index" [value]="genre.name">
+            {{genre.name}}
+          </option>
+        </select>
+
+
+        <button (click)="search()" name="search" id="search_btn"> Search </button>
+
+      </form>
+
+    </div>
+
+  </div>
+  <div *ngIf="search_flag==2" id="showingSearchedBooks">
+    <div id="tablediv">
+      <table id="books">
+        <div *ngIf="books.length == 1 && !(books[0].hasOwnProperty('column4'))" style="padding-left: 210px;">
+          <tr>
+            <td style="font-size:33px; font-weight: bold; text-align: center;">
+              Results
+              <br>
+            </td>
+          </tr>
+          <tr>
+
+            <td *ngIf="books[0].hasOwnProperty('column1')">
+
+              <div id="coverImg" *ngIf="books[0].column1.approved == true">
+                <img src={{books[0].column1.cover_path}} (click)=" goto_book(books[0].column1._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="books[0].column1.approved != true">
+                <img src={{books[0].column1.cover_path}} (click)=" goto_book(books[0].column1._id)">
+              </div>
+
+            </td>
+
+            <td *ngIf="books[0].hasOwnProperty('column2')">
+
+              <div id="coverImg" *ngIf="books[0].column2.approved == true">
+                <img src={{books[0].column2.cover_path}} (click)=" goto_book(books[0].column2._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="books[0].column2.approved != true">
+                <img src={{books[0].column2.cover_path}} (click)=" goto_book(books[0].column2._id)">
+              </div>
+
+            </td>
+            <td *ngIf="books[0].hasOwnProperty('column3')">
+
+              <div id="coverImg" *ngIf="books[0].column3.approved == true">
+                <img src={{books[0].column3.cover_path}} (click)=" goto_book(books[0].column3._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="books[0].column3.approved != true">
+                <img src={{books[0].column3.cover_path}} (click)=" goto_book(books[0].column3._id)">
+              </div>
+
+            </td>
+
+
+          </tr>
+        </div>
+
+        <div *ngIf="books.length > 1 || books[0].hasOwnProperty('column4')">
+          <tr>
+            <td colspan="4" style="font-size:33px; font-weight: bold;">
+              Results
+              <br>
+            </td>
+          </tr>
+          <tr *ngFor="let book of books">
+            <td *ngIf="book.hasOwnProperty('column1')">
+              <div id="coverImg" *ngIf="book.column1.approved == true">
+                <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="book.column1.approved != true">
+                <img src={{book.column1.cover_path}} (click)=" goto_book(book.column1._id)">
+              </div>
+            </td>
+
+            <td *ngIf="book.hasOwnProperty('column2')">
+              <div id="coverImg" *ngIf="book.column2.approved == true">
+                <img src={{book.column2.cover_path}} (click)=" goto_book(book.column2._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="book.column2.approved != true">
+                <img src={{book.column2.cover_path}} (click)=" goto_book(book.column2._id)">
+              </div>
+            </td>
+
+            <td *ngIf="book.hasOwnProperty('column3')">
+              <div id="coverImg" *ngIf="book.column3.approved == true">
+                <img src={{book.column3.cover_path}} (click)=" goto_book(book.column3._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="book.column3.approved != true">
+                <img src={{book.column3.cover_path}} (click)=" goto_book(book.column3._id)">
+              </div>
+            </td>
+
+            <td *ngIf="book.hasOwnProperty('column4')">
+              <div id="coverImg" *ngIf="book.column4.approved == true">
+                <img src={{book.column4.cover_path}} (click)=" goto_book(book.column4._id)">
+              </div>
+              <div class="coverImg_notApproved" *ngIf="book.column4.approved != true">
+                <img src={{book.column4.cover_path}} (click)=" goto_book(book.column4._id)">
+              </div>
+            </td>
+
+          </tr>
+
+        </div>
+      </table>
+
+    </div>
+  </div>
+
+
+  <div *ngIf="search_flag==3 && this.user.username!='Guest'" class="addBook">
+
+    <form class="form" id="first_form">
+      <h2>Add a book</h2>
+      <p type="Title:"> <input type="text" name="name" placeholder="Book title" [(ngModel)]="name" class="input-text" />
+      </p>
+      <p type="Authors:"><input type="text" name="authors" placeholder="Authors" [(ngModel)]="authors"
+          class="input-text" /></p>
+      <p type="Genres:"> <input type="text" name="genres" placeholder="Genres" [(ngModel)]="genres"
+          class="input-text" />
+      </p>
+      <p type="Date of publishing:"> <input type="Date" name="date_of_publishing" placeholder="Date of publishing"
+          [(ngModel)]="date_of_publishing" class="input-text" />
+      </p>
+
+      <button (click)='form_partTwo()' class="button" style="margin-top: 5px;">Next step</button>
+
+    </form>
+
+    <form class="form" id="second_form" *ngIf="secondform_flag==true">
+      <h2>Finishing touches</h2>
+      <p type="Description:"><br> <textarea placeholder="Type your book description here..." name="description"
+          [(ngModel)]="description" class="input-text"></textarea>
+      </p>
+
+      <p type="Cover:"> <input type="file" name="cover" multiple (change)="upload_img($event)" id="img_upload" />
+      </p>
+
+      <button (click)='add_book()' class="button" style="margin-top: 5px;">Add a book</button>
+
+    </form>
+  </div>
+
+  <div *ngIf="search_flag==3 && this.user.username=='Guest'"
+    style="color: rgb(26, 27, 29); margin-left: 300px; margin-top: 200px; font-size: 30px;">
+    Please register to add books that are not in our database
+  </div>
+</body>

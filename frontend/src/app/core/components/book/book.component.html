@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <div id="breef_info" *ngIf="book_came == true">
+    <div id="left_col" class="col">
+      <div id="img_div">
+        <img src={{book.cover_path}} alt="" id="img">
+      </div>
+      <div id="read_lists" *ngIf="this.book.approved==true">
+        <form *ngIf="user.username!='Guest'">
+
+          <button mat-button (click)="addToWishlist()"
+            *ngIf="want_to_read_flag==false && currently_reading_flag==false && finished_reading_flag==false"
+            style="background-color: rgb(47, 99, 211); width: 75%;">Wishlist</button>
+          <button mat-button (click)="startReading()"
+            *ngIf="(want_to_read_flag==false && currently_reading_flag==false && finished_reading_flag==false) || want_to_read_flag==true"
+            style="background-color: rgb(47, 99, 211); width: 75%; margin-top: 5px;">Start
+            reading</button>
+          <button mat-button (click)="finishReading()"
+            *ngIf="(want_to_read_flag==false && currently_reading_flag==false && finished_reading_flag==false) || currently_reading_flag==true"
+            style="background-color: rgb(47, 99, 211); width: 75%;  margin-top: 5px;">Finish
+            reading</button>
+
+
+
+
+
+
+          <div *ngIf="finished_reading_flag==true" style="text-align: center;">
+            Finished!
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+    <div id="right_col" class="col">
+
+
+      <div *ngIf="change_flag==1">
+        <div style="display: inline-block;">
+          <input type="text" name="name" [(ngModel)]="new_name">
+        </div>
+        <div class="right_btn">
+          <button (click)="submitChange('name')"> Submit </button>
+        </div>
+
+      </div>
+      <div style="font-weight: bold; font-size: 28px;" *ngIf="change_flag!=1">
+        <div style="display: inline-block; max-width: 430px;">
+          {{book.name}}
+        </div>
+        <div class="right_btn" *ngIf="this.user.type == 'admin'">
+          <button (click)="changeName()">Change</button>
+        </div>
+      </div>
+
+      <br>
+
+      <div *ngIf="change_flag==2">
+        <div style="display: inline-block;">
+          <input type="text" name="authors" [(ngModel)]="new_authors">
+        </div>
+        <div class="right_btn">
+          <button (click)="submitChange('authors')"> Submit </button>
+        </div>
+      </div>
+
+      <div *ngIf="change_flag!=2">
+        <div
+          style="color: rgb(15, 15, 15); font-size: 18px;  padding-top: 3px; display: inline-block; max-width: 430px;">
+          by {{authors}}
+        </div>
+        <div class="right_btn" *ngIf="this.user.type == 'admin'">
+          <button (click)="changeAuthors()">Change</button>
+        </div>
+      </div>
+
+
+
+      <div class="line"></div>
+      <div style="color: rgb(0, 0, 0); font-size: 15px;" *ngIf="real_rating==0">
+        No reviews yet
+      </div>
+      <div style="color: rgb(0, 0, 0); font-size: 15px;" *ngIf="real_rating>0">
+        Average review: {{real_rating}}
+      </div>
+
+
+      <div class="line"></div>
+
+
+      <div *ngIf="change_flag==3">
+        <div style="display: inline-block;">
+          <input type="text" name="description" [(ngModel)]="new_description">
+        </div>
+        <div class="right_btn">
+          <button (click)="submitChange('description')"> Submit </button>
+        </div>
+      </div>
+
+      <div *ngIf="change_flag!=3">
+        <div id="description" style="display: inline-block; max-width: 390px;">
+          {{book.description}}
+        </div>
+        <div class="right_btn" *ngIf="this.user.type == 'admin'">
+          <button (click)="changeDescription()">Change</button>
+        </div>
+      </div>
+
+
+      <div class="line"></div>
+
+
+
+      <div *ngIf="change_flag==4">
+        <div style="display: inline-block;">
+          <input type="text" name="genres" [(ngModel)]="new_genres">
+        </div>
+        <div class="right_btn">
+          <button (click)="submitChange('genres')"> Submit </button>
+        </div>
+      </div>
+
+      <div *ngIf="change_flag!=4">
+        <div style="display: inline-block;">
+          Genres: {{book.genres}}
+        </div>
+        <div class="right_btn" *ngIf="this.user.type == 'admin'">
+          <button (click)="changeGenres()">Change</button>
+        </div>
+      </div>
+
+      <div class="line"></div>
+
+      <div *ngIf="change_flag==5">
+        <div style="display: inline-block;">
+          <input type="date" name="pub_date" [(ngModel)]="new_pub_date">
+        </div>
+        <div class="right_btn">
+          <button (click)="submitChange('date_of_publishing')"> Submit </button>
+        </div>
+      </div>
+      <div *ngIf="change_flag!=5">
+        <div id="published" style="display: inline-block;">
+          Published: {{date_of_publishing}}
+        </div>
+        <div class="right_btn" *ngIf="this.user.type == 'admin'">
+          <button (click)="changePublishingDate()">Change</button>
+        </div>
+      </div>
+
+      <div class="line"></div>
+
+      <!--Progress part!-->
+
+      <div id="progress">
+        <div *ngIf="this.currently_reading_flag==true || this.finished_reading_flag==true">
+          Progress:
+          <mat-progress-bar mode="determinate" [value]="this.progress" *ngIf="this.currently_reading_flag==true">
+          </mat-progress-bar>
+          <mat-progress-bar mode="determinate" value="100" *ngIf="this.finished_reading_flag==true">
+          </mat-progress-bar>
+
+        </div>
+        <div *ngIf="currently_reading_flag==true && progress_flag==false">
+          <button (click)="setProgress()" style="display: inline-block;">Set progress</button>
+        </div>
+        <div *ngIf="progress_flag==true">
+          <input type="number" name="progress" placeholder="eg. 85%" [(ngModel)]="temp_progress" style="width: 80px;">
+        </div>
+
+        <div *ngIf="progress_flag==true">
+          <button (click)="submitProgress()">Submit</button>
+        </div>
+      </div>
+
+
+      <div *ngIf="want_to_read_flag == true" id="start_reading">
+
+        Currently in your Wishlist
+        <br>
+        Reading? Click on the button under the image
+      </div>
+
+
+
+    </div>
+  </div>
+
+
+  <div class="line" id="bigline" *ngIf="this.book.approved==true"></div>
+
+
+  <div id="comments" *ngIf="this.book.approved==true">
+    <div id="add_comment"
+      *ngIf="already_reviewed==false && this.user.username != 'Guest' && (this.finished_reading_flag==true || this.progress > 50)">
+      <form class="form" id="second_form">
+        <h2>Write a review</h2>
+        <p type="Text:"><br> <textarea name="comment" placeholder="Type your comment text here..."
+            [(ngModel)]="my_comment_text" class="input-text"></textarea>
+        </p>
+
+        <p type="Rating:"> <input type="number" min="1" max="10" name="rating" id="rating" placeholder="eg. 8.7"
+            [(ngModel)]="my_rating" />
+        </p>
+
+        <button (click)='addComment()' class="button" style="margin-top: 5px;">Submit review</button>
+
+      </form>
+    </div>
+
+    <div class="line" id="bigline2" *ngIf="already_reviewed==false && this.user.username != 'Guest'"></div>
+    <h1 style="text-align: center;" id="title_comments">User reviews</h1>
+
+    <div id="other_comments" *ngFor="let comment of all_comments">
+      <div class="comment">
+        <div class="user_img_div">
+          <img src={{user.avatar_path}} id="user_img">
+          <div style="text-align: center;">
+            {{comment.rating}}
+          </div>
+        </div>
+        <div id="text">
+          <div id="username">
+            <div *ngIf="user.username!='Guest'">
+              <a [href]="'user/' + comment.username">{{comment.username}}</a>
+            </div>
+            <div *ngIf="user.username=='Guest'" style="font-style: italic; font-weight: 700;">
+              Username hidden
+            </div>
+
+          </div>
+          {{comment.comment}}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
