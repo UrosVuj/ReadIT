@@ -1,0 +1,41 @@
+<body>
+  <div *ngIf="room_idCame==true">
+
+    <div class="chat">
+
+      <div class="messages" id="chat">
+        <div>
+          <div *ngFor="let item of messages">
+            <div *ngIf="item.username == user.username">
+              <div class="message me">
+                {{item.text}}
+                <div class="time">
+                  {{item.time}}
+                </div>
+              </div>
+
+            </div>
+            <div *ngIf="item.username != user.username">
+              <div class="message">
+                <div class="user">
+                  {{item.username}}
+                </div>
+                {{item.text}}
+                <div class="time">
+                  {{item.time}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input">
+        <input placeholder="Type your message here!" type="text" [(ngModel)]="new_message">
+        <button type="button" class="btn btn-success pull-right" (click)="sendMessage()">Send</button>
+      </div>
+
+    </div>
+  </div>
+
+
+</body>
