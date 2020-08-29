@@ -23,6 +23,7 @@ export class ChatRoomComponent implements OnInit {
 
   ngOnInit(): void {
 
+    console.log('here');
     //get active route params
     this.subscription = this.route.params.subscribe(params => {
       this.room_id = params['id'];
@@ -60,5 +61,11 @@ export class ChatRoomComponent implements OnInit {
 
   sendMessage() {
     this.websocketService.emit('chatMessage', this.new_message);
+  }
+
+  leaveRoom() {
+    this.websocketService.emit('disconnect', "");
+    this.websocketService.disconnect();
+    this.router.navigate(['/chat'])
   }
 }

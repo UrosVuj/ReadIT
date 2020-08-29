@@ -46,6 +46,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/mod/approve-books'])
   }
 
+  chatRooms() {
+    this.router.navigate(['/chat'])
+  }
+
 
 
   logout() {

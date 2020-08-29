@@ -28,4 +28,8 @@ export class WebsocketService {
     console.log('here');
     this.socket.emit(eventName, data);
   }
+
+  disconnect() {
+    this.socket.disconnect();
+  }
 }

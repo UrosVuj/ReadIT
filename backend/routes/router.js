@@ -6,8 +6,9 @@ const multer = require('multer');
 const bcrypt = require('bcryptjs');
 
 const userContr = require('../controllers/user.controller')
-
+const chatContr = require('../controllers/chat.controller')
 const bookContr = require('../controllers/book.controller')
+
 
 
 const User = mongoose.model('User');
@@ -223,5 +224,13 @@ router.get('/user/get-users', userContr.getAllUsers);
 
 router.post('/user/check-password', userContr.checkOldPassword);
 
+
+
+//***************chats
+
+
+router.post('/chat/add', chatContr.addChatRoom);
+router.get('/chat/get-all', chatContr.getAllChats);
+router.get('/chat/get/:id', chatContr.getChatRoom);
 
 module.exports = router;

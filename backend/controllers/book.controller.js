@@ -103,8 +103,6 @@ module.exports.searchBooksUnapproved = async (req, res, next) => {
     }
 }
 
-
-
 module.exports.getBook = async (req, res, next) => {
 
     let book = await Book.findOne(ObjectId(req.params.id)).exec();
@@ -115,7 +113,6 @@ module.exports.getBook = async (req, res, next) => {
         res.send(unap_book)
     }
 }
-
 
 
 module.exports.getLists = async (req, res, next) => {

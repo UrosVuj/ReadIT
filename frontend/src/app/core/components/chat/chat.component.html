@@ -1,3 +1,20 @@
 <body>
-  <button (click)="goto_room('3')"></button>
+
+  <div id="chat_table">
+    <table>
+      <tr *ngFor="let chat of chats">
+        <td>
+          {{chat.name}}
+        </td>
+        <td>
+          <button (click)="goto_room(chat._id)"> GO</button>
+        </td>
+      </tr>
+
+
+    </table>
+
+  </div>
+
+
 </body>

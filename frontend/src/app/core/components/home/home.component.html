@@ -35,7 +35,7 @@
     <a (click)="profile()" *ngIf="this.user.username != 'Guest' "><i
         class="fas fa-user-circle"></i><span>Profile</span></a>
     <a (click)="books()"><i class="fas fa-book-open"></i><span>Books</span></a>
-    <a><i class="fas fa-users"></i><span>Events</span></a>
+    <a (click)="chatRooms()"><i class="fas fa-users"></i><span>Events</span></a>
     <a (click)="settings()" *ngIf="this.user.username != 'Guest' "><i
         class="fas fa-sliders-h"></i><span>Settings</span></a>
     <a (click)="approveUsers()" *ngIf="this.user.type == 'admin'"><i class="fas fa-user-plus"></i><span>Approve
