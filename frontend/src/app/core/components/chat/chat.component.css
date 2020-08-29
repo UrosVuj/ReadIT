@@ -2,7 +2,7 @@
 
 body {
   color: rgb(12, 12, 12);
-  font-size: 22px;
+  font-size: 18px;
   background-color: rgb(95, 95, 95);
   background-position: center;
   background-size: cover;
@@ -18,4 +18,67 @@ body {
 #chat_table {
   margin-left: 200px;
   margin-top: 50px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+#chatForm {
+  margin-left: 350px;
+  margin-top: 50px;
+  padding-left: 25px;
+  width: 300px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+#chatForm table td {
+  padding-left: 10px;
+}
+
+#formOne td {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+#formTwo td {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+#chat_table td {
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+#addChat {
+  margin-left: 430px;
+  margin-top: 20px
+}
+
+#addChat button {
+  border-radius: 5px;
+  padding: 10px;
+  border: 0px;
+  background-color: rgb(111, 143, 212);
+}
+
+#addChat button:hover {
+  background-color: rgb(192, 206, 238);
+  transition: 0.3s;
+  transform: scale(1.1);
+}
+
+
+#chatForm button {
+  border-radius: 5px;
+  padding: 10px;
+  border: 0px;
+  background-color: rgb(111, 143, 212);
+}
+
+#chatForm button:hover {
+  background-color: rgb(192, 206, 238);
+  transition: 0.3s;
+  transform: scale(1.1);
 }

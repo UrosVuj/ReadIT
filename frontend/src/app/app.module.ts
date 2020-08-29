@@ -22,12 +22,14 @@ import { ApproveBooksComponent } from './core/components/approve-books/approve-b
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //material
+import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { OtherProfileComponent } from './core/components/other-profile/other-profile.component';
 import { ChatComponent } from './core/components/chat/chat.component';
 import { ChatRoomComponent } from './core/components/chat-room/chat-room.component';
+
 
 
 @NgModule({
@@ -58,7 +60,8 @@ import { ChatRoomComponent } from './core/components/chat-room/chat-room.compone
     BrowserAnimationsModule,
     MatProgressBarModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]
