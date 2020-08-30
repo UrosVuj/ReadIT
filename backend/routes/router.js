@@ -141,7 +141,7 @@ router.post('/add-book', upload_bookCover.single('cover'), async (req, res, next
 
     if (req.file)
         book.cover_path = req.file.path;
-    else book.cover_path = 'images\\default_cover.png';
+    else book.cover_path = 'images\\default_cover.jpg';
 
     let name_found = await Book.find({
         name: req.body.name
@@ -232,5 +232,7 @@ router.post('/user/check-password', userContr.checkOldPassword);
 router.post('/chat/add', chatContr.addChatRoom);
 router.get('/chat/get-all', chatContr.getAllChats);
 router.get('/chat/get/:id', chatContr.getChatRoom);
+
+router.post('/chat/finish', chatContr.setChatFinished);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebsocketService } from '../../services/websocket.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-chat-room',
@@ -13,13 +14,14 @@ export class ChatRoomComponent implements OnInit {
   user: any;
   private subscription: any;
   room_id: string;
+  room: any;
   room_idCame: boolean;
 
 
   new_message: string = "";
   messages: any[];
 
-  constructor(private websocketService: WebsocketService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private websocketService: WebsocketService, private router: Router, private route: ActivatedRoute, private chatService: ChatService) { }
 
   ngOnInit(): void {
 
@@ -28,14 +30,22 @@ export class ChatRoomComponent implements OnInit {
     this.subscription = this.route.params.subscribe(params => {
       this.room_id = params['id'];
       this.room_idCame = true;
+      console.log(this.room_id)
+      this.chatService.getOneChat(this.room_id).subscribe(
+        res => {
+          this.room = res
+          console.log(res);
+
+          //get logged user
+          this.user = JSON.parse(localStorage.getItem('user_session'));
+
+          //join room
+          this.joinRoom(this.room_id);
+        }
+      )
     })
 
 
-    //get logged user
-    this.user = JSON.parse(localStorage.getItem('user_session'));
-
-    //join room
-    this.joinRoom(this.room_id);
 
 
     this.websocketService.listen('message').subscribe((data) => {
@@ -55,6 +65,8 @@ export class ChatRoomComponent implements OnInit {
   joinRoom(room_id: string) {
     let data = {};
     data["room"] = room_id;
+    console.log(this.room.name);
+    data["room_name"] = this.room.name;
     data["username"] = this.user.username;
     this.websocketService.emit('joinRoom', data)
   }
@@ -67,5 +79,17 @@ export class ChatRoomComponent implements OnInit {
     this.websocketService.emit('disconnect', "");
     this.websocketService.disconnect();
     this.router.navigate(['/chat'])
+  }
+
+  setFinished() {
+    let data = {};
+    data["id"] = this.room_id;
+    this.chatService.setFinished(data).subscribe(
+      res => {
+        console.log(res);
+        this.router.navigate(['/chat'])
+      }
+
+    )
   }
 }

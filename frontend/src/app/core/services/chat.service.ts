@@ -21,4 +21,8 @@ export class ChatService {
   getOneChat(chat_id: string) {
     return this.http.get<any>(environment.apiUrl + '/chat/get/' + chat_id)
   }
+
+  setFinished(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/chat/finish', data)
+  }
 }

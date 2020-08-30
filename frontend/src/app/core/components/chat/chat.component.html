@@ -39,7 +39,7 @@
           {{chat.fake_start}}
         </td>
         <td *ngIf="(checkAccess(chat) == true || chat.private == false) && checkStart(chat) && user.username!='Guest'">
-          <button (click)="goto_room(chat._id)">GO</button>
+          <button (click)="goto_room(chat._id)">Join</button>
         </td>
       </tr>
 
@@ -88,7 +88,7 @@
       </tr>
 
       <tr>
-        <td>
+        <td *ngIf="this.user.type!='user'">
           <mat-radio-group [(ngModel)]="private">
             <mat-radio-button class="example-margin" value="true" style="  margin: 0 15px;">Private</mat-radio-button>
             <mat-radio-button class="example-margin" value="false" style="  margin: 0 15px;">Public</mat-radio-button>
@@ -97,7 +97,7 @@
       </tr>
       <tr>
         <td>
-          <button (click)="submitNewRoom()" style="margin-left: 100px;">Submit</button>
+          <button (click)="submitNewRoom()" style="margin-left: 93px;">Submit</button>
         </td>
 
       </tr>

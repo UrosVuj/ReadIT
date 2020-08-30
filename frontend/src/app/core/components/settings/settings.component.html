@@ -91,6 +91,26 @@
           <button class="change_field" (click)="submitChange('city')">Submit</button>
         </td>
       </tr>
+
+      <tr>
+        <td>
+          Date of birth:
+        </td>
+        <td *ngIf="change_flag!=6" class="middle_col">
+          {{birthday}}
+        </td>
+        <td *ngIf="change_flag!=6">
+          <button class="change_field" (click)="changeField(6)">Change</button>
+        </td>
+        <td *ngIf="change_flag==6" class="middle_col">
+          <input type="date" name="dob" id="date" [(ngModel)]="dob" required>
+        </td>
+        <td *ngIf="change_flag==6">
+          <button class="change_field" (click)="submitChange('dob')">Submit</button>
+        </td>
+      </tr>
+
+
     </table>
   </form>
   <div id="change_pass">

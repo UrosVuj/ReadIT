@@ -122,7 +122,10 @@ export class ChatComponent implements OnInit {
     data["name"] = this.name;
     data["creator"] = this.user.username;
     data["description"] = this.description;
-    data['private'] = this.private;
+    if (this.user.type == 'user')
+      data['private'] = 'true'
+    else
+      data['private'] = this.private;
     data['start'] = this.start;
     data['finished'] = false;
 

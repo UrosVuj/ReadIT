@@ -185,7 +185,7 @@
 
         Currently in your Wishlist
         <br>
-        Reading? Click on the button under the image
+        <strong>Started reading? Click on the button under the image </strong>
       </div>
 
 
@@ -221,9 +221,9 @@
     <div id="other_comments" *ngFor="let comment of all_comments">
       <div class="comment">
         <div class="user_img_div">
-          <img src={{user.avatar_path}} id="user_img">
+          <img src="http://localhost:3000/admin_photo.png" id="user_img">
           <div style="text-align: center;">
-            {{comment.rating}}
+            Rating: {{comment.rating}}
           </div>
         </div>
         <div id="text">

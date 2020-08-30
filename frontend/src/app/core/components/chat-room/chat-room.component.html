@@ -31,12 +31,13 @@
       </div>
       <div class="input">
         <input placeholder="Type your message here!" type="text" [(ngModel)]="new_message">
-        <button type="button" class="btn btn-success pull-right" (click)="sendMessage()">Send</button>
+        <button type="button" class="btn btn-success pull-right" id="send_btn" (click)="sendMessage()">Send</button>
       </div>
 
     </div>
   </div>
 
-  <button (click)="leaveRoom()"> leave</button>
+  <button (click)="leaveRoom()" id="leave_btn"> Leave room </button>
+  <button (click)="setFinished()" id="finish_btn"> Finish session </button>
 
 </body>

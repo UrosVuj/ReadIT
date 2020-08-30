@@ -24,6 +24,8 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+    localStorage.clear();
+
     this.sgnup_page2 = false;
 
     this.user = {} as User;

@@ -56,3 +56,16 @@ module.exports.getChatRoom = async (req, res, next) => {
 
     res.send(chat);
 }
+
+module.exports.setChatFinished = async (req, res, next) => {
+
+
+    console.log(req.body.id)
+    let chat = await Chats.updateOne({
+        _id: ObjectId(req.body.id)
+    }, {
+        finished: "true"
+    }).exec();
+
+    res.send(chat);
+}

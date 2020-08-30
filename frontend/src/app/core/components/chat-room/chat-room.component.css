@@ -194,3 +194,62 @@ body {
     opacity: 1;
   }
 }
+
+#leave_btn {
+  font-size: 20px;
+  margin-left: 290px;
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 5px 3px 3px #3d3d3d;
+  background-color: rgb(69, 170, 196);
+  padding: 15px;
+}
+
+#leave_btn:hover {
+  background-color: rgb(78, 188, 216);
+  transition: 0.3s;
+  transform: scale(1.1);
+}
+
+#leave_btn:active {
+  transform: scale(0.95);
+}
+
+#finish_btn {
+  margin-left: 330px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 5px 3px 3px #3d3d3d;
+  background-color: rgb(69, 170, 196);
+  padding: 15px;
+}
+
+#finish_btn:hover {
+  background-color: rgb(78, 188, 216);
+  transition: 0.3s;
+  transform: scale(1.1);
+}
+
+#finish_btn:active {
+  transform: scale(0.95);
+}
+
+
+#send_btn {
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 5px 3px 3px #c4c4c4;
+  background-color: rgb(150, 150, 150);
+  padding: 8px;
+}
+
+#send_btn:hover {
+  background-color: rgb(189, 189, 189);
+  transition: 0.3s;
+  transform: scale(1.1);
+}
+
+#send_btn:active {
+  transform: scale(0.95);
+}
