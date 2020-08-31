@@ -6,8 +6,9 @@ const multer = require('multer');
 const bcrypt = require('bcryptjs');
 
 const userContr = require('../controllers/user.controller')
-
+const chatContr = require('../controllers/chat.controller')
 const bookContr = require('../controllers/book.controller')
+
 
 
 const User = mongoose.model('User');
@@ -140,7 +141,7 @@ router.post('/add-book', upload_bookCover.single('cover'), async (req, res, next
 
     if (req.file)
         book.cover_path = req.file.path;
-    else book.cover_path = 'images\\default_cover.png';
+    else book.cover_path = 'images\\default_cover.jpg';
 
     let name_found = await Book.find({
         name: req.body.name
@@ -223,5 +224,24 @@ router.get('/user/get-users', userContr.getAllUsers);
 
 router.post('/user/check-password', userContr.checkOldPassword);
 
+
+//book pages progress
+
+router.post('/book/create-progress', bookContr.createBookPages);
+router.post('/book/delete-progress', bookContr.deleteBookPages)
+router.post('/book/update-progress', bookContr.updateBookPages);
+
+router.get('/book/get-progress/:username/:book_id', bookContr.getBookPages);
+
+
+
+//***************chats
+
+
+router.post('/chat/add', chatContr.addChatRoom);
+router.get('/chat/get-all', chatContr.getAllChats);
+router.get('/chat/get/:id', chatContr.getChatRoom);
+
+router.post('/chat/finish', chatContr.setChatFinished);
 
 module.exports = router;

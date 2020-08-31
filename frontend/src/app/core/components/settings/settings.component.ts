@@ -75,6 +75,12 @@ export class SettingsComponent implements OnInit {
     data["type_to_update"] = type;
 
     switch (type) {
+      case ("dob"):
+        data[type] = this.dob;
+        this.user.dob = this.dob;
+        this.generateBirthday();
+        localStorage.setItem('user_session', JSON.stringify(this.user))
+        break;
       case ("first_name"):
         data[type] = this.first_name;
         this.user.first_name = this.first_name;

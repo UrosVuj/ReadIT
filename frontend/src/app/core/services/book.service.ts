@@ -71,6 +71,20 @@ export class BookService {
     return this.http.post<any>(environment.apiUrl + '/book/remove-from-list', data)
   }
 
+  updatePages(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/book/update-progress', data)
+  }
+  deleteTotalPages(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/book/delete-progress', data)
+  }
+  createTotalPages(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/book/create-progress', data)
+  }
+  getBookTotalPages(book_id: string, username: string) {
+    return this.http.get<any>(environment.apiUrl + '/book/get-progress/' + username + '/' + book_id)
+  }
+
+
 
 
 }

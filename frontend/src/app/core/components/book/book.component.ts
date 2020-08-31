@@ -50,6 +50,7 @@ export class BookComponent implements OnInit, OnDestroy {
   temp_progress: number;
   progress_flag: boolean;
 
+  absolute_progress: number;
 
   //changing book info
   change_flag: number;
@@ -60,6 +61,10 @@ export class BookComponent implements OnInit, OnDestroy {
   new_genres: string;
   new_genres_arr: string[];
   new_pub_date: Date;
+
+  total_pages: number;
+  real_total_pages: number;
+  set_length_flag: boolean;
 
 
 
@@ -103,6 +108,7 @@ export class BookComponent implements OnInit, OnDestroy {
           this.book_came = true;
           this.generatePublishingDate();
           this.getComments();
+
         }
       )
     });
@@ -154,6 +160,8 @@ export class BookComponent implements OnInit, OnDestroy {
     this.addToList();
     if (this.want_to_read_flag)
       this.removeFromList('want_to_read');
+
+    this.createTotalPages();
 
     this.want_to_read_flag = false;
     this.currently_reading_flag = true;
@@ -290,7 +298,7 @@ export class BookComponent implements OnInit, OnDestroy {
           console.log(this.currently_reading)
           if (this.id == book.book_id) {
             this.currently_reading_flag = true;
-            this.progress = book.progress;
+            this.getTotalPages(book)
           }
         });
 
@@ -378,8 +386,9 @@ export class BookComponent implements OnInit, OnDestroy {
 
   submitProgress() {
     if (this.progress > this.temp_progress) return;
-    this.progress = this.temp_progress;
-
+    this.progress = (this.temp_progress / this.real_total_pages) * 100;
+    this.absolute_progress = this.temp_progress;
+    console.log(this.real_total_pages)
     if (this.progress != 100) {
       let data = {}
       data["username"] = this.user.username;
@@ -418,5 +427,47 @@ export class BookComponent implements OnInit, OnDestroy {
 
   goto_User(username: string) {
     this.router.navigate(['/user/' + username])
+  }
+
+  createTotalPages() {
+    let data = {};
+    data["username"] = this.user.username;
+    data["book_id"] = this.id;
+    this.bookService.createTotalPages(data).subscribe(
+      res => {
+        console.log(res)
+      }
+    )
+  }
+
+  updateTotalPages() {
+    if (this.total_pages) {
+      this.real_total_pages = this.total_pages;
+      let data = {};
+      data["username"] = this.user.username;
+      data["book_id"] = this.id;
+      data["book_pages"] = this.total_pages;
+      this.bookService.updatePages(data).subscribe(
+        res => {
+          console.log(res)
+        }
+      )
+    }
+
+  }
+
+  getTotalPages(book: any) {
+
+    this.bookService.getBookTotalPages(this.id, this.user.username).subscribe(
+      res => {
+        this.real_total_pages = res.book_pages
+        this.progress = (book.progress / this.real_total_pages) * 100;
+        this.absolute_progress = ((this.progress * this.real_total_pages) / 100) | 0;
+      }
+    )
+  }
+
+  setLengthFlag() {
+    this.set_length_flag = true;
   }
 }

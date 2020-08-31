@@ -32,6 +32,7 @@ export class ApproveBooksComponent implements OnInit {
           this.unapproved_books = res.books;
           this.unapproved_books.forEach(book => {
             book.cover_path = "http://localhost:3000/" + book.cover_path.substr(7);
+            book.date_of_publishing = this.generatePublishingDate(book);
           })
         }
         else console.log("no unapproved books like that")
@@ -65,6 +66,27 @@ export class ApproveBooksComponent implements OnInit {
 
       }
     )
+  }
+
+  generatePublishingDate(book: any): string {
+    var real_month: string;
+    var real_day: string;
+
+    let date = new Date(book.date_of_publishing)
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let year = date.getFullYear();
+
+    real_month = month + "";
+    real_day = day + "";
+
+    if (month < 10) {
+      real_month = "0" + real_month;
+    }
+    if (day < 10) {
+      real_day = "0" + real_day
+    }
+    return real_day + "/" + real_month + "/" + year
   }
 
 

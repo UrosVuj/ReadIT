@@ -1,0 +1,110 @@
+<body>
+
+  <div id="addChat" *ngIf="addChat_flag == false && user.username!='Guest'">
+    <button (click)="addChat()"> Add an event</button>
+  </div>
+  <div *ngIf="addChat_flag == false">
+    <table id="chat_table" *ngIf="chats_came==true">
+      <tr>
+        <td>
+          Room name:
+        </td>
+        <td>
+          Owner:
+        </td>
+        <td>
+          Availability:
+        </td>
+        <td>
+          Start time:
+        </td>
+
+      </tr>
+      <tr *ngFor="let chat of chats">
+        <td>
+          {{chat.name}}
+        </td>
+        <td>
+          {{chat.creator}}
+        </td>
+        <td>
+          <div *ngIf="chat.private == true">
+            Private
+          </div>
+          <div *ngIf="chat.private != true">
+            Public
+          </div>
+        </td>
+        <td>
+          {{chat.fake_start}}
+        </td>
+        <td *ngIf="(checkAccess(chat) == true || chat.private == false) && checkStart(chat) && user.username!='Guest'">
+          <button (click)="goto_room(chat._id)">Join</button>
+        </td>
+      </tr>
+
+
+    </table>
+
+  </div>
+  <div id="chatForm" *ngIf="addChat_flag == true">
+
+    <table *ngIf="page2_flag==false" id="formOne">
+
+      <tr>
+        <td>
+          <mat-form-field style="width: 250px;">
+            <mat-label>Enter event name</mat-label>
+            <input matInput type="text" placeholder="Event name" [(ngModel)]="name">
+          </mat-form-field>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td>
+          <p>Description:</p>
+          <textarea name="description" [(ngModel)]="description"> </textarea>
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+          <button (click)="page2()" style="margin-left: 100px;">Next</button>
+        </td>
+
+      </tr>
+
+    </table>
+    <table *ngIf="page2_flag==true" id="formTwo">
+      <tr>
+        <td>
+          <mat-form-field style="width: 250px;">
+            <mat-label>Enter start time</mat-label>
+            <input matInput type="datetime-local" placeholder="Event name" [(ngModel)]="start">
+          </mat-form-field>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td *ngIf="this.user.type!='user'">
+          <mat-radio-group [(ngModel)]="private">
+            <mat-radio-button class="example-margin" value="true" style="  margin: 0 15px;">Private</mat-radio-button>
+            <mat-radio-button class="example-margin" value="false" style="  margin: 0 15px;">Public</mat-radio-button>
+          </mat-radio-group>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button (click)="submitNewRoom()" style="margin-left: 93px;">Submit</button>
+        </td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+
+</body>

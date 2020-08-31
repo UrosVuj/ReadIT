@@ -11,6 +11,8 @@ import { GenresComponent } from './core/components/genres/genres.component';
 import { AddPrivilegesComponent } from './core/components/add-privileges/add-privileges.component';
 import { ApproveBooksComponent } from './core/components/approve-books/approve-books.component';
 import { OtherProfileComponent } from './core/components/other-profile/other-profile.component';
+import { ChatComponent } from './core/components/chat/chat.component';
+import { ChatRoomComponent } from './core/components/chat-room/chat-room.component';
 
 
 const routes: Routes = [
@@ -25,7 +27,9 @@ const routes: Routes = [
   { path: "admin/genres", component: GenresComponent },
   { path: "mod/approve-books", component: ApproveBooksComponent },
   { path: "admin/privileges", component: AddPrivilegesComponent },
-  { path: "user/:id", component: OtherProfileComponent }
+  { path: "user/:id", component: OtherProfileComponent },
+  { path: "chat", component: ChatComponent },
+  { path: "chat-room/:id", component: ChatRoomComponent }
 
 ];
 
