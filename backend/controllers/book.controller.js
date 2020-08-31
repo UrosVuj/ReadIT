@@ -12,6 +12,7 @@ const Comment = mongoose.model('Comment');
 const Book = mongoose.model('Book');
 const ReadList = mongoose.model('ReadList');
 const Unapproved_Book = mongoose.model('Unapproved_Book')
+const BookProgress = mongoose.model('BookProgress')
 
 
 module.exports.searchBooks = async (req, res, next) => {
@@ -487,5 +488,61 @@ module.exports.updateBook = async (req, res, next) => {
     //console.log(req.body);
     res.send(req.body);
 
+
+}
+
+module.exports.createBookPages = async (req, res, next) => {
+
+
+
+    bookProgress = new BookProgress()
+    bookProgress.book_id = req.body.book_id;
+    bookProgress.username = req.body.username;
+    bookProgress.book_pages = 100;
+
+    bookProgress.save();
+
+    console.log(req.body);
+    res.send(req.body);
+
+}
+
+module.exports.updateBookPages = async (req, res, next) => {
+
+
+    let respon = await BookProgress.updateOne({
+        username: req.body.username,
+        book_id: req.body.book_id,
+    }, {
+        book_pages: req.body.book_pages
+    }).exec();
+
+
+    res.send(respon);
+
+}
+
+module.exports.getBookPages = async (req, res, next) => {
+
+    let respon = await BookProgress.findOne({
+        username: req.params.username,
+        book_id: req.params.book_id,
+    }).exec();
+
+
+    res.send(respon);
+
+}
+
+module.exports.deleteBookPages = async (req, res, next) => {
+
+
+    let respon = await BookProgress.deleteOne({
+        username: req.body.username,
+        book_id: req.body.book_id,
+    }).exec();
+
+
+    res.send(respon);
 
 }

@@ -25,6 +25,13 @@
             *ngIf="(want_to_read_flag==false && currently_reading_flag==false && finished_reading_flag==false) || currently_reading_flag==true"
             style="background-color: rgb(47, 99, 211); width: 75%;  margin-top: 5px;">Finish
             reading</button>
+          <button mat-button (click)="setLengthFlag()"
+            *ngIf="((want_to_read_flag==false && finished_reading_flag==false) && currently_reading_flag==true) && set_length_flag!=true"
+            style="background-color: rgb(47, 99, 211); width: 50%;  margin-top: 5px;">Set length</button>
+          <input type="text" name="total_pages" [(ngModel)]="total_pages" placeholder="eg. 343"
+            *ngIf="set_length_flag==true" style="width: 60%;  margin-top: 15px;">
+          <button mat-button (click)="updateTotalPages()" *ngIf="set_length_flag==true"
+            style="background-color: rgb(47, 99, 211); width: 41%;  margin-top: 5px;">Set</button>
 
 
 
@@ -164,6 +171,9 @@
           Progress:
           <mat-progress-bar mode="determinate" [value]="this.progress" *ngIf="this.currently_reading_flag==true">
           </mat-progress-bar>
+          <div *ngIf="this.currently_reading_flag==true" id="progress_display">
+            {{absolute_progress}}/{{real_total_pages}}
+          </div>
           <mat-progress-bar mode="determinate" value="100" *ngIf="this.finished_reading_flag==true">
           </mat-progress-bar>
 
@@ -172,7 +182,7 @@
           <button (click)="setProgress()" style="display: inline-block;">Set progress</button>
         </div>
         <div *ngIf="progress_flag==true">
-          <input type="number" name="progress" placeholder="eg. 85%" [(ngModel)]="temp_progress" style="width: 80px;">
+          <input type="number" name="progress" placeholder="eg. 255" [(ngModel)]="temp_progress" style="width: 80px;">
         </div>
 
         <div *ngIf="progress_flag==true">

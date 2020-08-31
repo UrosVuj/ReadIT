@@ -225,6 +225,15 @@ router.get('/user/get-users', userContr.getAllUsers);
 router.post('/user/check-password', userContr.checkOldPassword);
 
 
+//book pages progress
+
+router.post('/book/create-progress', bookContr.createBookPages);
+router.post('/book/delete-progress', bookContr.deleteBookPages)
+router.post('/book/update-progress', bookContr.updateBookPages);
+
+router.get('/book/get-progress/:username/:book_id', bookContr.getBookPages);
+
+
 
 //***************chats
 
