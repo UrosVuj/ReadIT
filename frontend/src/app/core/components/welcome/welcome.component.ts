@@ -24,6 +24,8 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+    localStorage.clear();
+
     this.sgnup_page2 = false;
 
     this.user = {} as User;
@@ -99,6 +101,15 @@ export class WelcomeComponent implements OnInit {
   }
 
   signup() {
+
+    //min 7 karaktera, slovo malo i veliko, broj, specijalan karakter
+    let passwordRegex = RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])([a-z]|[A-Z]).{7,}$');
+
+
+    if (!passwordRegex.test(this.password)) {
+      this.emptyField_pg2msg = "Password isn't strong enough!"
+      return;
+    }
 
 
     let form = new FormData();

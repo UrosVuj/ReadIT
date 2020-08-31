@@ -62,8 +62,7 @@ td {
 }
 
 img {
-  height: 188px;
-  width: 120px;
+  max-width: 120px;
 }
 
 #lists {

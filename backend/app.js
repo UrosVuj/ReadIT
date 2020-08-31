@@ -5,9 +5,24 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+//create server and init socket.io
+var app = express();
+var server = require('http').createServer(app);
+
+//socket.io
+const io = require('socket.io')(server);
+const {
+    userJoin,
+    getCurrentUser,
+    userLeave,
+    getRoomUsers
+} = require('./util/chat/users');
+const formatMessage = require('./util/chat/message');
+const botName = 'Readit Bot';
+
+//router
 const rtsIndex = require('./routes/router');
 
-var app = express();
 
 // middleware
 app.use(bodyParser.json());
@@ -26,5 +41,63 @@ app.use((err, req, res, next) => {
     }
 });
 
+
+io.on('connection', socket => {
+
+    console.log('User has connected')
+
+    socket.on('joinRoom', (data) => {
+
+        console.log(data.username + ' has joined the room ' + data.room);
+        const user = userJoin(socket.id, data.username, data.room);
+
+        socket.join(user.room);
+
+        // Welcome current user
+        socket.emit('message', formatMessage(botName, 'Welcome to the "' + data.room_name + '" room'));
+
+        // Broadcast when a user connects
+        socket.broadcast
+            .to(user.room)
+            .emit(
+                'message',
+                formatMessage(botName, `${user.username} has joined the chat`)
+            );
+
+        // Send users and room info
+        io.to(user.room).emit('roomUsers', {
+            room: user.room,
+            users: getRoomUsers(user.room)
+        });
+    });
+
+    // Listen for chatMessage
+    socket.on('chatMessage', msg => {
+        const user = getCurrentUser(socket.id);
+        console.log(msg)
+        io.to(user.room).emit('message', formatMessage(user.username, msg));
+    });
+
+    // Runs when client disconnects
+    socket.on('disconnect', () => {
+        const user = userLeave(socket.id);
+        console.log("disconnected");
+        if (user) {
+            io.to(user.room).emit(
+                'message',
+                formatMessage(botName, `${user.username} has left the chat`)
+            );
+
+            // Send users and room info
+            io.to(user.room).emit('roomUsers', {
+                room: user.room,
+                users: getRoomUsers(user.room)
+            });
+        }
+    });
+});
+
+
+
 // start server
-app.listen(process.env.PORT, () => console.log(`Server started at port : ${process.env.PORT}`));
+server.listen(process.env.PORT, () => console.log(`Server started at port : ${process.env.PORT}`));
