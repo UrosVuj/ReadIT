@@ -11,7 +11,7 @@ ReadIT - Book catalogue social web app
 * Users have ***wishlists/reading lists/lists of finished books*** with ***graphed representations*** of genres they enjoy
 
 * ***Book discussion rooms*** with set time and date when they begin
-  * **Live chat** between users in same rooms
+  * **Live chat** between users in the same room
   * Users can add people to their private rooms while moderators create public events
   
 
