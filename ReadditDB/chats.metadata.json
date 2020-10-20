@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"ReadditDB.chats"}],"uuid":"54d0da3d2c3a49eda71ae5cd73b90e8f"}
