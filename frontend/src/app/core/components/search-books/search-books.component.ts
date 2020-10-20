@@ -66,7 +66,7 @@ export class SearchBooksComponent implements OnInit {
     }
     this.books.forEach(book => {
       console.log(book)
-      book.cover_path = "http://localhost:3000/" + book.cover_path.substr(7);
+      book.cover_path = book.cover_path.substr(7);
     });
 
     //test

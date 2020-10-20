@@ -44,11 +44,11 @@ app.use((err, req, res, next) => {
 
 io.on('connection', socket => {
 
-    console.log('User has connected')
+
 
     socket.on('joinRoom', (data) => {
 
-        console.log(data.username + ' has joined the room ' + data.room);
+
         const user = userJoin(socket.id, data.username, data.room);
 
         socket.join(user.room);
@@ -74,14 +74,12 @@ io.on('connection', socket => {
     // Listen for chatMessage
     socket.on('chatMessage', msg => {
         const user = getCurrentUser(socket.id);
-        console.log(msg)
         io.to(user.room).emit('message', formatMessage(user.username, msg));
     });
 
     // Runs when client disconnects
     socket.on('disconnect', () => {
         const user = userLeave(socket.id);
-        console.log("disconnected");
         if (user) {
             io.to(user.room).emit(
                 'message',

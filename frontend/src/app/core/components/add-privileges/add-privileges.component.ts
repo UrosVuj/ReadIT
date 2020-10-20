@@ -18,7 +18,7 @@ export class AddPrivilegesComponent implements OnInit {
       res => {
         this.users = res;
         this.users.forEach(user => {
-          user.avatar_path = "http://localhost:3000/" + user.avatar_path.substr(7);
+          user.avatar_path = user.avatar_path.substr(7);
         })
       }
     )

@@ -85,7 +85,7 @@ export class BookComponent implements OnInit, OnDestroy {
 
     //user init
     this.user = JSON.parse(localStorage.getItem('user_session'));
-    this.user.avatar_path = "http://localhost:3000/" + this.user.avatar_path.substr(7);
+    this.user.avatar_path = this.user.avatar_path.substr(7);
 
     //get book
     this.subscription = this.route.params.subscribe(params => {
@@ -104,7 +104,7 @@ export class BookComponent implements OnInit, OnDestroy {
               this.genres = this.genres + this.book.genres[i];
             else this.genres = this.genres + this.book.genres[i] + ", ";
           }
-          this.book.cover_path = "http://localhost:3000/" + this.book.cover_path.substr(7);
+          this.book.cover_path = this.book.cover_path.substr(7);
           this.book_came = true;
           this.generatePublishingDate();
           this.getComments();

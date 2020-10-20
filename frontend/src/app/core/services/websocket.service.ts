@@ -8,7 +8,7 @@ import { Observable, Subscriber } from 'rxjs';
 export class WebsocketService {
 
   socket: any;
-  readonly chatURI: string = "http://localhost:3000"
+  readonly chatURI: string = ""
 
   constructor() {
     this.socket = io(this.chatURI)

@@ -18,7 +18,7 @@ export class ApproveComponent implements OnInit {
   ngOnInit(): void {
 
     this.user = JSON.parse(localStorage.getItem('user_session'));
-    this.user.avatar_path = "http://localhost:3000/" + this.user.avatar_path.substr(7);
+    this.user.avatar_path = this.user.avatar_path.substr(7);
 
     this.getUnapproved();
 

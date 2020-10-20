@@ -19,7 +19,7 @@ module.exports.searchBooks = async (req, res, next) => {
 
     var query = {};
 
-    console.log(req.body)
+    //console.log(req.body)
 
     // pojedinacno se dodaju parametri u zavisnosti od toga sta je korsinik hteo da doda
     // regex sluzi kao LIKE operator za upit
@@ -43,7 +43,7 @@ module.exports.searchBooks = async (req, res, next) => {
     }
 
     let books = await Book.find(query).exec();
-    console.log(books);
+    //console.log(books);
     if (books.length == 0) {
         res.status(200).json({
             found: false,
@@ -65,7 +65,7 @@ module.exports.searchBooksUnapproved = async (req, res, next) => {
 
     var query = {};
 
-    console.log(req.body)
+    //console.log(req.body)
 
     // pojedinacno se dodaju parametri u zavisnosti od toga sta je korsinik hteo da doda
     // regex sluzi kao LIKE operator za upit
@@ -89,7 +89,6 @@ module.exports.searchBooksUnapproved = async (req, res, next) => {
     }
 
     let books = await Unapproved_Book.find(query).exec();
-    console.log(books);
     if (books.length == 0) {
         res.status(200).json({
             found: false,
@@ -158,7 +157,6 @@ module.exports.getLists = async (req, res, next) => {
         }
     }).exec();
 
-    console.log(currently_reading_books);
 
     res.json({
         "currently_reading": currently_reading_books,
@@ -205,7 +203,6 @@ module.exports.addToPastList = async (req, res, next) => {
         }
     }).exec();
 
-    console.log(req.body);
     res.send(req.body);
 
 }
@@ -223,7 +220,6 @@ module.exports.addToPresentList = async (req, res, next) => {
         }
     }).exec();
 
-    console.log(req.body);
     res.send(req.body);
 
 
@@ -241,14 +237,12 @@ module.exports.addToFutureList = async (req, res, next) => {
         }
     }).exec();
 
-    console.log(req.body);
     res.send(req.body);
 
 
 }
 module.exports.removeFromList = async (req, res, next) => {
 
-    console.log(req.body.type_to_update);
 
     if (req.body.type_to_update == 'currently_reading')
         await ReadList.updateOne({
@@ -292,7 +286,6 @@ module.exports.setProgress = async (req, res, next) => {
     }).exec();
 
 
-    console.log(req.body);
     res.json({
         msg: "Success!"
     });
@@ -305,7 +298,6 @@ module.exports.getLists2 = async (req, res, next) => {
 
 
     //ukoliko zatreba da vrati samo listu _id od knjiga u listi za citanje
-    console.log(req.params.id)
     let book_lists = await ReadList.findOne({
         username: req.params.id
     }).exec();
@@ -329,7 +321,6 @@ module.exports.addComment = async (req, res, next) => {
 
     }).exec();
 
-    console.log(comment);
 
     comment.save((err, doc) => {
         if (!err)
@@ -378,10 +369,8 @@ module.exports.updateBook = async (req, res, next) => {
             _id: ObjectId(req.body._id)
         })
 
-        console.log(req.body.type_to_update)
         switch (req.body.type_to_update) {
             case "name":
-                console.log("Update email")
                 await Book.updateOne({
                     _id: ObjectId(req.body._id)
                 }, {
@@ -389,7 +378,6 @@ module.exports.updateBook = async (req, res, next) => {
                 }).exec();
                 break;
             case "authors":
-                console.log("Update dob")
                 await Book.updateOne({
                     _id: ObjectId(req.body._id)
                 }, {

@@ -66,7 +66,7 @@ export class ProfileComponent implements OnInit {
 
     this.user = JSON.parse(localStorage.getItem('user_session'));
 
-    this.user.avatar_path = "http://localhost:3000/" + this.user.avatar_path.substr(7);
+    this.user.avatar_path = this.user.avatar_path.substr(7);
 
     this.chart_data = [];
 
@@ -123,15 +123,15 @@ export class ProfileComponent implements OnInit {
         this.generatePieChart()
 
         this.want_to_read.forEach(book => {
-          book.cover_path = "http://localhost:3000/" + book.cover_path.substr(7);
+          book.cover_path = book.cover_path.substr(7);
           console.log(book.cover_path.substr(7))
         });
         this.finished_reading.forEach(book => {
-          book.cover_path = "http://localhost:3000/" + book.cover_path.substr(7);
+          book.cover_path = book.cover_path.substr(7);
           console.log(book.cover_path.substr(7))
         });
         this.currently_reading.forEach(book => {
-          book.cover_path = "http://localhost:3000/" + book.cover_path.substr(7);
+          book.cover_path = book.cover_path.substr(7);
           console.log(book.cover_path.substr(7))
         });
       },

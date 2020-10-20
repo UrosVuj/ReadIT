@@ -18,7 +18,7 @@ export class ApproveBooksComponent implements OnInit {
   ngOnInit(): void {
 
     this.user = JSON.parse(localStorage.getItem('user_session'));
-    this.user.avatar_path = "http://localhost:3000/" + this.user.avatar_path.substr(7);
+    this.user.avatar_path = this.user.avatar_path.substr(7);
 
     let criteria = {};
     criteria["name"] = ""
@@ -31,7 +31,7 @@ export class ApproveBooksComponent implements OnInit {
           console.log(res);
           this.unapproved_books = res.books;
           this.unapproved_books.forEach(book => {
-            book.cover_path = "http://localhost:3000/" + book.cover_path.substr(7);
+            book.cover_path = book.cover_path.substr(7);
             book.date_of_publishing = this.generatePublishingDate(book);
           })
         }
