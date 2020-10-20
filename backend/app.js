@@ -32,6 +32,13 @@ app.use('/api', rtsIndex);
 //for image displaying
 app.use(express.static('images'))
 
+//for heroku
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
+  });
+  
+
 // error handler
 app.use((err, req, res, next) => {
     if (err.name === 'ValidationError') {
