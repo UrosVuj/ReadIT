@@ -98,4 +98,4 @@ io.on('connection', socket => {
 
 
 // start server
-server.listen(process.env.PORT || 80, () => console.log(`Server started at port : ${process.env.PORT}`));
+server.listen(process.env.PORT || 80, '0.0.0.0', () => console.log(`Server started at port : ${process.env.PORT}`));
