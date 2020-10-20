@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI, (err) => {
+var MONGODB_URI = "mongodb+srv://UrosV:uros2001999710178@uroscluster.ozbqx.azure.mongodb.net/ReadditDB?retryWrites=true&w=majority";
+mongoose.connect(MONGODB_URI, (err) => {
     if (!err) {
         console.log('MongoDB connection succeeded.');
     } else {
