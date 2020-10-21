@@ -1,6 +1,8 @@
 # ReadIT
 ReadIT - Book catalogue social web app
 
+Check it out at  https://app-readit.herokuapp.com/  ( Dyno might be sleeping at times :) )
+
 ## Features
 * Guest access and user registration
 * Database consisting of numerous books and their detailed information
