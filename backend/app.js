@@ -34,9 +34,9 @@ app.use(express.static('images'))
 
 //for heroku
 
-app.use(express.static(__dirname + '/dist/frontend'));
+app.use(express.static(__dirname + '/dist'));
 app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/dist/frontend/index.html');
+    res.sendFile(__dirname + '/dist/index.html');
   });
   
 
