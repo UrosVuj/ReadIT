@@ -30,7 +30,7 @@ app.use(cors());
 app.use('/api', rtsIndex);
 
 //for image displaying
-app.use(express.static('images'))
+app.use(express.static(__dirname+'/images'))
 
 //for heroku
 
