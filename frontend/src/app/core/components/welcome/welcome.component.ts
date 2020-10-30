@@ -102,15 +102,6 @@ export class WelcomeComponent implements OnInit {
 
   signup() {
 
-    //min 7 karaktera, slovo malo i veliko, broj, specijalan karakter
-    let passwordRegex = RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])([a-z]|[A-Z]).{6,}$');
-
-
-    if (!passwordRegex.test(this.password)) {
-      this.emptyField_pg2msg = "Password isn't strong enough!"
-      return;
-    }
-
 
     let form = new FormData();
     form.append('avatar', this.avatar);
